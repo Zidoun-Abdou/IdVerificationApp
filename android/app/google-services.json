@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "164914734142",
+    "project_id": "whotest-be893",
+    "storage_bucket": "whotest-be893.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164914734142:android:5b7789f89d3b05fa889d6f",
+        "android_client_info": {
+          "package_name": "com.icosnet.whowiyati"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164914734142-erkpsbno2qil2jjm7fhvr5kbasss0p3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB17C4l0m63ZLXyJSQ1F2JswexCNqftoQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164914734142-erkpsbno2qil2jjm7fhvr5kbasss0p3u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
