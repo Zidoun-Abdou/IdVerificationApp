@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:get_ip_address/get_ip_address.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
@@ -71,20 +72,23 @@ class _VerifyFaceState extends State<VerifyFace> {
     // final file =
     //     await File('${tempDir.path}/temp_image.png').writeAsBytes(imageBytes);
 
+    /// Initialize Ip Address
+    var ipAddress = IpAddress(type: RequestType.text);
+
+    /// Get the IpAddress based on requestType.
+    dynamic data = await ipAddress.getIpAddress();
+    String ip = data.toString();
+    print(data.toString());
+
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'https://api.icosnet.com/kyc_liveness/liveness?token=ffffffff&question=neutral&ip_adress=111111111111'));
+            'http://10.16.2.16:8000/liveness?token=ffffffff&question=neutral&ip_adress=${ip}'));
     request.files.add(await http.MultipartFile.fromPath('video', link));
-
-    // final picker = ImagePicker();
-    // final pickedFile1 = await picker.pickImage(
-    //   source: ImageSource.camera,
-    // );
     request.files.add(await http.MultipartFile.fromPath('face', widget.face));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-    print("*********************************************");
+
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
       return true;

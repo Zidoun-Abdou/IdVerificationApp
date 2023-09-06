@@ -231,7 +231,7 @@ class _IdCardsState extends State<IdCards> {
                               'assets/images/id_card.png',
                               // Replace with the actual path to your image file
                               fit: BoxFit.fill,
-                            ).animate().fade(delay: 500.ms),
+                            ).animate().fade(delay: 1000.ms),
                             Positioned(
                               child: Container(
                                 margin: EdgeInsets.symmetric(
