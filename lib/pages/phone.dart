@@ -25,60 +25,6 @@ class _PhoneState extends State<Phone> {
   String countryCode = "";
   String mytoken = "";
 
-  getToken() async {
-    /*  var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {*/
-    isLoading = true;
-    setState(() {});
-    var headers = {
-      'Authorization': 'Basic aWNvc25ldF9hcHBzOkttNGFHVGxiZU1sNEFOcmh0U0xy',
-    };
-    var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            'https://api.icosnet.com/ibmpp/esb/pbflow_customer_create.php'));
-
-    FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
-      mytoken = value!;
-      request.fields.addAll(
-          {'phone': "213${_phoneContr.text}", 'token': token.toString()});
-    });
-    await prefs.setString('token', mytoken.toString());
-
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
-    String answer = await response.stream.bytesToString();
-    var answerJson = jsonDecode(answer);
-    if (answerJson["success"] == true) {
-      await sendSms();
-      print(answerJson.toString());
-    } else {
-      print(answerJson.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Number or phone already used, Please Login"),
-          duration: Duration(seconds: 2),
-        ),
-      );
-      isLoading = false;
-      setState(() {});
-    }
-    /* } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
-        ),
-      );
-      isLoading = false;
-      setState(() {});
-    }*/
-    isLoading = false;
-    setState(() {});
-  }
-
   Future<int> sendSms() async {
     isLoading = true;
     setState(() {});
@@ -93,13 +39,19 @@ class _PhoneState extends State<Phone> {
       'phone': '${countryCode}${_phoneContr.text}',
       'template': 'Votre code est: {{code}}\n$signature'
     });
-
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? token = value;
+      mytoken = value!;
+      request.fields.addAll(
+          {'phone': "213${_phoneContr.text}", 'token': token.toString()});
+    });
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
     String answer = await response.stream.bytesToString();
     var answerJson = jsonDecode(answer);
     if (answerJson["id"] != null) {
+      print('sms sent with succus');
       print(answerJson["id"].toString());
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => Otp(
@@ -117,7 +69,6 @@ class _PhoneState extends State<Phone> {
       setState(() {});
       return 0;
     }
-
   }
 
   @override
@@ -141,8 +92,8 @@ class _PhoneState extends State<Phone> {
                         'assets/images/logo.png',
                         // Replace with the actual path to your image file
                         fit: BoxFit.contain,
-                        height: 150.h,
-                        width: 250.w,
+                        height: 100.h,
+                        width: 200.w,
                       ),
                     ),
                     SizedBox(
@@ -246,7 +197,7 @@ class _PhoneState extends State<Phone> {
                 ),
               ),
               Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -267,7 +218,7 @@ class _PhoneState extends State<Phone> {
                                     ConnectivityResult.mobile ||
                                 connectivityResult == ConnectivityResult.wifi) {
                               if (isPhoneNumberValid == true) {
-                                getToken();
+                                await sendSms();
                               }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(

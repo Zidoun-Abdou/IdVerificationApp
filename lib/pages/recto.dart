@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:whowiyati/const.dart';
+import 'package:whowiyati/pages/verso.dart';
 
 class Recto extends StatefulWidget {
   const Recto({super.key});
@@ -19,6 +21,20 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
   static const Duration durationToReverse = Duration(seconds: 3);
   static const Duration durationToForward = Duration(seconds: 1);
   static const Duration durationToChangeWidget = Duration(milliseconds: 50);
+
+  takeRecto() async {
+    final picker = ImagePicker();
+    final verso = await picker.pickImage(
+      source: ImageSource.camera,
+    );
+
+    if (verso != null) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Verso(
+                rectoPath: verso.path,
+              )));
+    }
+  }
 
   @override
   void initState() {
@@ -159,7 +175,9 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 5.h),
                               child: ElevatedButton(
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  takeRecto();
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: color3,
                                   padding: EdgeInsets.symmetric(vertical: 15.h),

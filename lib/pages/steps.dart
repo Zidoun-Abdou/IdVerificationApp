@@ -37,26 +37,14 @@ class _StepsState extends State<Steps> {
             children: [
               Expanded(
                 flex: 1,
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    Center(
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        // Replace with the actual path to your image file
-                        fit: BoxFit.contain,
-                        height: 150.h,
-                        width:
-                            250.w, // Adjust the image's fit property as needed
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                  ],
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    // Replace with the actual path to your image file
+                    fit: BoxFit.contain,
+                    height: 100.h,
+                    width: 200.w, // Adjust the image's fit property as needed
+                  ),
                 ),
               ),
               Expanded(

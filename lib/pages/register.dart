@@ -17,9 +17,8 @@ class _RegisterState extends State<Register> {
     return Stack(
       children: [
         ColorFiltered(
-          colorFilter:  ColorFilter.mode(
-              Colors.black.withOpacity(0.6), BlendMode.darken
-          ),
+          colorFilter:
+              ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
           child: Image.asset(
             "assets/images/background.png",
             height: MediaQuery.of(context).size.height,
@@ -39,9 +38,9 @@ class _RegisterState extends State<Register> {
                     child: Image.asset(
                       'assets/images/logo.png',
                       // Replace with the actual path to your image file
-                        fit: BoxFit.contain,
-                        height: 150.h,
-                        width: 250.w, // Adjust the image's fit property as needed
+                      fit: BoxFit.contain,
+                      height: 100.h,
+                      width: 200.w, // Adjust the image's fit property as needed
                     ),
                   ),
                 ),
@@ -54,8 +53,9 @@ class _RegisterState extends State<Register> {
                               horizontal: 20.w, vertical: 8.h),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) => Login()));                              },
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Login()));
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                               padding: EdgeInsets.symmetric(vertical: 15.h),
@@ -88,8 +88,9 @@ class _RegisterState extends State<Register> {
                               horizontal: 20.w, vertical: 8.h),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) => Conditions()));                            },
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Conditions()));
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: color3,
                               padding: EdgeInsets.symmetric(vertical: 15.h),

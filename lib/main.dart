@@ -7,6 +7,7 @@ import 'package:whowiyati/pages/conditions.dart';
 import 'package:whowiyati/pages/email.dart';
 import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/idcards.dart';
+import 'package:whowiyati/pages/idinfos.dart';
 import 'package:whowiyati/pages/login.dart';
 import 'package:whowiyati/pages/nif.dart';
 import 'package:whowiyati/pages/otp.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: IdCards(token: "11111111111"),
+            home: HomePage(),
           );
         });
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -30,6 +31,58 @@ class _OtpState extends State<Otp> {
   bool isPhoneNumberValid = false;
   String otp = "";
   bool _isLoading = false;
+  String mytoken = "";
+
+  sendToken() async {
+    /*  var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {*/
+    _isLoading = true;
+    setState(() {});
+    var headers = {
+      'Authorization': 'Basic aWNvc25ldF9hcHBzOkttNGFHVGxiZU1sNEFOcmh0U0xy',
+    };
+    var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            'https://api.icosnet.com/ibmpp/esb/pbflow_customer_create.php'));
+
+    request.fields.addAll(
+        {'phone': "213${_phoneContr.text}", 'token': widget.token.toString()});
+    await prefs.setString('token', mytoken.toString());
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
+    if (answerJson["success"] == true) {
+      print("token send with succus");
+      await Next();
+      print(answerJson.toString());
+    } else {
+      print(answerJson.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Number or phone already used, Please Login"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      _isLoading = false;
+      setState(() {});
+    }
+    /* } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Veillez vérifier votre connection internet"),
+          duration: Duration(seconds: 5),
+        ),
+      );
+      isLoading = false;
+      setState(() {});
+    }*/
+    _isLoading = false;
+    setState(() {});
+  }
 
   Future<int> Next() async {
     if (otp.length == 4) {
@@ -48,7 +101,7 @@ class _OtpState extends State<Otp> {
       if (answerJson["success"] == true) {
         print(answerJson.toString());
         await _addtoportaone();
-      return 1;
+        return 1;
       } else {
         //print(answerJson["success"]);
         print(answerJson.toString());
@@ -62,7 +115,6 @@ class _OtpState extends State<Otp> {
           ),
         );
         return 0;
-
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,6 +153,7 @@ class _OtpState extends State<Otp> {
     String answer = await response.stream.bytesToString();
     var answerJson = jsonDecode(answer);
     if (answerJson["success"] == true) {
+      print("add to portaone with succus");
       print(answerJson.toString());
       _isLoading = false;
       setState(() {});
@@ -127,7 +180,6 @@ class _OtpState extends State<Otp> {
       setState(() {});
       return 0;
     }
-
   }
 
   @override
@@ -147,8 +199,8 @@ class _OtpState extends State<Otp> {
                   children: [
                     Center(
                       child: Container(
-                        height: 150,
-                        width: 250,
+                        height: 100,
+                        width: 200,
                         child: Image.asset(
                           'assets/images/logo.png',
                           // Replace with the actual path to your image file
@@ -195,7 +247,8 @@ class _OtpState extends State<Otp> {
                       child: PinFieldAutoFill(
                         controller: _phoneContr,
                         codeLength: 4,
-                        autoFocus: true,
+                        textInputAction: TextInputAction.next,
+
                         // cursor: Cursor(color: color3,enabled: true),
                         decoration: UnderlineDecoration(
                           lineHeight: 2,
@@ -219,7 +272,7 @@ class _OtpState extends State<Otp> {
                           EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
                       child: ElevatedButton(
                         onPressed: () async {
-                          Next();
+                          sendToken();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: color3,

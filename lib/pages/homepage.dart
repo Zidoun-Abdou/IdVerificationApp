@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
                   'assets/images/logo.png',
                   // Replace with the actual path to your image file
                   fit: BoxFit.contain,
-                  height: 150.h,
-                  width: 250.w, // Adjust the image's fit property as needed
+                  height: 100.h,
+                  width: 200.w, // Adjust the image's fit property as needed
                 ),
               ),
             ),

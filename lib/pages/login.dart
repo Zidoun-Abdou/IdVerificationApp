@@ -5,14 +5,12 @@ import 'package:whowiyati/const.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
 }
-
 
 class _LoginState extends State<Login> {
   bool _isChecked = false;
@@ -26,7 +24,7 @@ class _LoginState extends State<Login> {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
-      if (_formKey.currentState!.validate() ) {
+      if (_formKey.currentState!.validate()) {
         isLoading = true;
         setState(() {});
         var headers = {
@@ -73,9 +71,8 @@ class _LoginState extends State<Login> {
     return Stack(
       children: [
         ColorFiltered(
-          colorFilter:  ColorFilter.mode(
-              Colors.black.withOpacity(0.6), BlendMode.darken
-          ),
+          colorFilter:
+              ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
           child: Image.asset(
             "assets/images/background.png",
             height: MediaQuery.of(context).size.height,
@@ -97,8 +94,9 @@ class _LoginState extends State<Login> {
                         'assets/images/logo.png',
                         // Replace with the actual path to your image file
                         fit: BoxFit.contain,
-                        height: 150.h,
-                        width: 250.w, // Adjust the image's fit property as needed
+                        height: 100.h,
+                        width:
+                            200.w, // Adjust the image's fit property as needed
                       ),
                     ),
                   ),

@@ -9,15 +9,42 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/camera_page.dart';
 import 'package:whowiyati/pages/conditions.dart';
+import 'package:whowiyati/pages/idinfos.dart';
 import 'package:whowiyati/pages/steps.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 
 class VerifyFace extends StatefulWidget {
   final String face;
-  const VerifyFace({Key? key, required this.face}) : super(key: key);
+  final String mrz;
+  final String front;
+  final String back;
+  final String name;
+  final String surname;
+  final String country;
+  final String nationality;
+  final String birth_date;
+  final String expiry_date;
+  final String sex;
+  final String document_type;
+  final String document_number;
+  const VerifyFace(
+      {Key? key,
+      required this.face,
+      required this.name,
+      required this.surname,
+      required this.country,
+      required this.nationality,
+      required this.birth_date,
+      required this.expiry_date,
+      required this.sex,
+      required this.document_type,
+      required this.document_number,
+      required this.front,
+      required this.back,
+      required this.mrz})
+      : super(key: key);
 
   @override
   State<VerifyFace> createState() => _VerifyFaceState();
@@ -28,13 +55,14 @@ class _VerifyFaceState extends State<VerifyFace> {
   var isRecording = false;
   bool _isShownFace = false;
   late File savedImage;
+  bool _is_loading = false;
 
   @override
   void initState() {
     super.initState();
     controller = CameraController(
       cameras[1],
-      ResolutionPreset.max,
+      ResolutionPreset.low,
     );
     controller.initialize().then((_) {
       if (!mounted) {
@@ -83,16 +111,94 @@ class _VerifyFaceState extends State<VerifyFace> {
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'http://10.16.2.16:8000/liveness?token=ffffffff&question=neutral&ip_adress=${ip}'));
+            'https://api.icosnet.com/kyc_liveness/liveness?token=ffffffff&question=neutral&ip_adress=${ip}'));
     request.files.add(await http.MultipartFile.fromPath('video', link));
     request.files.add(await http.MultipartFile.fromPath('face', widget.face));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
+    print(answerJson);
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+    if (answerJson["decision"] == "True") {
+      print("face ok");
+
+      await sendToAlfresco();
+      // Navigator.of(context).push(MaterialPageRoute(
+      //     builder: (context) => IdInfos(
+      //           name: widget.name,
+      //           surname: widget.surname,
+      //           country: widget.country,
+      //           nationality: widget.nationality,
+      //           birth_date: widget.birth_date,
+      //           expiry_date: widget.expiry_date,
+      //           sex: widget.sex,
+      //           document_type: widget.document_type,
+      //           document_number: widget.document_number,
+      //         )));
       return true;
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Face verification failed, Please try again."),
+          duration: Duration(seconds: 5),
+        ),
+      );
+      print(response.reasonPhrase);
+      return false;
+    }
+  }
+
+  Future<bool> sendToAlfresco() async {
+    var headers = {
+      'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
+      'Cookie': 'PHPSESSID=lfn533cru9ah04m0gbsc5hrahv'
+    };
+    var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            'https://api.icosnet.com/ibmpp/esb/ged_add_user_identification_who.php'));
+    request.fields.addAll({
+      'folder_name':
+          '${widget.name}_${widget.surname}_${widget.document_number}',
+      'mrz': widget.mrz
+    });
+    request.files
+        .add(await http.MultipartFile.fromPath('image_recto', widget.front));
+    request.files
+        .add(await http.MultipartFile.fromPath('image_verso', widget.back));
+    request.files
+        .add(await http.MultipartFile.fromPath('image_face', widget.face));
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
+
+    if (answerJson["status"] == "success") {
+      print("Alfresco ok");
+      controller.dispose();
+
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => IdInfos(
+                name: widget.name,
+                surname: widget.surname,
+                country: widget.country,
+                nationality: widget.nationality,
+                birth_date: widget.birth_date,
+                expiry_date: widget.expiry_date,
+                sex: widget.sex,
+                document_type: widget.document_type,
+                document_number: widget.document_number,
+              )));
+      return true;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to send to Alfresco."),
+          duration: Duration(seconds: 5),
+        ),
+      );
       print(response.reasonPhrase);
       return false;
     }
@@ -194,59 +300,70 @@ class _VerifyFaceState extends State<VerifyFace> {
                               decoration: BoxDecoration(
                                   color: color4.withOpacity(0.8),
                                   borderRadius: BorderRadius.circular(15.r)),
-                              child: Image.asset(
-                                'assets/images/face.png',
-                                fit: BoxFit.contain,
-                              ),
+                              child: _is_loading == true
+                                  ? Center(
+                                      child: CircularProgressIndicator(
+                                          color: color3),
+                                    )
+                                  : Image.asset(
+                                      'assets/images/face.png',
+                                      fit: BoxFit.contain,
+                                    ),
                             ),
                           ),
                   ),
-                  Positioned(
-                    bottom: 80.h,
-                    right: 0,
-                    left: 0,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          setState(() {
-                            _isShownFace = !_isShownFace;
-                          });
-                          controller.startVideoRecording();
-                          await Future.delayed(const Duration(seconds: 7));
-                          var video = await controller.stopVideoRecording();
-                          setState(() {
-                            _isShownFace = !_isShownFace;
-                          });
-                          String _mypath = video.path;
-                          print(_mypath);
-                          await GallerySaver.saveVideo(_mypath);
-                          var myvideo = File(video.path);
-                          print(
-                              "--------------------------------------------------------");
-                          print(myvideo.path);
-                          await verifyFace(myvideo.path);
-
-                          print("finish");
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: color3,
-                          padding: EdgeInsets.symmetric(vertical: 15.h),
-                          foregroundColor: Colors.white,
-                          minimumSize: Size.fromHeight(50.w),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
+                  Visibility(
+                    visible: _is_loading == false && _isShownFace == false,
+                    child: Positioned(
+                      bottom: 80.h,
+                      right: 0,
+                      left: 0,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            setState(() {
+                              _isShownFace = !_isShownFace;
+                            });
+                            controller.startVideoRecording();
+                            await Future.delayed(const Duration(seconds: 7));
+                            var video = await controller.stopVideoRecording();
+                            setState(() {
+                              _isShownFace = !_isShownFace;
+                            });
+                            _is_loading = true;
+                            setState(() {});
+                            String _mypath = video.path;
+                            print(_mypath);
+                            await GallerySaver.saveVideo(_mypath);
+                            var myvideo = File(video.path);
+                            print(
+                                "--------------------------------------------------------");
+                            print(myvideo.path);
+                            await verifyFace(myvideo.path);
+                            _is_loading = false;
+                            setState(() {});
+                            print("finish");
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: color3,
+                            padding: EdgeInsets.symmetric(vertical: 15.h),
+                            foregroundColor: Colors.white,
+                            minimumSize: Size.fromHeight(50.w),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.r),
+                            ),
+                            elevation: 20,
+                            shadowColor: color3, // Set the shadow color
                           ),
-                          elevation: 20,
-                          shadowColor: color3, // Set the shadow color
-                        ),
-                        child: Text(
-                          "Open camera",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
+                          child: Text(
+                            "Open camera",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13.sp,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),

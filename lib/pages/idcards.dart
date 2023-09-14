@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/idinfos.dart';
+import 'package:whowiyati/pages/recto.dart';
 import 'package:whowiyati/pages/verify_face.dart';
 
 class IdCards extends StatefulWidget {
@@ -24,112 +25,112 @@ class IdCards extends StatefulWidget {
 class _IdCardsState extends State<IdCards> {
   bool? _is_loading = false;
 
-  void takePhotos() async {
-    _is_loading = true;
-    setState(() {});
-    final picker = ImagePicker();
-    final pickedFile1 = await picker.pickImage(
-      source: ImageSource.camera,
-    );
-    final pickedFile2 = await picker.pickImage(
-      source: ImageSource.camera,
-    );
+  // void takePhotos() async {
+  //   _is_loading = true;
+  //   setState(() {});
+  //   final picker = ImagePicker();
+  //   final pickedFile1 = await picker.pickImage(
+  //     source: ImageSource.camera,
+  //   );
+  //   final pickedFile2 = await picker.pickImage(
+  //     source: ImageSource.camera,
+  //   );
 
-    if (pickedFile1 != null && pickedFile2 != null) {
-      String _token = prefs.getString('mail').toString();
+  //   if (pickedFile1 != null && pickedFile2 != null) {
+  //     String _token = prefs.getString('mail').toString();
 
-      var headers = {'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0='};
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              'https://api.icosnet.com/kyc/algerian_id_card_detection_and_data_extraction_2_images_type_file?token=$_token'));
-      request.files.add(await http.MultipartFile.fromPath(
-        'front_image',
-        pickedFile1.path,
-      ));
+  //     var headers = {'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0='};
+  //     var request = http.MultipartRequest(
+  //         'POST',
+  //         Uri.parse(
+  //             'https://api.icosnet.com/kyc/algerian_id_card_detection_and_data_extraction_2_images_type_file?token=$_token'));
+  //     request.files.add(await http.MultipartFile.fromPath(
+  //       'front_image',
+  //       pickedFile1.path,
+  //     ));
 
-      request.files.add(
-          await http.MultipartFile.fromPath('back_image', pickedFile2.path));
+  //     request.files.add(
+  //         await http.MultipartFile.fromPath('back_image', pickedFile2.path));
 
-      request.headers.addAll(headers);
+  //     request.headers.addAll(headers);
 
-      http.StreamedResponse response = await request.send();
-      String answer = await response.stream.bytesToString();
-      var answerJson = jsonDecode(answer);
-      if (answerJson["mrz"]["decision"] == "mrz") {
-        //"abdelkrim_nachef_121328643_face.png"
-        String _base64img = "${answerJson["folder_name"]}_face.png";
+  //     http.StreamedResponse response = await request.send();
+  //     String answer = await response.stream.bytesToString();
+  //     var answerJson = jsonDecode(answer);
+  //     if (answerJson["mrz"]["decision"] == "mrz") {
+  //       //"abdelkrim_nachef_121328643_face.png"
+  //       String _base64img = "${answerJson["folder_name"]}_face.png";
 
-        List<int> imageBytes = base64Decode(answerJson[_base64img]);
-        final _tempDir = await getTemporaryDirectory();
-        final _myFile = await File('${_tempDir.path}/temp_image.png')
-            .writeAsBytes(imageBytes);
-        await prefs.setString(
-            'idinfos', answerJson["mrz"]["result"]["name"].toString());
-        String name = answerJson["mrz"]["result"]["name"].toString();
-        String surname = answerJson["mrz"]["result"]["surname"].toString();
+  //       List<int> imageBytes = base64Decode(answerJson[_base64img]);
+  //       final _tempDir = await getTemporaryDirectory();
+  //       final _myFile = await File('${_tempDir.path}/temp_image.png')
+  //           .writeAsBytes(imageBytes);
+  //       await prefs.setString(
+  //           'idinfos', answerJson["mrz"]["result"]["name"].toString());
+  //       String name = answerJson["mrz"]["result"]["name"].toString();
+  //       String surname = answerJson["mrz"]["result"]["surname"].toString();
 
-        String country = answerJson["mrz"]["result"]["country"].toString();
-        String nationality =
-            answerJson["mrz"]["result"]["nationality"].toString() == "dza"
-                ? "Algerien"
-                : answerJson["mrz"]["result"]["nationality"].toString();
-        String birth_date =
-            answerJson["mrz"]["result"]["birth_date"].toString();
-        String expiry_date =
-            answerJson["mrz"]["result"]["expiry_date"].toString();
-        String sex = answerJson["mrz"]["result"]["sex"].toString();
-        String document_type =
-            answerJson["mrz"]["result"]["document_type"].toString();
-        String document_number =
-            answerJson["mrz"]["result"]["document_number"].toString();
-        //await prefs.setString('nin', document_number);
-        // await _addtoportaone(document_number);
+  //       String country = answerJson["mrz"]["result"]["country"].toString();
+  //       String nationality =
+  //           answerJson["mrz"]["result"]["nationality"].toString() == "dza"
+  //               ? "Algerien"
+  //               : answerJson["mrz"]["result"]["nationality"].toString();
+  //       String birth_date =
+  //           answerJson["mrz"]["result"]["birth_date"].toString();
+  //       String expiry_date =
+  //           answerJson["mrz"]["result"]["expiry_date"].toString();
+  //       String sex = answerJson["mrz"]["result"]["sex"].toString();
+  //       String document_type =
+  //           answerJson["mrz"]["result"]["document_type"].toString();
+  //       String document_number =
+  //           answerJson["mrz"]["result"]["document_number"].toString();
+  //       //await prefs.setString('nin', document_number);
+  //       // await _addtoportaone(document_number);
 
-        /*Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => IdInfo(
-                  name: name,
-                  surname: surname,
-                  country: country,
-                  nationality: nationality,
-                  birth_date: birth_date,
-                  expiry_date: expiry_date,
-                  sex: sex,
-                  document_type: document_type,
-                  document_number: document_number,
-                  token: widget.token,
-                )));*/
-        print("-------------------------------------------");
-        print(_myFile.path);
-        print("-------------------------------------------");
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => VerifyFace(
-                  face: _myFile.path,
-                )));
-        _is_loading = false;
-        setState(() {});
-      } else {
-        print(answerJson.toString());
+  //       /*Navigator.of(context).push(MaterialPageRoute(
+  //           builder: (context) => IdInfo(
+  //                 name: name,
+  //                 surname: surname,
+  //                 country: country,
+  //                 nationality: nationality,
+  //                 birth_date: birth_date,
+  //                 expiry_date: expiry_date,
+  //                 sex: sex,
+  //                 document_type: document_type,
+  //                 document_number: document_number,
+  //                 token: widget.token,
+  //               )));*/
+  //       print("-------------------------------------------");
+  //       print(_myFile.path);
+  //       print("-------------------------------------------");
+  //       Navigator.of(context).push(MaterialPageRoute(
+  //           builder: (context) => VerifyFace(
+  //                 face: _myFile.path,
+  //               )));
+  //       _is_loading = false;
+  //       setState(() {});
+  //     } else {
+  //       print(answerJson.toString());
 
-        print(response.reasonPhrase);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "non valid cards, try again",
-              textAlign: TextAlign.center,
-            ),
-            duration: Duration(seconds: 3),
-          ),
-        );
-        _is_loading = false;
-        setState(() {});
-      }
-      _is_loading = false;
-      setState(() {});
-    }
-    _is_loading = false;
-    setState(() {});
-  }
+  //       print(response.reasonPhrase);
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(
+  //             "non valid cards, try again",
+  //             textAlign: TextAlign.center,
+  //           ),
+  //           duration: Duration(seconds: 3),
+  //         ),
+  //       );
+  //       _is_loading = false;
+  //       setState(() {});
+  //     }
+  //     _is_loading = false;
+  //     setState(() {});
+  //   }
+  //   _is_loading = false;
+  //   setState(() {});
+  // }
 
   /* Future<int> _addtoportaone(String idcard) async {
     _is_loading = true;
@@ -198,7 +199,7 @@ class _IdCardsState extends State<IdCards> {
                                 // Replace with the actual path to your image file
                                 fit: BoxFit.contain,
                                 height: 150.h,
-                                width: 250.w,
+                                width: 150.w,
                               ),
                             ),
                             SizedBox(
@@ -238,7 +239,9 @@ class _IdCardsState extends State<IdCards> {
                                     horizontal: 20.w, vertical: 8.h),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    takePhotos();
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => Recto()));
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: color3,

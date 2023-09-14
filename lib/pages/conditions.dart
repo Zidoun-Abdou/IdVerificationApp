@@ -52,8 +52,9 @@ class _ConditionsState extends State<Conditions> {
                         'assets/images/logo.png',
                         // Replace with the actual path to your image file
                         fit: BoxFit.contain,
-                        height: 150.h,
-                        width: 250.w, // Adjust the image's fit property as needed
+                        height: 100.h,
+                        width:
+                            200.w, // Adjust the image's fit property as needed
                       ),
                     ),
                   ),
@@ -145,9 +146,9 @@ class _ConditionsState extends State<Conditions> {
                                 horizontal: 20.w, vertical: 8.h),
                             child: ElevatedButton(
                               onPressed: () {
-                                if(_isChecked== true){
-                                  Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (context) => Phone()));
+                                if (_isChecked == true) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Phone()));
                                 }
                               },
                               style: ElevatedButton.styleFrom(

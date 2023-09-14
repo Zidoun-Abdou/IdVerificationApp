@@ -1,12 +1,22 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
+import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/idinfos.dart';
+import 'package:whowiyati/pages/verify_face.dart';
 
 class Verso extends StatefulWidget {
-  const Verso({super.key});
+  final String rectoPath;
+
+  const Verso({super.key, required this.rectoPath});
 
   @override
   State<Verso> createState() => _VersoState();
@@ -19,6 +29,148 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
   static const Duration durationToReverse = Duration(seconds: 3);
   static const Duration durationToForward = Duration(seconds: 1);
   static const Duration durationToChangeWidget = Duration(milliseconds: 50);
+  bool? _is_loading = false;
+
+  void takePhotos() async {
+    _is_loading = true;
+    setState(() {});
+    final picker = ImagePicker();
+    final versoPath = await picker.pickImage(
+      source: ImageSource.camera,
+    );
+
+    if (widget.rectoPath != null && versoPath != null) {
+      String _token = prefs.getString('mail').toString();
+
+      var headers = {'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0='};
+      var request = http.MultipartRequest(
+          'POST',
+          Uri.parse(
+              'https://api.icosnet.com/kyc/algerian_id_card_detection_and_data_extraction_2_images_type_file?token=$_token'));
+      request.files.add(await http.MultipartFile.fromPath(
+        'front_image',
+        widget.rectoPath,
+      ));
+
+      request.files
+          .add(await http.MultipartFile.fromPath('back_image', versoPath.path));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      String answer = await response.stream.bytesToString();
+      // Parse the JSON string.
+      Map<String, dynamic> jsonData = json.decode(answer);
+      // Extract the "result" part as a JSON string.
+      String resultData = jsonEncode(jsonData['mrz']['result']);
+      // Create a new map with "result" as the key.
+      Map<String, dynamic> outputMap = {"result": resultData};
+      // Convert the map to a JSON string.
+      String resultJson = jsonEncode(outputMap);
+      print("------------------------------------------------------------");
+      print(resultJson.runtimeType);
+      print(resultJson);
+      print("------------------------------------------------------------");
+      var answerJson = jsonDecode(answer);
+      if (answerJson["mrz"]["decision"] == "mrz") {
+        //"abdelkrim_nachef_121328643_face.png"
+        String _face = "${answerJson["folder_name"]}_face.png";
+        String _front = "${answerJson["folder_name"]}_front.png";
+        String _back = "${answerJson["folder_name"]}_back.png";
+
+        List<int> imageBytes_face = base64Decode(answerJson[_face]);
+        List<int> imageBytes_front = base64Decode(answerJson[_front]);
+        List<int> imageBytes_back = base64Decode(answerJson[_back]);
+
+        final _tempDir_face = await getTemporaryDirectory();
+        final _tempDir_front = await getTemporaryDirectory();
+        final _tempDir_back = await getTemporaryDirectory();
+
+        final _myFile_face =
+            await File('${_tempDir_face.path}/temp_image_face.png')
+                .writeAsBytes(imageBytes_face);
+        final _myFile_front =
+            await File('${_tempDir_front.path}/temp_image_front_card.png')
+                .writeAsBytes(imageBytes_front);
+        final _myFile_back =
+            await File('${_tempDir_back.path}/temp_image_back_card.png')
+                .writeAsBytes(imageBytes_back);
+        await prefs.setString(
+            'idinfos', answerJson["mrz"]["result"]["name"].toString());
+        String name = answerJson["mrz"]["result"]["name"].toString();
+        String surname = answerJson["mrz"]["result"]["surname"].toString();
+
+        String country = answerJson["mrz"]["result"]["country"].toString();
+        String nationality =
+            answerJson["mrz"]["result"]["nationality"].toString() == "dza"
+                ? "Algerien"
+                : answerJson["mrz"]["result"]["nationality"].toString();
+        String birth_date =
+            answerJson["mrz"]["result"]["birth_date"].toString();
+        String expiry_date =
+            answerJson["mrz"]["result"]["expiry_date"].toString();
+        String sex = answerJson["mrz"]["result"]["sex"].toString();
+        String document_type =
+            answerJson["mrz"]["result"]["document_type"].toString();
+        String document_number =
+            answerJson["mrz"]["result"]["document_number"].toString();
+        //await prefs.setString('nin', document_number);
+        // await _addtoportaone(document_number);
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => IdInfos(
+        //           name: name,
+        //           surname: surname,
+        //           country: country,
+        //           nationality: nationality,
+        //           birth_date: birth_date,
+        //           expiry_date: expiry_date,
+        //           sex: sex,
+        //           document_type: document_type,
+        //           document_number: document_number,
+        //         )));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => VerifyFace(
+                  face: _myFile_face.path,
+                  front: _myFile_front.path,
+                  back: _myFile_back.path,
+                  name: name,
+                  surname: surname,
+                  country: country,
+                  nationality: nationality,
+                  birth_date: birth_date,
+                  expiry_date: expiry_date,
+                  sex: sex,
+                  document_type: document_type,
+                  document_number: document_number,
+                  mrz: resultJson,
+                )));
+        _is_loading = false;
+        setState(() {});
+      } else {
+        print(answerJson.toString());
+
+        print(response.reasonPhrase);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "non valid cards, try again",
+              textAlign: TextAlign.center,
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
+
+        _is_loading = false;
+        setState(() {});
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      }
+      _is_loading = false;
+      setState(() {});
+    }
+    _is_loading = false;
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -65,7 +217,6 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  bool? _is_loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +224,9 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator()
+              ? CircularProgressIndicator(
+                  color: color3,
+                )
               : Form(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -159,7 +312,9 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 5.h),
                               child: ElevatedButton(
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  takePhotos();
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: color3,
                                   padding: EdgeInsets.symmetric(vertical: 15.h),
