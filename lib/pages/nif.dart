@@ -64,7 +64,8 @@ class _NifState extends State<Nif> {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: 'Hello\n${prefs.getString('idinfos').toString()}',
+                                text: "Bonjour",
+                                //text: 'Hello\n${prefs.getString('idinfos').toString()}',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 40,

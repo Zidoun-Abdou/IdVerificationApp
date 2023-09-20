@@ -43,8 +43,12 @@ class _EmailState extends State<Email> {
         var answerJson = jsonDecode(answer);
         if (response.statusCode == 200) {
           print(answerJson["id"].toString());
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => ConfirmMail(token: widget.token,mail: _mailContr.text,id: answerJson["id"].toString(),)));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ConfirmMail(
+                    token: widget.token,
+                    mail: _mailContr.text,
+                    id: answerJson["id"].toString(),
+                  )));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -100,8 +104,9 @@ class _EmailState extends State<Email> {
                               'assets/images/logo.png',
                               // Replace with the actual path to your image file
                               fit: BoxFit.contain,
-                              height: 150.h,
-                              width: 250.w, // Adjust the image's fit property as needed
+                              height: 100.h,
+                              width: 200
+                                  .w, // Adjust the image's fit property as needed
                             ),
                           ),
                         ),

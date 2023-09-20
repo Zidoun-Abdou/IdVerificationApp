@@ -43,7 +43,7 @@ class _WelcomeState extends State<Welcome> {
                               height: 1,
                             ),
                             Text(
-                              'My account',
+                              prefs.getString("user_id").toString(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFFA2A2B5),
@@ -66,7 +66,8 @@ class _WelcomeState extends State<Welcome> {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: 'Hello\n${prefs.getString('idinfos').toString()}',
+                                text: "Bonjour",
+                                //text: 'Hello\n${prefs.getString('idinfos').toString()}',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 40,
@@ -143,8 +144,13 @@ class _WelcomeState extends State<Welcome> {
                             children: [
                               Expanded(
                                 child: InkWell(
-                                  onTap: () {Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (context) => Steps(token: widget.token,)));},
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => Steps(
+                                                  token: widget.token,
+                                                )));
+                                  },
                                   child: Container(
                                     height:
                                         MediaQuery.of(context).size.width / 2 -
@@ -207,7 +213,7 @@ class _WelcomeState extends State<Welcome> {
                                       Container(
                                           padding: EdgeInsets.all(8.sp),
                                           decoration: BoxDecoration(
-                                              color: color5,
+                                              color: Colors.grey,
                                               borderRadius:
                                                   BorderRadius.circular(15.r)),
                                           child: Icon(
@@ -253,7 +259,7 @@ class _WelcomeState extends State<Welcome> {
                                       Container(
                                           padding: EdgeInsets.all(8.sp),
                                           decoration: BoxDecoration(
-                                              color: color5,
+                                              color: Colors.grey,
                                               borderRadius:
                                                   BorderRadius.circular(15.r)),
                                           child: Icon(
@@ -295,7 +301,7 @@ class _WelcomeState extends State<Welcome> {
                                       Container(
                                           padding: EdgeInsets.all(8.sp),
                                           decoration: BoxDecoration(
-                                              color: color5,
+                                              color: Colors.grey,
                                               borderRadius:
                                                   BorderRadius.circular(15.r)),
                                           child: Icon(
@@ -334,7 +340,7 @@ class _WelcomeState extends State<Welcome> {
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

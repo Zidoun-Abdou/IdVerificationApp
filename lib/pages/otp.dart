@@ -16,9 +16,14 @@ class Otp extends StatefulWidget {
   final String phone;
   final String id;
   final String token;
+  final String password;
 
   const Otp(
-      {Key? key, required this.phone, required this.id, required this.token})
+      {Key? key,
+      required this.phone,
+      required this.id,
+      required this.token,
+      required this.password})
       : super(key: key);
 
   @override
@@ -33,7 +38,7 @@ class _OtpState extends State<Otp> {
   bool _isLoading = false;
   String mytoken = "";
 
-  sendToken() async {
+  Future<bool> sendToken() async {
     /*  var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {*/
@@ -47,28 +52,39 @@ class _OtpState extends State<Otp> {
         Uri.parse(
             'https://api.icosnet.com/ibmpp/esb/pbflow_customer_create.php'));
 
-    request.fields.addAll(
-        {'phone': "213${_phoneContr.text}", 'token': widget.token.toString()});
-    await prefs.setString('token', mytoken.toString());
+    request.fields.addAll({
+      'phone': "213${_phoneContr.text}",
+      'token': widget.token.toString(),
+      'password': widget.password
+    });
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     String answer = await response.stream.bytesToString();
     var answerJson = jsonDecode(answer);
     if (answerJson["success"] == true) {
+      print(answerJson);
       print("token send with succus");
-      await Next();
-      print(answerJson.toString());
+      await prefs.setString('phone', 'checked');
+      await prefs.setString('user_id', answerJson["user_id"].toString());
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => Welcome(token: widget.token)),
+          (Route<dynamic> route) => false);
+      return true;
     } else {
       print(answerJson.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Number or phone already used, Please Login"),
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 5),
         ),
       );
       _isLoading = false;
       setState(() {});
+      return false;
     }
     /* } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -84,7 +100,7 @@ class _OtpState extends State<Otp> {
     setState(() {});
   }
 
-  Future<int> Next() async {
+  Future<int> verifySms() async {
     if (otp.length == 4) {
       var headers = {
         'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
@@ -100,7 +116,7 @@ class _OtpState extends State<Otp> {
       var answerJson = jsonDecode(answer);
       if (answerJson["success"] == true) {
         print(answerJson.toString());
-        await _addtoportaone();
+        await sendToken();
         return 1;
       } else {
         //print(answerJson["success"]);
@@ -157,12 +173,7 @@ class _OtpState extends State<Otp> {
       print(answerJson.toString());
       _isLoading = false;
       setState(() {});
-      await prefs.setString('phone', widget.phone);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => Steps(token: widget.token),
-        ),
-      );
+
       return 1;
     } else {
       print('sms not sent');
@@ -185,7 +196,6 @@ class _OtpState extends State<Otp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: color1,
       body: _isLoading
           ? Center(
@@ -194,151 +204,108 @@ class _OtpState extends State<Otp> {
               ),
             )
           : SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Center(
-                      child: Container(
-                        height: 100,
-                        width: 200,
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          // Replace with the actual path to your image file
-                          fit: BoxFit.contain,
-                          // Adjust the image's fit property as needed
-                        ),
-                      ),
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      // Replace with the actual path to your image file
+                      fit: BoxFit.contain,
+                      height: 100.h,
+                      width: 200.w,
+                      // Adjust the image's fit property as needed
                     ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                    Text(
-                      "Verification du numéro de téléphone",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.1.h,
-                        letterSpacing: 0.20.w,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      "Veuillez saisir le code SMS à 4 chiffres qui a été envoyé à ${widget.phone}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12.5.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.1.h,
-                        letterSpacing: 0.20.w,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 40.w),
-                      child: PinFieldAutoFill(
-                        controller: _phoneContr,
-                        codeLength: 4,
-                        textInputAction: TextInputAction.next,
-
-                        // cursor: Cursor(color: color3,enabled: true),
-                        decoration: UnderlineDecoration(
-                          lineHeight: 2,
-                          lineStrokeCap: StrokeCap.square,
-                          textStyle: TextStyle(color: color3, fontSize: 20.sp),
-                          bgColorBuilder: PinListenColorBuilder(color4, color4),
-                          colorBuilder: const FixedColorBuilder(color3),
-                        ),
-                        onCodeChanged: (code) {
-                          otp = code.toString();
-                          print(otp);
-                        },
-                      ),
-                    ),
-                    //Expanded(child: Text("")),
-                    SizedBox(
-                      height: 200.h,
-                    ),
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          sendToken();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: color3,
-                          padding: EdgeInsets.symmetric(vertical: 15.h),
-                          foregroundColor: Colors.white,
-                          minimumSize: Size.fromHeight(30.w),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          elevation: 20,
-                          shadowColor: color3, // Set the shadow color
-                        ),
-                        child: Text(
-                          'Continuer',
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        Text(
+                          "Verification du numéro de téléphone",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.sp,
                             fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
+                            height: 1.1.h,
+                            letterSpacing: 0.20.w,
                           ),
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Text(
+                          "Veuillez saisir le code SMS à 4 chiffres qui a été envoyé à ${widget.phone}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12.5.sp,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            height: 1.1.h,
+                            letterSpacing: 0.20.w,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 40.w),
+                          child: PinFieldAutoFill(
+                            controller: _phoneContr,
+                            codeLength: 4, autoFocus: true,
+                            textInputAction: TextInputAction.none,
+                            // cursor: Cursor(color: color3,enabled: true),
+                            decoration: UnderlineDecoration(
+                              lineHeight: 2,
+                              lineStrokeCap: StrokeCap.square,
+                              textStyle:
+                                  TextStyle(color: color3, fontSize: 20.sp),
+                              bgColorBuilder:
+                                  PinListenColorBuilder(color4, color4),
+                              colorBuilder: FixedColorBuilder(color3),
+                            ),
+                            onCodeChanged: (code) {
+                              otp = code.toString();
+                              print(otp);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        verifySms();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: color3,
+                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        foregroundColor: Colors.white,
+                        minimumSize: Size.fromHeight(30.w),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.r),
+                        ),
+                        elevation: 20,
+                        shadowColor: color3, // Set the shadow color
+                      ),
+                      child: Text(
+                        'Continuer',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.sp,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                    /* Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Visibility(
-                          visible: is_filled, child: CircularProgressIndicator()),
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            Next();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: color3,
-                            padding: EdgeInsets.symmetric(vertical: 15.h),
-                            foregroundColor: Colors.white,
-                            minimumSize: Size.fromHeight(30.w),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.r),
-                            ),
-                            elevation: 20,
-                            shadowColor: color3, // Set the shadow color
-                          ),
-                          child: Text(
-                            'Continuer',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),*/
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
     );

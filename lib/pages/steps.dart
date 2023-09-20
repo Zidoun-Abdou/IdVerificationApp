@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/email.dart';
 import 'package:whowiyati/pages/idcards.dart';
+import 'package:whowiyati/pages/idinfos.dart';
 import 'dart:convert';
 
 import 'package:whowiyati/pages/otp.dart';
@@ -263,9 +264,7 @@ class _StepsState extends State<Steps> {
                                       )));
                             } else {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Welcome(
-                                        token: widget.token,
-                                      )));
+                                  builder: (context) => IdInfos()));
                             }
                           },
                           style: ElevatedButton.styleFrom(

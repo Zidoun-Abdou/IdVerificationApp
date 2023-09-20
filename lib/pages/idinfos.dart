@@ -1,33 +1,13 @@
-
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
+import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/welcome.dart';
 
-
 class IdInfos extends StatefulWidget {
-  final String name;
-  final String surname;
-  final String country;
-  final String nationality;
-  final String birth_date;
-  final String expiry_date;
-  final String sex;
-  final String document_type;
-  final String document_number;
-
   const IdInfos({
     Key? key,
-    required this.name,
-    required this.surname,
-    required this.country,
-    required this.nationality,
-    required this.birth_date,
-    required this.expiry_date,
-    required this.sex,
-    required this.document_type,
-    required this.document_number,
   }) : super(key: key);
 
   @override
@@ -131,7 +111,7 @@ class _IdInfosState extends State<IdInfos> {
                                   height: 170.h,
                                   width: 320.w,
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w, vertical: 10.h),
+                                      horizontal: 5.w, vertical: 10.h),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.r),
                                     image: DecorationImage(
@@ -165,7 +145,7 @@ class _IdInfosState extends State<IdInfos> {
                                                             style: TextStyle(
                                                               color: Color(
                                                                   0xFF00FF84),
-                                                              fontSize: 15.sp,
+                                                              fontSize: 12.sp,
                                                               fontFamily:
                                                                   'Poppins',
                                                               fontWeight:
@@ -176,14 +156,17 @@ class _IdInfosState extends State<IdInfos> {
                                                             ),
                                                           ),
                                                           TextSpan(
-                                                            text: widget.name,
+                                                            text: prefs
+                                                                .getString(
+                                                                    'surname')
+                                                                ?.toUpperCase(),
                                                             style: TextStyle(
                                                               overflow:
                                                                   TextOverflow
-                                                                      .ellipsis,
+                                                                      .clip,
                                                               color:
                                                                   Colors.white,
-                                                              fontSize: 15.sp,
+                                                              fontSize: 12.sp,
                                                               fontFamily:
                                                                   'Poppins',
                                                               fontWeight:
@@ -208,7 +191,7 @@ class _IdInfosState extends State<IdInfos> {
                                                             style: TextStyle(
                                                               color: Color(
                                                                   0xFF00FF84),
-                                                              fontSize: 15.sp,
+                                                              fontSize: 12.sp,
                                                               fontFamily:
                                                                   'Poppins',
                                                               fontWeight:
@@ -219,15 +202,17 @@ class _IdInfosState extends State<IdInfos> {
                                                             ),
                                                           ),
                                                           TextSpan(
-                                                            text:
-                                                                widget.surname,
+                                                            text: prefs
+                                                                .getString(
+                                                                    'name')
+                                                                ?.toUpperCase(),
                                                             style: TextStyle(
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
                                                               color:
                                                                   Colors.white,
-                                                              fontSize: 15.sp,
+                                                              fontSize: 12.sp,
                                                               fontFamily:
                                                                   'Poppins',
                                                               fontWeight:
@@ -245,137 +230,192 @@ class _IdInfosState extends State<IdInfos> {
                                               ),
                                               Row(
                                                 children: [
-                                                  Text.rich(
-                                                    TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text: 'Pays: ',
-                                                          style: TextStyle(
-                                                            color: Color(
-                                                                0xFF00FF84),
-                                                            fontSize: 15.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing: 0.20,
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Text.rich(
+                                                      maxLines: 1,
+                                                      TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text: 'Né(e) le: ',
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF00FF84),
+                                                              fontSize: 12.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              letterSpacing:
+                                                                  0.20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        TextSpan(
-                                                          text: widget.country,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing: 0.20,
+                                                          TextSpan(
+                                                            text: prefs
+                                                                .getString(
+                                                                    'birth_date')
+                                                                ?.toUpperCase(),
+                                                            style: TextStyle(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .clip,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              letterSpacing:
+                                                                  0.20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                                  Expanded(child: Text("")),
-                                                  Text.rich(
-                                                    TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text: 'Nationalité: ',
-                                                          style: TextStyle(
-                                                            color: Color(
-                                                                0xFF00FF84),
-                                                            fontSize: 15.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing: 0.20,
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Text.rich(
+                                                      maxLines: 1,
+                                                      TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text: 'Crée le: ',
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF00FF84),
+                                                              fontSize: 12.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              letterSpacing:
+                                                                  0.20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        TextSpan(
-                                                          text: widget
-                                                              .nationality,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing: 0.20,
+                                                          TextSpan(
+                                                            text: prefs
+                                                                .getString(
+                                                                    'creation_date')
+                                                                ?.toUpperCase(),
+                                                            style: TextStyle(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              letterSpacing:
+                                                                  0.20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                               Row(
                                                 children: [
-                                                  Text.rich(
-                                                    TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text: 'Sexe: ',
-                                                          style: TextStyle(
-                                                            color: Color(
-                                                                0xFF00FF84),
-                                                            fontSize: 15.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing: 0.20,
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Text.rich(
+                                                      maxLines: 1,
+                                                      TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text: 'Expire le: ',
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF00FF84),
+                                                              fontSize: 12.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              letterSpacing:
+                                                                  0.20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        TextSpan(
-                                                          text: widget.sex,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing: 0.20,
+                                                          TextSpan(
+                                                            text: prefs
+                                                                .getString(
+                                                                    'expiry_date')
+                                                                ?.toUpperCase(),
+                                                            style: TextStyle(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .clip,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              letterSpacing:
+                                                                  0.20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                                  Expanded(child: Text("")),
-                                                  Text.rich(
-                                                    TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text:
-                                                              'Date de naissance: ',
-                                                          style: TextStyle(
-                                                            color: Color(
-                                                                0xFF00FF84),
-                                                            fontSize: 15.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing: 0.20,
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Text.rich(
+                                                      maxLines: 1,
+                                                      TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text: 'Carte N°: ',
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF00FF84),
+                                                              fontSize: 12.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              letterSpacing:
+                                                                  0.20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        TextSpan(
-                                                          text:
-                                                              widget.birth_date,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing: 0.20,
+                                                          TextSpan(
+                                                            text: prefs
+                                                                .getString(
+                                                                    'document_number')
+                                                                ?.toUpperCase(),
+                                                            style: TextStyle(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              letterSpacing:
+                                                                  0.20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -400,7 +440,7 @@ class _IdInfosState extends State<IdInfos> {
                                                 TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: 'Experation date: ',
+                                                      text: 'Nin: ',
                                                       style: TextStyle(
                                                         color:
                                                             Color(0xFF00FF84),
@@ -413,7 +453,9 @@ class _IdInfosState extends State<IdInfos> {
                                                       ),
                                                     ),
                                                     TextSpan(
-                                                      text: widget.expiry_date,
+                                                      text: prefs
+                                                          .getString('nin')
+                                                          ?.toUpperCase(),
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 12.sp,

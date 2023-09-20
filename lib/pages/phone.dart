@@ -18,55 +18,71 @@ class Phone extends StatefulWidget {
 }
 
 class _PhoneState extends State<Phone> {
-  var _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formstate = GlobalKey();
   bool isLoading = false;
   TextEditingController _phoneContr = TextEditingController();
+  TextEditingController _confpasswordContr = TextEditingController();
+  TextEditingController _passwordContr = TextEditingController();
+
   bool isPhoneNumberValid = false;
   String countryCode = "";
   String mytoken = "";
 
   Future<int> sendSms() async {
-    isLoading = true;
-    setState(() {});
-    var headers = {
-      'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
-    };
+    if (_formstate.currentState!.validate()) {
+      if (_confpasswordContr.text == _passwordContr.text) {
+        isLoading = true;
+        setState(() {});
+        var headers = {
+          'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
+        };
 
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://api.icosnet.com/apisrv/sms-verify/generate/'));
-    final String signature = await SmsAutoFill().getAppSignature;
-    request.fields.addAll({
-      'phone': '${countryCode}${_phoneContr.text}',
-      'template': 'Votre code est: {{code}}\n$signature'
-    });
-    FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
-      mytoken = value!;
-      request.fields.addAll(
-          {'phone': "213${_phoneContr.text}", 'token': token.toString()});
-    });
-    request.headers.addAll(headers);
+        var request = http.MultipartRequest('POST',
+            Uri.parse('https://api.icosnet.com/apisrv/sms-verify/generate/'));
+        final String signature = await SmsAutoFill().getAppSignature;
+        request.fields.addAll({
+          'phone': '${countryCode}${_phoneContr.text}',
+          'template': 'Votre code est: {{code}}\n$signature'
+        });
+        FirebaseMessaging.instance.getToken().then((value) {
+          mytoken = value.toString();
+          request.fields.addAll(
+              {'phone': "213${_phoneContr.text}", 'token': mytoken.toString()});
+        });
+        request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
-    String answer = await response.stream.bytesToString();
-    var answerJson = jsonDecode(answer);
-    if (answerJson["id"] != null) {
-      print('sms sent with succus');
-      print(answerJson["id"].toString());
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Otp(
-                phone: "+213${_phoneContr.text}",
-                id: answerJson["id"].toString(),
-                token: mytoken,
-              )));
-      isLoading = false;
-      setState(() {});
-      return 1;
+        http.StreamedResponse response = await request.send();
+        String answer = await response.stream.bytesToString();
+        var answerJson = jsonDecode(answer);
+        if (answerJson["id"] != null) {
+          print('sms sent with succus');
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Otp(
+                    phone: "+213${_phoneContr.text}",
+                    id: answerJson["id"].toString(),
+                    token: mytoken,
+                    password: _passwordContr.text,
+                  )));
+          isLoading = false;
+          setState(() {});
+          return 1;
+        } else {
+          print('sms not sent');
+          print(response.reasonPhrase);
+          isLoading = false;
+          setState(() {});
+          return 0;
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Mot de passes non identiques"),
+            duration: Duration(seconds: 5),
+          ),
+        );
+        return 0;
+      }
     } else {
-      print('sms not sent');
-      print(response.reasonPhrase);
-      isLoading = false;
-      setState(() {});
       return 0;
     }
   }
@@ -77,15 +93,16 @@ class _PhoneState extends State<Phone> {
       backgroundColor: color1,
       body: SafeArea(
         child: Form(
+          key: _formstate,
           child: Column(
             children: [
               Expanded(
-                flex: 3,
+                flex: 6,
                 child: ListView(
                   shrinkWrap: true,
                   children: [
                     SizedBox(
-                      height: 30.h,
+                      height: 10.h,
                     ),
                     Center(
                       child: Image.asset(
@@ -97,7 +114,7 @@ class _PhoneState extends State<Phone> {
                       ),
                     ),
                     SizedBox(
-                      height: 50.h,
+                      height: 20.h,
                     ),
                     Text(
                       "Saisissez votre numéro de téléphone",
@@ -133,11 +150,11 @@ class _PhoneState extends State<Phone> {
                       margin: EdgeInsets.symmetric(horizontal: 20.w),
                       child: IntlPhoneField(
                         autofocus: true,
+                        textInputAction: TextInputAction.next,
                         controller: _phoneContr,
                         cursorColor: color3,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          hintText: "21 99 33 42",
                           hintStyle: TextStyle(color: Colors.white),
                           label: Text(
                             "Numero de téléphone",
@@ -151,6 +168,7 @@ class _PhoneState extends State<Phone> {
                           ),
                           filled: true,
                           fillColor: Colors.black,
+
                           // Set background color to black
                           prefixIcon: Icon(
                             Icons.lock_outline,
@@ -181,8 +199,91 @@ class _PhoneState extends State<Phone> {
                         },
                       ),
                     ),
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+                      child: TextFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
+
+                        validator: (val) {
+                          return validInput(val!, 5, 50);
+                        },
+                        cursorColor: color3,
+                        controller: _passwordContr,
+                        obscureText: true,
+
+                        style: TextStyle(color: Colors.white),
+                        // Set text color to white
+                        decoration: InputDecoration(
+                          label: Text(
+                            "Mot de passe",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50.r),
+                            borderSide: BorderSide(
+                              color: color3,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: Colors.black,
+                          // Set background color to black
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: color3,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                50.r), // Set border radius
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+                      child: TextFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
+                        validator: (val) {
+                          return validInput(val!, 5, 50);
+                        },
+                        cursorColor: color3,
+                        controller: _confpasswordContr,
+                        style: TextStyle(color: Colors.white),
+                        obscureText: true,
+                        // Set text color to white
+                        decoration: InputDecoration(
+                          label: Text(
+                            "Confirmer le mot de passe",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50.r),
+                            borderSide: BorderSide(
+                              color: color3,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: Colors.black,
+                          // Set background color to black
+                          prefixIcon: Icon(
+                            Icons.lock_outline,
+                            color: color3,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                50.r), // Set border radius
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                     Text(
-                      "* Première étape de vérification de l’identité \n « insertion du numéro de téléphone »",
+                      "* Première étape de vérification de l’identité",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey,
@@ -197,7 +298,7 @@ class _PhoneState extends State<Phone> {
                 ),
               ),
               Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

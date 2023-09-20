@@ -6,6 +6,7 @@ import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/login.dart';
 import 'package:whowiyati/pages/register.dart';
 import 'package:whowiyati/pages/steps.dart';
+import 'package:whowiyati/pages/welcome.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -59,17 +60,8 @@ class _HomePageState extends State<HomePage> {
                           EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
                       child: ElevatedButton(
                         onPressed: () {
-                          if (prefs.getString('phone').toString() == "null") {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Register()));
-                          } else {
-                            FirebaseMessaging.instance.getToken().then((value) {
-                              String? token = value;
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      Steps(token: token.toString())));
-                            });
-                          }
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Register()));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: color3,

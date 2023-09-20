@@ -36,7 +36,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
     setState(() {});
     final picker = ImagePicker();
     final versoPath = await picker.pickImage(
-      source: ImageSource.camera,
+      source: ImageSource.camera,imageQuality: 25
     );
 
     if (widget.rectoPath != null && versoPath != null) {
@@ -46,7 +46,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
       var request = http.MultipartRequest(
           'POST',
           Uri.parse(
-              'https://api.icosnet.com/kyc/algerian_id_card_detection_and_data_extraction_2_images_type_file?token=$_token'));
+              'https://api.icosnet.com/whowiyati/Whowiyati_KYC/'));
       request.files.add(await http.MultipartFile.fromPath(
         'front_image',
         widget.rectoPath,
@@ -62,7 +62,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
       // Parse the JSON string.
       Map<String, dynamic> jsonData = json.decode(answer);
       // Extract the "result" part as a JSON string.
-      String resultData = jsonEncode(jsonData['mrz']['result']);
+      String resultData = jsonEncode(['result']);
       // Create a new map with "result" as the key.
       Map<String, dynamic> outputMap = {"result": resultData};
       // Convert the map to a JSON string.
@@ -72,11 +72,11 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
       print(resultJson);
       print("------------------------------------------------------------");
       var answerJson = jsonDecode(answer);
-      if (answerJson["mrz"]["decision"] == "mrz") {
+      if (answerJson["decision"] == true) {
         //"abdelkrim_nachef_121328643_face.png"
-        String _face = "${answerJson["folder_name"]}_face.png";
-        String _front = "${answerJson["folder_name"]}_front.png";
-        String _back = "${answerJson["folder_name"]}_back.png";
+        String _face = "Face";
+        String _front = "front_card";
+        String _back = "back_card";
 
         List<int> imageBytes_face = base64Decode(answerJson[_face]);
         List<int> imageBytes_front = base64Decode(answerJson[_front]);
@@ -95,25 +95,19 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         final _myFile_back =
             await File('${_tempDir_back.path}/temp_image_back_card.png')
                 .writeAsBytes(imageBytes_back);
-        await prefs.setString(
-            'idinfos', answerJson["mrz"]["result"]["name"].toString());
-        String name = answerJson["mrz"]["result"]["name"].toString();
-        String surname = answerJson["mrz"]["result"]["surname"].toString();
+        await prefs.setString('idinfos', answerJson["french_name"].toString());
+        String name = answerJson["french_name"].toString();
+        String surname = answerJson["french_surname"].toString();
 
-        String country = answerJson["mrz"]["result"]["country"].toString();
-        String nationality =
-            answerJson["mrz"]["result"]["nationality"].toString() == "dza"
-                ? "Algerien"
-                : answerJson["mrz"]["result"]["nationality"].toString();
+        String nin = answerJson["id_number"].toString();
+        String creation_date =
+            answerJson["creation_date"].toString();
         String birth_date =
-            answerJson["mrz"]["result"]["birth_date"].toString();
+            answerJson["birth_date"].toString();
         String expiry_date =
-            answerJson["mrz"]["result"]["expiry_date"].toString();
-        String sex = answerJson["mrz"]["result"]["sex"].toString();
-        String document_type =
-            answerJson["mrz"]["result"]["document_type"].toString();
+            answerJson["expiration_date"].toString();
         String document_number =
-            answerJson["mrz"]["result"]["document_number"].toString();
+            answerJson["card_number"].toString();
         //await prefs.setString('nin', document_number);
         // await _addtoportaone(document_number);
         // Navigator.of(context).push(MaterialPageRoute(
@@ -135,12 +129,10 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                   back: _myFile_back.path,
                   name: name,
                   surname: surname,
-                  country: country,
-                  nationality: nationality,
+                  nin: nin,
+                  creation_date: creation_date,
                   birth_date: birth_date,
                   expiry_date: expiry_date,
-                  sex: sex,
-                  document_type: document_type,
                   document_number: document_number,
                   mrz: resultJson,
                 )));

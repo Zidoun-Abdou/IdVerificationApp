@@ -14,7 +14,9 @@ class ConfirmMail extends StatefulWidget {
   final String mail;
   final String token;
 
-  const ConfirmMail({Key? key, required this.id, required this.mail, required this.token}) : super(key: key);
+  const ConfirmMail(
+      {Key? key, required this.id, required this.mail, required this.token})
+      : super(key: key);
 
   @override
   State<ConfirmMail> createState() => _ConfirmMailState();
@@ -47,7 +49,12 @@ class _ConfirmMailState extends State<ConfirmMail> {
         var answerJson = jsonDecode(answer);
         if (answerJson["success"] == true) {
           print(answerJson.toString());
-          await _addtoportaone();
+          await prefs.setString('mail', _mailContr.text);
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Steps(
+                    token: widget.token,
+                  )));
+          //await _addtoportaone();
         } else {
           print(answerJson.toString());
           ScaffoldMessenger.of(context).showSnackBar(
@@ -70,7 +77,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
     setState(() {});
   }
 
-  String _mytoken ='';
+  String _mytoken = '';
 
   Future<int> _addtoportaone() async {
     isLoading = true;
@@ -82,11 +89,8 @@ class _ConfirmMailState extends State<ConfirmMail> {
         'POST',
         Uri.parse(
             'https://api.icosnet.com/ibmpp/esb/pbflow_account_create.php'));
-    request.fields.addAll({
-      'token': widget.token,
-      'type': 'email',
-      'value': widget.mail
-    });
+    request.fields
+        .addAll({'token': widget.token, 'type': 'email', 'value': widget.mail});
 
     request.headers.addAll(headers);
 
@@ -95,8 +99,10 @@ class _ConfirmMailState extends State<ConfirmMail> {
     var answerJson = jsonDecode(answer);
     if (answerJson["success"] == true) {
       await prefs.setString('mail', _mailContr.text);
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Steps(token: widget.token,)));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Steps(
+                token: widget.token,
+              )));
       print(answerJson.toString());
       isLoading = false;
       setState(() {});
@@ -117,12 +123,10 @@ class _ConfirmMailState extends State<ConfirmMail> {
       isLoading = false;
       setState(() {});
       return 0;
-
     }
     isLoading = false;
     setState(() {});
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -158,8 +162,8 @@ class _ConfirmMailState extends State<ConfirmMail> {
                               'assets/images/logo.png',
                               // Replace with the actual path to your image file
                               fit: BoxFit.contain,
-                              height: 150.h,
-                              width: 250.w,
+                              height: 100.h,
+                              width: 200.w,
                             ),
                           ),
                         ),
@@ -212,7 +216,6 @@ class _ConfirmMailState extends State<ConfirmMail> {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       validateCode();
-
                                     },
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: color3,
