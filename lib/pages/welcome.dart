@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/steps.dart';
 
 class Welcome extends StatefulWidget {
@@ -53,10 +54,24 @@ class _WelcomeState extends State<Welcome> {
                                 letterSpacing: 0.20,
                               ),
                             ),
-                            Icon(
-                              Icons.settings,
-                              color: Colors.grey,
-                            )
+                            IconButton(
+                                onPressed: () {
+                                  prefs.clear();
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              HomePage()),
+                                      (Route<dynamic> route) => false);
+                                },
+                                icon: Icon(
+                                  Icons.logout,
+                                  color: Colors.grey,
+                                ))
+                            // Icon(
+                            //   Icons.logout,
+                            //   color: Colors.grey,
+                            // )
                           ],
                         ),
                         SizedBox(
@@ -87,6 +102,18 @@ class _WelcomeState extends State<Welcome> {
                             ],
                           ),
                         ),
+                        // Container(
+                        //   margin: EdgeInsets.all(5.sp),
+                        //   padding: EdgeInsets.symmetric(
+                        //       horizontal: 10.w, vertical: 5.h),
+                        //   decoration: BoxDecoration(
+                        //       color: Colors.red,
+                        //       borderRadius: BorderRadius.circular(10.r)),
+                        //   child: Text(
+                        //     "Non identifié",
+                        //     style: TextStyle(color: Colors.white),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 20.h,
                         ),

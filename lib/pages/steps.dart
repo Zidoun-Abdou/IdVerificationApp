@@ -262,7 +262,10 @@ class _StepsState extends State<Steps> {
                                   builder: (context) => IdCards(
                                         token: widget.token,
                                       )));
-                            } else {
+                            } else if (prefs.getString('idinfos').toString() !=
+                                    "null" &&
+                                prefs.getString('mail').toString() !=
+                                    "null") {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => IdInfos()));
                             }

@@ -95,7 +95,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         final _myFile_back =
             await File('${_tempDir_back.path}/temp_image_back_card.png')
                 .writeAsBytes(imageBytes_back);
-        await prefs.setString('idinfos', answerJson["french_name"].toString());
+        //await prefs.setString('idinfos', answerJson["french_name"].toString());
         String name = answerJson["french_name"].toString();
         String surname = answerJson["french_surname"].toString();
 

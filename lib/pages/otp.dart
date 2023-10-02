@@ -7,7 +7,6 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:whowiyati/const.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/phone_ok.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/steps.dart';
 import 'package:whowiyati/pages/welcome.dart';
@@ -65,7 +64,6 @@ class _OtpState extends State<Otp> {
     if (answerJson["success"] == true) {
       print(answerJson);
       print("token send with succus");
-      await prefs.setString('phone', 'checked');
       await prefs.setString('user_id', answerJson["user_id"].toString());
 
       Navigator.pushAndRemoveUntil(

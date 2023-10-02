@@ -138,6 +138,7 @@ class _LoginState extends State<Login> {
                                       return validInput(val!, 6, 25);
                                     },
                                     cursorColor: color3,
+                                    keyboardType: TextInputType.number,
                                     controller: _mailContr,
                                     style: TextStyle(color: Colors.white),
                                     maxLength: 8,

@@ -119,9 +119,6 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     if (answerJson["decision"] == "True") {
       print("face ok");
-
-      //await sendToAlfresco();
-      controller.dispose();
       await prefs.setString('name', widget.name);
       await prefs.setString('surname', widget.surname);
       await prefs.setString('creation_date', widget.creation_date);
@@ -129,6 +126,11 @@ class _VerifyFaceState extends State<VerifyFace> {
       await prefs.setString('expiry_date', widget.expiry_date);
       await prefs.setString('nin', widget.nin);
       await prefs.setString('document_number', widget.document_number);
+      await prefs.setString('idinfos', widget.name);
+
+      controller.dispose();
+
+      // await sendToAlfresco();
 
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => IdInfos()));
@@ -173,7 +175,6 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     if (answerJson["status"] == "success") {
       print("Alfresco ok");
-      controller.dispose();
 
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => IdInfos(
