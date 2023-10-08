@@ -14,9 +14,7 @@ import 'package:whowiyati/pages/recto.dart';
 import 'package:whowiyati/pages/verify_face.dart';
 
 class IdCards extends StatefulWidget {
-  final String token;
-
-  const IdCards({Key? key, required this.token}) : super(key: key);
+  const IdCards({Key? key}) : super(key: key);
 
   @override
   State<IdCards> createState() => _IdCardsState();
@@ -24,7 +22,6 @@ class IdCards extends StatefulWidget {
 
 class _IdCardsState extends State<IdCards> {
   bool? _is_loading = false;
-
 
   @override
   Widget build(BuildContext context) {

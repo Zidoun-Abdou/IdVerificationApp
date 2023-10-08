@@ -16,6 +16,7 @@ import 'package:whowiyati/const.dart';
 import 'package:dmrtd/dmrtd.dart';
 import 'package:dmrtd/extensions.dart';
 import 'package:whowiyati/pages/cardnfcinfo.dart';
+import 'package:whowiyati/pages/verify_face.dart';
 
 import '../main.dart';
 
@@ -51,11 +52,20 @@ String formatProgressMsg(String message, int percentProgress) {
 }
 
 class ReadNfc extends StatefulWidget {
-  final String docNumber;
   final String dob;
   final String doe;
+  final String idnumber;
+  final String face;
+  final String front;
+  final String back;
   const ReadNfc(
-      {Key? key, required this.docNumber, required this.dob, required this.doe})
+      {Key? key,
+      required this.dob,
+      required this.doe,
+      required this.idnumber,
+      required this.face,
+      required this.front,
+      required this.back})
       : super(key: key);
 
   @override
@@ -161,7 +171,7 @@ class _ReadNfcState extends State<ReadNfc> {
 
       _nfc.setIosAlertMessage("Initiating session ...");
       final bacKeySeed =
-          DBAKeys(widget.docNumber, _getDOBDate()!, _getDOEDate()!);
+          DBAKeys(widget.idnumber, _getDOBDate()!, _getDOEDate()!);
       await passport.startSession(bacKeySeed);
 
       _nfc.setIosAlertMessage(formatProgressMsg("Reading EF.COM ...", 0));
@@ -348,6 +358,7 @@ class _ReadNfcState extends State<ReadNfc> {
       await prefs.setString("sex_arabic", answerJson["dg11"]["sex_arabic"]);
       await prefs.setString("blood_type", answerJson["dg11"]["blood_type"]);
       await prefs.setString("nin", answerJson["dg11"]["nin"]);
+      await prefs.setString('idinfos', answerJson["dg11"]["nin"]);
 
       print(answerJson["dg12"]["daira"].toString());
     } else {
@@ -377,10 +388,16 @@ class _ReadNfcState extends State<ReadNfc> {
         answerJson["dg2"]["result"] == "True" &&
         answerJson["dg7"]["result"] == "True") {
       Timer(Duration(seconds: 1), () {});
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => CardNfcInfo()),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => CardNfcInfo()),
+      // );
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => VerifyFace(
+                face: widget.face,
+                front: widget.front,
+                back: widget.back,
+              )));
       _isLoading = false;
       setState(() {});
     }
@@ -442,7 +459,7 @@ class _ReadNfcState extends State<ReadNfc> {
                             child: Text(
                               _isNfcAvailable
                                   ? " "
-                                  : "Veillez activer votre NFC",
+                                  : "Veuillez activer votre NFC",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
@@ -456,7 +473,6 @@ class _ReadNfcState extends State<ReadNfc> {
                         ),
                         Image.asset(
                           'assets/images/nfcphone.png',
-                          // Replace with the actual path to your image file
                           fit: BoxFit.fill,
                         ),
                         Visibility(

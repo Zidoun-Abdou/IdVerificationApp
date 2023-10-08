@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/cardnfcinfo.dart';
 import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/steps.dart';
 
@@ -129,25 +130,44 @@ class _WelcomeState extends State<Welcome> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25.w, vertical: 10.h),
-                              decoration: ShapeDecoration(
-                                color: Colors.white
-                                    .withOpacity(0.10000000149011612),
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(width: 0.50),
-                                  borderRadius: BorderRadius.circular(50.r),
+                            InkWell(
+                              onTap: () {
+                                if (prefs.getString('idinfos').toString() !=
+                                        "null" &&
+                                    prefs.getString('mail').toString() !=
+                                        "null") {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => CardNfcInfo()));
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 25.w, vertical: 10.h),
+                                decoration: ShapeDecoration(
+                                  color: Colors.white
+                                      .withOpacity(0.10000000149011612),
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 0.50),
+                                    borderRadius: BorderRadius.circular(50.r),
+                                  ),
                                 ),
-                              ),
-                              child: Text(
-                                'profile',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
+                                child: Text(
+                                  'profile',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color:
+                                        prefs.getString('idinfos').toString() !=
+                                                    "null" &&
+                                                prefs
+                                                        .getString('mail')
+                                                        .toString() !=
+                                                    "null"
+                                            ? Colors.white
+                                            : Colors.grey,
+                                    fontSize: 12.sp,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             )
@@ -208,7 +228,7 @@ class _WelcomeState extends State<Welcome> {
                                           height: 10.h,
                                         ),
                                         Text(
-                                          "Mon profil",
+                                          "Mon identité",
                                           style: TextStyle(
                                               fontSize: 15.sp,
                                               color: Colors.white),

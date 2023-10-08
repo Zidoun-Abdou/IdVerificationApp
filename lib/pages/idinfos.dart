@@ -158,7 +158,7 @@ class _IdInfosState extends State<IdInfos> {
                                                           TextSpan(
                                                             text: prefs
                                                                 .getString(
-                                                                    'surname')
+                                                                    'name_latin')
                                                                 ?.toUpperCase(),
                                                             style: TextStyle(
                                                               overflow:
@@ -204,7 +204,7 @@ class _IdInfosState extends State<IdInfos> {
                                                           TextSpan(
                                                             text: prefs
                                                                 .getString(
-                                                                    'name')
+                                                                    'surname_latin')
                                                                 ?.toUpperCase(),
                                                             style: TextStyle(
                                                               overflow:
@@ -300,7 +300,7 @@ class _IdInfosState extends State<IdInfos> {
                                                           TextSpan(
                                                             text: prefs
                                                                 .getString(
-                                                                    'creation_date')
+                                                                    'deliv_date')
                                                                 ?.toUpperCase(),
                                                             style: TextStyle(
                                                               overflow:
@@ -350,7 +350,7 @@ class _IdInfosState extends State<IdInfos> {
                                                           TextSpan(
                                                             text: prefs
                                                                 .getString(
-                                                                    'expiry_date')
+                                                                    'exp_date')
                                                                 ?.toUpperCase(),
                                                             style: TextStyle(
                                                               overflow:

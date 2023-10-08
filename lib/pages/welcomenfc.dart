@@ -16,9 +16,22 @@ import 'package:whowiyati/pages/recto.dart';
 import 'package:whowiyati/pages/verify_face.dart';
 
 class WelcomeNfc extends StatefulWidget {
-  final String token;
+  final String dob;
+  final String doe;
+  final String idnumber;
+  final String face;
+  final String front;
+  final String back;
 
-  const WelcomeNfc({Key? key, required this.token}) : super(key: key);
+  const WelcomeNfc(
+      {Key? key,
+      required this.dob,
+      required this.doe,
+      required this.idnumber,
+      required this.face,
+      required this.front,
+      required this.back})
+      : super(key: key);
 
   @override
   State<WelcomeNfc> createState() => _WelcomeNfcState();
@@ -26,18 +39,6 @@ class WelcomeNfc extends StatefulWidget {
 
 class _WelcomeNfcState extends State<WelcomeNfc> {
   bool? _is_loading = false;
-  @override
-  void initState() {
-    super.initState();
-    getNfcStatus();
-  }
-
-  getNfcStatus() async {
-    NfcStatus status = await NfcProvider.nfcStatus;
-    print("//////////////////////////////////");
-    print(status.toString());
-    print("//////////////////////////////////");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +97,12 @@ class _WelcomeNfcState extends State<WelcomeNfc> {
                         onPressed: () async {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ReadNfc(
-                                    dob: '07/04/1963',
-                                    doe: '10/18/2026',
-                                    docNumber: '101427617',
+                                    dob: widget.dob,
+                                    doe: widget.doe,
+                                    idnumber: widget.idnumber,
+                                    face: widget.face,
+                                    back: widget.back,
+                                    front: widget.front,
                                   )));
                         },
                         style: ElevatedButton.styleFrom(

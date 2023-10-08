@@ -259,15 +259,15 @@ class _StepsState extends State<Steps> {
                             } else if (prefs.getString('idinfos').toString() ==
                                 "null") {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => IdCards(
-                                        token: widget.token,
-                                      )));
+                                  builder: (context) => IdCards()));
                             } else if (prefs.getString('idinfos').toString() !=
                                     "null" &&
-                                prefs.getString('mail').toString() !=
-                                    "null") {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => IdInfos()));
+                                prefs.getString('mail').toString() != "null") {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => IdInfos(),
+                                ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(

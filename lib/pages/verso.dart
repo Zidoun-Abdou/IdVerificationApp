@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:dmrtd/dmrtd.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/idinfos.dart';
 import 'package:whowiyati/pages/verify_face.dart';
+import 'package:whowiyati/pages/welcomenfc.dart';
 
 class Verso extends StatefulWidget {
   final String rectoPath;
@@ -35,18 +37,15 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
     _is_loading = true;
     setState(() {});
     final picker = ImagePicker();
-    final versoPath = await picker.pickImage(
-      source: ImageSource.camera,imageQuality: 25
-    );
+    final versoPath =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 25);
 
     if (widget.rectoPath != null && versoPath != null) {
       String _token = prefs.getString('mail').toString();
 
       var headers = {'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0='};
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              'https://api.icosnet.com/whowiyati/Whowiyati_KYC/'));
+      var request = http.MultipartRequest('POST',
+          Uri.parse('https://api.icosnet.com/whowiyati/Whowiyati_KYC/'));
       request.files.add(await http.MultipartFile.fromPath(
         'front_image',
         widget.rectoPath,
@@ -98,44 +97,43 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         //await prefs.setString('idinfos', answerJson["french_name"].toString());
         String name = answerJson["french_name"].toString();
         String surname = answerJson["french_surname"].toString();
-
         String nin = answerJson["id_number"].toString();
-        String creation_date =
-            answerJson["creation_date"].toString();
-        String birth_date =
-            answerJson["birth_date"].toString();
-        String expiry_date =
-            answerJson["expiration_date"].toString();
-        String document_number =
-            answerJson["card_number"].toString();
-        //await prefs.setString('nin', document_number);
-        // await _addtoportaone(document_number);
-        // Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (context) => IdInfos(
-        //           name: name,
-        //           surname: surname,
-        //           country: country,
-        //           nationality: nationality,
-        //           birth_date: birth_date,
-        //           expiry_date: expiry_date,
-        //           sex: sex,
-        //           document_type: document_type,
-        //           document_number: document_number,
-        //         )));
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => VerifyFace(
-                  face: _myFile_face.path,
-                  front: _myFile_front.path,
-                  back: _myFile_back.path,
-                  name: name,
-                  surname: surname,
-                  nin: nin,
-                  creation_date: creation_date,
-                  birth_date: birth_date,
-                  expiry_date: expiry_date,
-                  document_number: document_number,
-                  mrz: resultJson,
-                )));
+        String creation_date = answerJson["creation_date"].toString();
+        String birth_date = answerJson["birth_date"].toString();
+        String expiry_date = answerJson["expiration_date"].toString();
+        String document_number = answerJson["card_number"].toString();
+        await prefs.setString("surname_latin", surname);
+        await prefs.setString("name_latin", name);
+        await prefs.setString("birth_date", birth_date);
+        await prefs.setString("nin", nin);
+        await prefs.setString("deliv_date", creation_date);
+        await prefs.setString("exp_date", expiry_date);
+        await prefs.setString("document_number", document_number);
+
+        NfcStatus status = await NfcProvider.nfcStatus;
+
+        print(status.toString());
+
+        if (status.toString() == "NfcStatus.notSupported") {
+          print("NFC Step ignored");
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => VerifyFace(
+                    face: _myFile_face.path,
+                    front: _myFile_front.path,
+                    back: _myFile_back.path,
+                  )));
+        } else {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => WelcomeNfc(
+                    face: _myFile_face.path,
+                    front: _myFile_front.path,
+                    back: _myFile_back.path,
+                    dob: birth_date,
+                    doe: expiry_date,
+                    idnumber: document_number,
+                  )));
+        }
+
         _is_loading = false;
         setState(() {});
       } else {

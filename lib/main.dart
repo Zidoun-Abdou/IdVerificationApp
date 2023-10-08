@@ -45,6 +45,7 @@ class _MyAppState extends State<MyApp> {
     FirebaseMessaging.instance.getToken().then((value) {
       String? token = value;
       _myToken = value.toString();
+      print(_myToken);
     });
   }
 
@@ -58,8 +59,12 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: prefs.getString('user_id').toString() == "null"
-                ? WelcomeNfc(token: _myToken,)
-                : Welcome(token: _myToken,),
+                ? Welcome(
+                    token: _myToken,
+                  )
+                : Welcome(
+                    token: _myToken,
+                  ),
           );
         });
   }

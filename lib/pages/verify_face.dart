@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/cardnfcinfo.dart';
 import 'package:whowiyati/pages/conditions.dart';
 import 'package:whowiyati/pages/idinfos.dart';
 import 'package:whowiyati/pages/steps.dart';
@@ -17,31 +18,15 @@ import 'package:http/http.dart' as http;
 
 class VerifyFace extends StatefulWidget {
   final String face;
-  final String mrz;
   final String front;
   final String back;
-  final String name;
-  final String nin;
-  final String creation_date;
 
-  final String surname;
-  final String birth_date;
-  final String expiry_date;
-  final String document_number;
-  const VerifyFace(
-      {Key? key,
-      required this.face,
-      required this.name,
-      required this.surname,
-      required this.birth_date,
-      required this.expiry_date,
-      required this.document_number,
-      required this.front,
-      required this.back,
-      required this.mrz,
-      required this.nin,
-      required this.creation_date})
-      : super(key: key);
+  const VerifyFace({
+    Key? key,
+    required this.face,
+    required this.front,
+    required this.back,
+  }) : super(key: key);
 
   @override
   State<VerifyFace> createState() => _VerifyFaceState();
@@ -119,21 +104,9 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     if (answerJson["decision"] == "True") {
       print("face ok");
-      await prefs.setString('name', widget.name);
-      await prefs.setString('surname', widget.surname);
-      await prefs.setString('creation_date', widget.creation_date);
-      await prefs.setString('birth_date', widget.birth_date);
-      await prefs.setString('expiry_date', widget.expiry_date);
-      await prefs.setString('nin', widget.nin);
-      await prefs.setString('document_number', widget.document_number);
-      await prefs.setString('idinfos', widget.name);
-
       controller.dispose();
-
-      // await sendToAlfresco();
-
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => IdInfos()));
+          .push(MaterialPageRoute(builder: (context) => Steps(token: "hghjg",)));
       return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -147,57 +120,57 @@ class _VerifyFaceState extends State<VerifyFace> {
     }
   }
 
-  Future<bool> sendToAlfresco() async {
-    var headers = {
-      'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
-      'Cookie': 'PHPSESSID=lfn533cru9ah04m0gbsc5hrahv'
-    };
-    var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            'https://api.icosnet.com/ibmpp/esb/ged_add_user_identification_who.php'));
-    request.fields.addAll({
-      'folder_name':
-          '${widget.name}_${widget.surname}_${widget.document_number}',
-      'mrz': widget.mrz
-    });
-    request.files
-        .add(await http.MultipartFile.fromPath('image_recto', widget.front));
-    request.files
-        .add(await http.MultipartFile.fromPath('image_verso', widget.back));
-    request.files
-        .add(await http.MultipartFile.fromPath('image_face', widget.face));
-    request.headers.addAll(headers);
+  // Future<bool> sendToAlfresco() async {
+  //   var headers = {
+  //     'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
+  //     'Cookie': 'PHPSESSID=lfn533cru9ah04m0gbsc5hrahv'
+  //   };
+  //   var request = http.MultipartRequest(
+  //       'POST',
+  //       Uri.parse(
+  //           'https://api.icosnet.com/ibmpp/esb/ged_add_user_identification_who.php'));
+  //   request.fields.addAll({
+  //     'folder_name':
+  //         '${widget.name}_${widget.surname}_${widget.document_number}',
+  //     'mrz': widget.mrz
+  //   });
+  //   request.files
+  //       .add(await http.MultipartFile.fromPath('image_recto', widget.front));
+  //   request.files
+  //       .add(await http.MultipartFile.fromPath('image_verso', widget.back));
+  //   request.files
+  //       .add(await http.MultipartFile.fromPath('image_face', widget.face));
+  //   request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
-    String answer = await response.stream.bytesToString();
-    var answerJson = jsonDecode(answer);
+  //   http.StreamedResponse response = await request.send();
+  //   String answer = await response.stream.bytesToString();
+  //   var answerJson = jsonDecode(answer);
 
-    if (answerJson["status"] == "success") {
-      print("Alfresco ok");
+  //   if (answerJson["status"] == "success") {
+  //     print("Alfresco ok");
 
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => IdInfos(
-              // name: widget.name,
-              // surname: widget.surname,
-              // creation_date: widget.birth_date,
-              // birth_date: widget.birth_date,
-              // expiry_date: widget.expiry_date,
-              // nin: widget.nin,
-              // document_number: widget.document_number,
-              )));
-      return true;
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Failed to send to Alfresco."),
-          duration: Duration(seconds: 5),
-        ),
-      );
-      print(response.reasonPhrase);
-      return false;
-    }
-  }
+  //     Navigator.of(context).push(MaterialPageRoute(
+  //         builder: (context) => IdInfos(
+  //             // name: widget.name,
+  //             // surname: widget.surname,
+  //             // creation_date: widget.birth_date,
+  //             // birth_date: widget.birth_date,
+  //             // expiry_date: widget.expiry_date,
+  //             // nin: widget.nin,
+  //             // document_number: widget.document_number,
+  //             )));
+  //     return true;
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text("Failed to send to Alfresco."),
+  //         duration: Duration(seconds: 5),
+  //       ),
+  //     );
+  //     print(response.reasonPhrase);
+  //     return false;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
