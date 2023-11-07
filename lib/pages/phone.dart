@@ -86,7 +86,6 @@ class _PhoneState extends State<Phone> {
       return 0;
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,276 +93,281 @@ class _PhoneState extends State<Phone> {
       body: SafeArea(
         child: Form(
           key: _formstate,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 6,
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Center(
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        // Replace with the actual path to your image file
-                        fit: BoxFit.contain,
-                        height: 100.h,
-                        width: 200.w,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      "Saisissez votre numéro de téléphone",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.1.h,
-                        letterSpacing: 0.20.w,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      "Nous utilisons votre numéro de téléphone pour vous\n identifier.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12.5.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.1.h,
-                        letterSpacing: 0.20.w,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: IntlPhoneField(
-                        autofocus: true,
-                        textInputAction: TextInputAction.next,
-                        controller: _phoneContr,
-                        cursorColor: color3,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10.h,
+                ),
+                Center(
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    // Replace with the actual path to your image file
+                    fit: BoxFit.contain,
+                    height: 100.h,
+                    width: 200.w,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Text(
+                  "Saisissez votre numéro de téléphone",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 1.1.h,
+                    letterSpacing: 0.20.w,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Text(
+                  "Nous utilisons votre numéro de téléphone pour vous\n identifier.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12.5.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 1.1.h,
+                    letterSpacing: 0.20.w,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: IntlPhoneField(
+                    autofocus: true,
+                    textInputAction: TextInputAction.next,
+                    controller: _phoneContr,
+                    cursorColor: color3,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(color: Colors.white),
+                      label: Text(
+                        "Numero de téléphone",
                         style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintStyle: TextStyle(color: Colors.white),
-                          label: Text(
-                            "Numero de téléphone",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                            borderSide: BorderSide(
-                              color: color3,
-                            ),
-                          ),
-                          filled: true,
-                          fillColor: Colors.black,
-
-                          // Set background color to black
-                          prefixIcon: Icon(
-                            Icons.lock_outline,
-                            color: Colors.white,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                                50.r), // Set border radius
-                          ),
-                        ),
-                        initialCountryCode: 'DZ',
-                        dropdownIcon: Icon(
-                          Icons.arrow_drop_down,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.r),
+                        borderSide: BorderSide(
                           color: color3,
                         ),
-                        onChanged: (phone) {
-                          if (phone.completeNumber.length == 13) {
-                            setState(() {
-                              isPhoneNumberValid = true;
-                              countryCode = phone.countryCode.substring(1);
-                              print(countryCode);
-                            });
+                      ),
+                      filled: true,
+                      fillColor: Colors.black,
+
+                      // Set background color to black
+                      prefixIcon: Icon(
+                        Icons.lock_outline,
+                        color: Colors.white,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(50.r), // Set border radius
+                      ),
+                    ),
+                    initialCountryCode: 'DZ',
+                    dropdownIcon: Icon(
+                      Icons.arrow_drop_down,
+                      color: color3,
+                    ),
+                    onChanged: (phone) {
+                      if (phone.completeNumber.length == 13) {
+                        setState(() {
+                          isPhoneNumberValid = true;
+                          countryCode = phone.countryCode.substring(1);
+                          print(countryCode);
+                        });
+                      } else {
+                        setState(() {
+                          isPhoneNumberValid = false;
+                        });
+                      }
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+                  child: TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.next,
+
+                    validator: (val) {
+                      return validInput(val!, 5, 50);
+                    },
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                    cursorColor: color3,
+                    controller: _passwordContr,
+                    obscureText: true,
+
+                    style: TextStyle(color: Colors.white),
+                    // Set text color to white
+                    decoration: InputDecoration(
+                      label: Text(
+                        "Mot de passe",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.r),
+                        borderSide: BorderSide(
+                          color: color3,
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.black,
+                      // Set background color to black
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: color3,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(50.r), // Set border radius
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+                  child: TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.next,
+                    validator: (val) {
+                      return validInput(val!, 5, 50);
+                    },
+                    cursorColor: color3,
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                    controller: _confpasswordContr,
+                    style: TextStyle(color: Colors.white),
+                    obscureText: true,
+                    // Set text color to white
+                    decoration: InputDecoration(
+                      label: Text(
+                        "Confirmer le mot de passe",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.r),
+                        borderSide: BorderSide(
+                          color: color3,
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.black,
+                      // Set background color to black
+                      prefixIcon: Icon(
+                        Icons.lock_outline,
+                        color: color3,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(50.r), // Set border radius
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  "* Première étape de vérification de l’identité",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12.5.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 1.1.h,
+                    letterSpacing: 0.20.w,
+                  ),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Visibility(
+                      visible: isLoading,
+                      child: const CircularProgressIndicator(
+                        color: color3,
+                      ),
+                    ),
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          var connectivityResult =
+                              await (Connectivity().checkConnectivity());
+                          if (connectivityResult == ConnectivityResult.mobile ||
+                              connectivityResult == ConnectivityResult.wifi) {
+                            if (isPhoneNumberValid == true) {
+                              await sendSms();
+                            }
                           } else {
-                            setState(() {
-                              isPhoneNumberValid = false;
-                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    "Veillez vérifier votre connection internet"),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                            isLoading = false;
+                            setState(() {});
                           }
                         },
-                      ),
-                    ),
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                      child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        textInputAction: TextInputAction.next,
-
-                        validator: (val) {
-                          return validInput(val!, 5, 50);
-                        },
-                        cursorColor: color3,
-                        controller: _passwordContr,
-                        obscureText: true,
-
-                        style: TextStyle(color: Colors.white),
-                        // Set text color to white
-                        decoration: InputDecoration(
-                          label: Text(
-                            "Mot de passe",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          focusedBorder: OutlineInputBorder(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isPhoneNumberValid &&
+                                  _confpasswordContr.text ==
+                                      _passwordContr.text &&
+                                  _confpasswordContr.text.isNotEmpty
+                              ? color3
+                              : color4,
+                          padding: EdgeInsets.symmetric(vertical: 15.h),
+                          foregroundColor: Colors.white,
+                          minimumSize: Size.fromHeight(30.w),
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.r),
-                            borderSide: BorderSide(
-                              color: color3,
-                            ),
                           ),
-                          filled: true,
-                          fillColor: Colors.black,
-                          // Set background color to black
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: color3,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                                50.r), // Set border radius
+                          elevation: 20,
+                          shadowColor: isPhoneNumberValid &&
+                                  _confpasswordContr.text ==
+                                      _passwordContr.text &&
+                                  _confpasswordContr.text.isNotEmpty
+                              ? color3
+                              : color4, // Set the shadow color
+                        ),
+                        child: Text(
+                          'Continuer',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.sp,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                      child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        textInputAction: TextInputAction.next,
-                        validator: (val) {
-                          return validInput(val!, 5, 50);
-                        },
-                        cursorColor: color3,
-                        controller: _confpasswordContr,
-                        style: TextStyle(color: Colors.white),
-                        obscureText: true,
-                        // Set text color to white
-                        decoration: InputDecoration(
-                          label: Text(
-                            "Confirmer le mot de passe",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                            borderSide: BorderSide(
-                              color: color3,
-                            ),
-                          ),
-                          filled: true,
-                          fillColor: Colors.black,
-                          // Set background color to black
-                          prefixIcon: Icon(
-                            Icons.lock_outline,
-                            color: color3,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                                50.r), // Set border radius
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Text(
-                      "* Première étape de vérification de l’identité",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12.5.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.1.h,
-                        letterSpacing: 0.20.w,
                       ),
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                  flex: 2,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Visibility(
-                        visible: isLoading,
-                        child: const CircularProgressIndicator(
-                          color: color3,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 8.h),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            var connectivityResult =
-                                await (Connectivity().checkConnectivity());
-                            if (connectivityResult ==
-                                    ConnectivityResult.mobile ||
-                                connectivityResult == ConnectivityResult.wifi) {
-                              if (isPhoneNumberValid == true) {
-                                await sendSms();
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      "Veillez vérifier votre connection internet"),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                              isLoading = false;
-                              setState(() {});
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                isPhoneNumberValid ? color3 : color4,
-                            padding: EdgeInsets.symmetric(vertical: 15.h),
-                            foregroundColor: Colors.white,
-                            minimumSize: Size.fromHeight(30.w),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.r),
-                            ),
-                            elevation: 20,
-                            shadowColor: isPhoneNumberValid
-                                ? color3
-                                : color4, // Set the shadow color
-                          ),
-                          child: Text(
-                            'Continuer',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                height: 30.h,
-              ),
-            ],
+                SizedBox(
+                  height: 30.h,
+                ),
+              ],
+            ),
           ),
         ),
       ),

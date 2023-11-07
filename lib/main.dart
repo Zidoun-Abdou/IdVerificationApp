@@ -8,6 +8,7 @@ import 'package:whowiyati/pages/conditions.dart';
 import 'package:whowiyati/pages/email.dart';
 import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/idcards.dart';
+import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';
@@ -59,9 +60,8 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: prefs.getString('user_id').toString() == "null"
-                ? Welcome(
-                    token: _myToken,
-                  )
+                ? ListOfDocuments(
+                  )//HomePage()
                 : Welcome(
                     token: _myToken,
                   ),

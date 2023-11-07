@@ -1,8 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/cardnfcinfo.dart';
+import 'package:whowiyati/pages/changepassword.dart';
+import 'package:whowiyati/pages/documents.dart';
 import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/steps.dart';
 
@@ -103,18 +106,18 @@ class _WelcomeState extends State<Welcome> {
                             ],
                           ),
                         ),
-                        // Container(
-                        //   margin: EdgeInsets.all(5.sp),
-                        //   padding: EdgeInsets.symmetric(
-                        //       horizontal: 10.w, vertical: 5.h),
-                        //   decoration: BoxDecoration(
-                        //       color: Colors.red,
-                        //       borderRadius: BorderRadius.circular(10.r)),
-                        //   child: Text(
-                        //     "Non identifié",
-                        //     style: TextStyle(color: Colors.white),
-                        //   ),
-                        // ),
+                        Container(
+                          margin: EdgeInsets.all(5.sp),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.w, vertical: 5.h),
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10.r)),
+                          child: Text(
+                            "Non identifié",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
                         SizedBox(
                           height: 20.h,
                         ),
@@ -132,13 +135,16 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             InkWell(
                               onTap: () {
-                                if (prefs.getString('idinfos').toString() !=
-                                        "null" &&
-                                    prefs.getString('mail').toString() !=
-                                        "null") {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => CardNfcInfo()));
-                                }
+                                // if (prefs.getString('idinfos').toString() !=
+                                //         "null" &&
+                                //     prefs.getString('mail').toString() !=
+                                //         "null") {
+                                //   Navigator.of(context).push(MaterialPageRoute(
+                                //       builder: (context) => CardNfcInfo()));
+                                // }
+
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ChangePassword()));
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -152,7 +158,7 @@ class _WelcomeState extends State<Welcome> {
                                   ),
                                 ),
                                 child: Text(
-                                  'profile',
+                                  'Paramètres',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                     color:
@@ -242,41 +248,51 @@ class _WelcomeState extends State<Welcome> {
                                 width: 10.w,
                               ),
                               Expanded(
-                                child: Container(
-                                  height:
-                                      MediaQuery.of(context).size.width / 2 -
-                                          10.h -
-                                          10.h,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20.w, vertical: 10.h),
-                                  decoration: BoxDecoration(
-                                      color: color4.withOpacity(0.8),
-                                      borderRadius:
-                                          BorderRadius.circular(15.r)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          padding: EdgeInsets.all(8.sp),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(15.r)),
-                                          child: Icon(
-                                            Icons.folder_open,
-                                            color: Colors.white,
-                                          )),
-                                      SizedBox(
-                                        height: 10.h,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Documents(),
                                       ),
-                                      Text(
-                                        "Formulaire KYC",
-                                        style: TextStyle(
-                                            fontSize: 15.sp,
-                                            color: Colors.white),
-                                      )
-                                    ],
+                                    );
+                                  },
+                                  child: Container(
+                                    height:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            10.h -
+                                            10.h,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20.w, vertical: 10.h),
+                                    decoration: BoxDecoration(
+                                        color: color4.withOpacity(0.8),
+                                        borderRadius:
+                                            BorderRadius.circular(15.r)),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            padding: EdgeInsets.all(8.sp),
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        15.r)),
+                                            child: Icon(
+                                              Icons.folder_open,
+                                              color: Colors.white,
+                                            )),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                        Text(
+                                          "Signature des documents",
+                                          style: TextStyle(
+                                              fontSize: 15.sp,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -370,20 +386,56 @@ class _WelcomeState extends State<Welcome> {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Text(
-                            'Votre application d’indentification',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF666680),
-                              fontSize: 12.h,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 0.20,
+
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20.w, vertical: 15.h),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: color3,
+                                padding: EdgeInsets.symmetric(vertical: 15.h),
+                                foregroundColor: Colors.white,
+                                minimumSize: Size.fromHeight(30.w),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.r),
+                                ),
+                                elevation: 20,
+                                shadowColor: color3, // Set the shadow color
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Poursuivre mon identification   ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.sp,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.warning_rounded,
+                                    size: 25.sp,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
+                          // Text(
+                          //   'Votre application d’indentification',
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     color: Color(0xFF666680),
+                          //     fontSize: 12.h,
+                          //     fontFamily: 'Inter',
+                          //     fontWeight: FontWeight.w500,
+                          //     letterSpacing: 0.20,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

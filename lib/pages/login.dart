@@ -145,7 +145,7 @@ class _LoginState extends State<Login> {
                                     // Set text color to white
                                     decoration: InputDecoration(
                                       label: Text(
-                                        "User ID",
+                                        "User ID or Phone Number",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       counterStyle: TextStyle(

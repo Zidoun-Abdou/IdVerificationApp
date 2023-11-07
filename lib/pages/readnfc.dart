@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dmrtd/dmrtd.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:logging/logging.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
 import 'package:dmrtd/dmrtd.dart';
 import 'package:dmrtd/extensions.dart';
@@ -392,9 +394,16 @@ class _ReadNfcState extends State<ReadNfc> {
       //   context,
       //   MaterialPageRoute(builder: (context) => CardNfcInfo()),
       // );
+
+      List<int> imageBytes_face = base64Decode(answerJson["dg2"]["face"]);
+      final _tempDir_face = await getTemporaryDirectory();
+      final _myFile_face =
+          await File('${_tempDir_face.path}/temp_image_face.png')
+              .writeAsBytes(imageBytes_face);
+
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => VerifyFace(
-                face: widget.face,
+                face: _myFile_face.path,
                 front: widget.front,
                 back: widget.back,
               )));

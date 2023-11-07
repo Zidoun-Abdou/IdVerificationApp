@@ -44,7 +44,7 @@ class _VerifyFaceState extends State<VerifyFace> {
     super.initState();
     controller = CameraController(
       cameras[1],
-      ResolutionPreset.low,
+      ResolutionPreset.ultraHigh,
     );
     controller.initialize().then((_) {
       if (!mounted) {
@@ -104,9 +104,13 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     if (answerJson["decision"] == "True") {
       print("face ok");
+      await prefs.setString('idinfos', "ok");
+
       controller.dispose();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Steps(token: "hghjg",)));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Steps(
+                token: "hghjg",
+              )));
       return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

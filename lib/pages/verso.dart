@@ -80,6 +80,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         List<int> imageBytes_face = base64Decode(answerJson[_face]);
         List<int> imageBytes_front = base64Decode(answerJson[_front]);
         List<int> imageBytes_back = base64Decode(answerJson[_back]);
+        await prefs.setString("face", answerJson[_face]);
 
         final _tempDir_face = await getTemporaryDirectory();
         final _tempDir_front = await getTemporaryDirectory();
@@ -116,6 +117,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
 
         if (status.toString() == "NfcStatus.notSupported") {
           print("NFC Step ignored");
+          await prefs.setString("face", _myFile_face.path);
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => VerifyFace(
                     face: _myFile_face.path,
