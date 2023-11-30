@@ -4,11 +4,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/conditions.dart';
 import 'package:whowiyati/pages/email.dart';
 import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/idcards.dart';
 import 'package:whowiyati/pages/listofdocuments.dart';
+import 'package:whowiyati/pages/dealpad.dart';
+import 'package:whowiyati/pages/webviewfile.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';
@@ -60,11 +63,18 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: prefs.getString('user_id').toString() == "null"
-                ? ListOfDocuments(
-                  )//HomePage()
-                : Welcome(
-                    token: _myToken,
-                  ),
+                ? HomePage()
+                : prefs.getString('pasword').toString() == "null"
+                    ? DialpadScreen(
+                        status: 1,
+                      )
+                    : DialpadScreen(
+                        status: 3,
+                      ),
+            theme: ThemeData(
+                fontFamily: "Rubik",
+                canvasColor: Colors.white,
+                accentColor: color3),
           );
         });
   }

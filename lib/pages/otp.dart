@@ -8,6 +8,7 @@ import 'package:whowiyati/const.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:whowiyati/main.dart';
 import 'package:http/http.dart' as http;
+import 'package:whowiyati/pages/dealpad.dart';
 import 'package:whowiyati/pages/steps.dart';
 import 'package:whowiyati/pages/welcome.dart';
 
@@ -69,7 +70,7 @@ class _OtpState extends State<Otp> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => Welcome(token: widget.token)),
+              builder: (BuildContext context) => DialpadScreen(status: 1)),
           (Route<dynamic> route) => false);
       return true;
     } else {

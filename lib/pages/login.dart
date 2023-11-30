@@ -60,7 +60,6 @@ class _LoginState extends State<Login> {
         var answerJson = jsonDecode(answer);
         if (answerJson["success"] == true) {
           await prefs.setString('user_id', _mailContr.text);
-
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
@@ -145,7 +144,7 @@ class _LoginState extends State<Login> {
                                     // Set text color to white
                                     decoration: InputDecoration(
                                       label: Text(
-                                        "User ID or Phone Number",
+                                        "User ID",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       counterStyle: TextStyle(

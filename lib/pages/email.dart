@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:http/http.dart' as http;
+import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/confirm_mail.dart';
 import 'dart:convert';
 
@@ -42,7 +43,8 @@ class _EmailState extends State<Email> {
         String answer = await response.stream.bytesToString();
         var answerJson = jsonDecode(answer);
         if (response.statusCode == 200) {
-          print(answerJson["id"].toString());
+          await prefs.setString('mail', _mailContr.text);
+
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ConfirmMail(
                     token: widget.token,

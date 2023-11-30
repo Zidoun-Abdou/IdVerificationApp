@@ -9,11 +9,11 @@ class MyWebview extends StatefulWidget {
 }
 
 class _MyWebviewState extends State<MyWebview> {
-
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-    android: AndroidInAppWebViewOptions(
-      useHybridComposition: true,
-    ),);
+    crossPlatform: InAppWebViewOptions(
+        supportZoom: false, // zoom support
+        preferredContentMode: UserPreferredContentMode.MOBILE),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -22,137 +22,151 @@ class _MyWebviewState extends State<MyWebview> {
           appBar: AppBar(title: Text("Web Message Channels")),
           body: SafeArea(
               child: Column(children: <Widget>[
-                Expanded(
-                  child: InAppWebView(
-                    initialData: InAppWebViewInitialData(
-                        data: """
+            Expanded(
+              child: InAppWebView(
+                initialData: InAppWebViewInitialData(data: """
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebMessageChannel Test</title>
+    <title>API Request Example</title>
 </head>
 <body>
-    <!-- when you click this button, it will send a message to the Dart side -->
-    <button id="button" onclick="port.postMessage(input.value);" />Send</button>
-    <br />
-    <input id="input" type="text" value="JavaScript To Native" />
-    
+    <script src="https://cdn.docuseal.co/js/builder.js"></script>
+
+    <h1>API Response:</h1>
+    <div id="apiResponse"></div>
+    <!-- <div id="docusealBuilder" data-token=""></div> -->
+    <!-- <docuseal-builder  id="docusealBuilder"   data-token = "">  </docuseal-builder> -->
+
+    <!--docuseal-builder-- 
+        id="docusealBuilder"
+        data-token="">
+    </!--docuseal-builder-->
     <script>
-      // variable that will represents the port used to communicate with the Dart side
-      var port;
-      // listen for messages
-      window.addEventListener('message', function(event) {
-          if (event.data == 'capturePort') {
-              // capture port2 coming from the Dart side
-              if (event.ports[0] != null) {
-                  // the port is ready for communication,
-                  // so you can use port.postMessage(message); wherever you want
-                  port = event.ports[0];
-                  // To listen to messages coming from the Dart side, set the onmessage event listener
-                  port.onmessage = function (event) {
-                      // event.data contains the message data coming from the Dart side 
-                      console.log(event.data);
-                  };
-              }
-          }
-      }, false);
+
+        // Get a reference to the DOM element where you want to display the API response
+const apiResponseElement = document.getElementById('apiResponse');
+
+// Define the URL of your API endpoint
+const apiUrl = 'https://v-room.icosnet.com/api/docu_seal';
+
+    const url= 'https://www.mountaingoatsoftware.com/uploads/documents/example-user-stories.pdf';
+// Make a GET request to your API
+
+/* var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("url", url);
+urlencoded.append("name", "test from my embedded page");
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: 'follow'
+}; */
+
+
+var myHeaders1 = new Headers();
+var username = "dsi_selfcare";
+var password = "dsi_selfcare";
+var base64Credentials = btoa(username + ':' + password);
+console.log("token",base64Credentials);
+
+
+// myHeaders1.append("Content-Type", "application/x-www-form-urlencoded");
+
+myHeaders1.append("Access-Control-Allow-Headers", "Content-Type");
+myHeaders1.append("Access-Control-Allow-Methods", "OPTIONS,POST,GET,PATCH");
+myHeaders1.append("Access-Control-Allow-Origin", "*");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("url", url);
+urlencoded.append("name", "test from my embedded page");
+
+var requestOptions2 = {
+// mode: 'no-cors',
+  method: 'POST',
+  headers: myHeaders1,
+  body: urlencoded,
+   redirect: 'follow'
+
+};
+
+
+/*fetch("https://ibm-p.vazii.com/esb/generate_docuseal_token.php", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));*/
+
+fetch(apiUrl, requestOptions2)
+    .then(response => {
+        console.log("response",response)
+        
+        if (!response.ok) {
+           
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(data => {
+        // Display the API response on the HTML page
+        console.log("data",data);
+        apiResponseElement.textContent = data;
+        //docusealBuilder = document.getElementById('docusealBuilder');
+        //docusealBuilder.setAttribute('data-token', data);
+        var demoElement = document.getElementById('apiResponse');
+        // var docusealBuilderElement = document.getElementById('docusealBuilder');
+        // docusealBuilderElement.setAttribute('data-token', data);
+        demoElement.innerHTML = `<docuseal-builder 
+   id="docusealBuilder"
+   data-token=` + data + `>
+</docuseal-builder>`;
+
+    })
+    .catch(error => {
+        apiResponseElement.textContent = 'Error: ' + error.message;
+    });
+
     </script>
 </body>
 </html>
+
 """),
-                    initialOptions: options,
-                    onConsoleMessage: (controller, consoleMessage) {
-                      print("Message coming from the Dart side: ${consoleMessage.message}");
-                    },
-                    onLoadStop: (controller, url) async {
-                      if (!Platform.isAndroid || await AndroidWebViewFeature.isFeatureSupported(AndroidWebViewFeature.CREATE_WEB_MESSAGE_CHANNEL)) {
-                        // wait until the page is loaded, and then create the Web Message Channel
-                        var webMessageChannel = await controller.createWebMessageChannel();
-                        var port1 = webMessageChannel!.port1;
-                        var port2 = webMessageChannel.port2;
-  
-                        // set the web message callback for the port1
-                        await port1.setWebMessageCallback((message) async {
-                          print("Message coming from the JavaScript side: $message");
-                          // when it receives a message from the JavaScript side, respond back with another message.
-                          await port1.postMessage(WebMessage(data: message! + " and back"));
-                        });
-  
-                        // transfer port2 to the webpage to initialize the communication
-                        await controller.postWebMessage(message: WebMessage(data: "capturePort", ports: [port2]), targetOrigin: Uri.parse("*"));
-                      }
-                    },
-                  ),
-                ),
-              ])
-          )
-      ),
+                initialOptions: options,
+                onConsoleMessage: (controller, consoleMessage) {
+                  print(
+                      "Message coming from the Dart side: ${consoleMessage.message}");
+                },
+                onLoadStop: (controller, url) async {
+                  if (!Platform.isAndroid ||
+                      await AndroidWebViewFeature.isFeatureSupported(
+                          AndroidWebViewFeature.CREATE_WEB_MESSAGE_CHANNEL)) {
+                    // wait until the page is loaded, and then create the Web Message Channel
+                    var webMessageChannel =
+                        await controller.createWebMessageChannel();
+                    var port1 = webMessageChannel!.port1;
+                    var port2 = webMessageChannel.port2;
+
+                    // set the web message callback for the port1
+                    await port1.setWebMessageCallback((message) async {
+                      print(
+                          "Message coming from the JavaScript side: $message");
+                      // when it receives a message from the JavaScript side, respond back with another message.
+                      await port1.postMessage(
+                          WebMessage(data: message! + " and back"));
+                    });
+
+                    // transfer port2 to the webpage to initialize the communication
+                    await controller.postWebMessage(
+                        message:
+                            WebMessage(data: "capturePort", ports: [port2]),
+                        targetOrigin: Uri.parse("*"));
+                  }
+                },
+              ),
+            ),
+          ]))),
     );
   }
 }
-
-  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-      android: AndroidInAppWebViewOptions(
-        useHybridComposition: true,
-      ),);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(title: Text("JavaScript Handlers")),
-          body: SafeArea(
-              child: Column(children: <Widget>[
-                Expanded(
-                  child: InAppWebView(
-                    initialData: InAppWebViewInitialData(
-                        data: """
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    </head>
-    <body>
-        <h1>JavaScript Handlers</h1>
-        <script>
-            window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
-                window.flutter_inappwebview.callHandler('handlerFoo')
-                  .then(function(result) {
-                    // print to the console the data coming
-                    // from the Flutter side.
-                    console.log(JSON.stringify(result));
-                    
-                    window.flutter_inappwebview
-                      .callHandler('handlerFooWithArgs', 1, true, ['bar', 5], {foo: 'baz'}, result);
-                });
-            });
-        </script>
-    </body>
-</html>
-                      """
-                    ),
-                    initialOptions: options,
-                    onWebViewCreated: (controller) {
-                      controller.addJavaScriptHandler(handlerName: 'handlerFoo', callback: (args) {
-                        // return data to the JavaScript side!
-                        return {
-                          'bar': 'bar_value', 'baz': 'baz_value'
-                        };
-                      });
-
-                      controller.addJavaScriptHandler(handlerName: 'handlerFooWithArgs', callback: (args) {
-                        print(args);
-                        // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
-                      });
-                    },
-                    onConsoleMessage: (controller, consoleMessage) {
-                      print(consoleMessage);
-                      // it will print: {message: {"bar":"bar_value","baz":"baz_value"}, messageLevel: 1}
-                    },
-                  ),
-                ),
-              ]))),
-    );
-  }

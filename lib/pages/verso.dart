@@ -38,7 +38,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
     setState(() {});
     final picker = ImagePicker();
     final versoPath =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 25);
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
 
     if (widget.rectoPath != null && versoPath != null) {
       String _token = prefs.getString('mail').toString();
@@ -66,17 +66,16 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
       Map<String, dynamic> outputMap = {"result": resultData};
       // Convert the map to a JSON string.
       String resultJson = jsonEncode(outputMap);
-      print("------------------------------------------------------------");
-      print(resultJson.runtimeType);
-      print(resultJson);
-      print("------------------------------------------------------------");
+
       var answerJson = jsonDecode(answer);
       if (answerJson["decision"] == true) {
         //"abdelkrim_nachef_121328643_face.png"
         String _face = "Face";
         String _front = "front_card";
         String _back = "back_card";
-
+        print("------------------------------------------------------------");
+        print(answerJson);
+        print("------------------------------------------------------------");
         List<int> imageBytes_face = base64Decode(answerJson[_face]);
         List<int> imageBytes_front = base64Decode(answerJson[_front]);
         List<int> imageBytes_back = base64Decode(answerJson[_back]);
@@ -125,15 +124,18 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                     back: _myFile_back.path,
                   )));
         } else {
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).push(
+            MaterialPageRoute(
               builder: (context) => WelcomeNfc(
-                    face: _myFile_face.path,
-                    front: _myFile_front.path,
-                    back: _myFile_back.path,
-                    dob: birth_date,
-                    doe: expiry_date,
-                    idnumber: document_number,
-                  )));
+                face: _myFile_face.path,
+                front: _myFile_front.path,
+                back: _myFile_back.path,
+                dob: birth_date,
+                doe: expiry_date,
+                idnumber: document_number,
+              ),
+            ),
+          );
         }
 
         _is_loading = false;

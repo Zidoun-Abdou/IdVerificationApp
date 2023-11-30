@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
@@ -8,6 +7,9 @@ import 'package:whowiyati/pages/changepassword.dart';
 import 'package:whowiyati/pages/documents.dart';
 import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/steps.dart';
+
+import 'idinfos.dart';
+import 'listofdocuments.dart';
 
 class Welcome extends StatefulWidget {
   final String token;
@@ -106,16 +108,19 @@ class _WelcomeState extends State<Welcome> {
                             ],
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.all(5.sp),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 5.h),
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(10.r)),
-                          child: Text(
-                            "Non identifié",
-                            style: TextStyle(color: Colors.white),
+                        Visibility(
+                          visible: prefs.getString('name_latin') == null,
+                          child: Container(
+                            margin: EdgeInsets.all(5.sp),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 5.h),
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(10.r)),
+                            child: Text(
+                              "Non identifié",
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -252,7 +257,7 @@ class _WelcomeState extends State<Welcome> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => Documents(),
+                                        builder: (context) => ListOfDocuments(),
                                       ),
                                     );
                                   },
@@ -346,96 +351,115 @@ class _WelcomeState extends State<Welcome> {
                                 width: 10.w,
                               ),
                               Expanded(
-                                child: Container(
-                                  height:
-                                      MediaQuery.of(context).size.width / 2 -
-                                          10.h -
-                                          10.h,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20.w, vertical: 10.h),
-                                  decoration: BoxDecoration(
-                                      color: color4.withOpacity(0.8),
-                                      borderRadius:
-                                          BorderRadius.circular(15.r)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          padding: EdgeInsets.all(8.sp),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(15.r)),
-                                          child: Icon(
-                                            Icons.credit_card_outlined,
-                                            color: Colors.white,
-                                          )),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                      Text(
-                                        "My Identity Card",
-                                        style: TextStyle(
-                                            fontSize: 15.sp,
-                                            color: Colors.white),
-                                      ),
-                                    ],
+                                child: InkWell(
+                                  onTap: () {
+                                    prefs.getString("name_arabic") == null
+                                        ? Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => IdInfos(),
+                                            ),
+                                          )
+                                        : Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CardNfcInfo()));
+                                  },
+                                  child: Container(
+                                    height:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            10.h -
+                                            10.h,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20.w, vertical: 10.h),
+                                    decoration: BoxDecoration(
+                                        color: color4.withOpacity(0.8),
+                                        borderRadius:
+                                            BorderRadius.circular(15.r)),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            padding: EdgeInsets.all(8.sp),
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        15.r)),
+                                            child: Icon(
+                                              Icons.credit_card_outlined,
+                                              color: Colors.white,
+                                            )),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                        Text(
+                                          "My Identity Card",
+                                          style: TextStyle(
+                                              fontSize: 15.sp,
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
-
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 20.w, vertical: 15.h),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                Navigator.of(context).pop();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: color3,
-                                padding: EdgeInsets.symmetric(vertical: 15.h),
-                                foregroundColor: Colors.white,
-                                minimumSize: Size.fromHeight(30.w),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.r),
-                                ),
-                                elevation: 20,
-                                shadowColor: color3, // Set the shadow color
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Poursuivre mon identification   ',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                          Visibility(
+                            visible: prefs.getString('name_latin') == null,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 20.w, vertical: 15.h),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  Navigator.of(context).pop();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: color3,
+                                  padding: EdgeInsets.symmetric(vertical: 15.h),
+                                  foregroundColor: Colors.white,
+                                  minimumSize: Size.fromHeight(30.w),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.r),
                                   ),
-                                  Icon(
-                                    Icons.warning_rounded,
-                                    size: 25.sp,
-                                  )
-                                ],
+                                  elevation: 20,
+                                  shadowColor: color3, // Set the shadow color
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Poursuivre mon identification   ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.sp,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.warning_rounded,
+                                      size: 25.sp,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          // Text(
-                          //   'Votre application d’indentification',
-                          //   textAlign: TextAlign.center,
-                          //   style: TextStyle(
-                          //     color: Color(0xFF666680),
-                          //     fontSize: 12.h,
-                          //     fontFamily: 'Inter',
-                          //     fontWeight: FontWeight.w500,
-                          //     letterSpacing: 0.20,
-                          //   ),
-                          // ),
+                          Container(margin: EdgeInsets.only(top: 20.h),
+                            child: Text(
+                              'Votre application d’indentification',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFF666680),
+                                fontSize: 12.h,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.20,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),

@@ -25,7 +25,7 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
   takeRecto() async {
     final picker = ImagePicker();
     final verso =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 25);
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
 
     if (verso != null) {
       Navigator.of(context).push(

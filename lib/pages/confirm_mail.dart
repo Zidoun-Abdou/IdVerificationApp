@@ -49,7 +49,6 @@ class _ConfirmMailState extends State<ConfirmMail> {
         var answerJson = jsonDecode(answer);
         if (answerJson["success"] == true) {
           print(answerJson.toString());
-          await prefs.setString('mail', _mailContr.text);
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => Steps(
                     token: widget.token,
