@@ -115,6 +115,8 @@ class _OtpState extends State<Otp> {
       var answerJson = jsonDecode(answer);
       if (answerJson["success"] == true) {
         print(answerJson.toString());
+        print(
+            "*************************************sqdqsdqs****************************");
         await sendToken();
         return 1;
       } else {

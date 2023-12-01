@@ -220,9 +220,11 @@ packages:
   dmrtd:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: fd682e056e3b16070cd5cf7e81b73dc13edd2532
+      url: "https://github.com/ZeroPass/dmrtd.git"
+    source: git
     version: "1.4.3"
   expandable:
     dependency: "direct main"

@@ -31,7 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   dmrtd:
-    path: ../
+    git:
+      url: https://github.com/ZeroPass/dmrtd.git
   flutter_localizations:
     sdk: flutter
   flutter_platform_widgets: ^2.0.0
