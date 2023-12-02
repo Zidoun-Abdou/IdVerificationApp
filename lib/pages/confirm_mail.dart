@@ -49,11 +49,12 @@ class _ConfirmMailState extends State<ConfirmMail> {
         var answerJson = jsonDecode(answer);
         if (answerJson["success"] == true) {
           print(answerJson.toString());
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Steps(
-                    token: widget.token,
-                  )));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => Steps(
+          //           token: widget.token,
+          //         )));
           //await _addtoportaone();
+          await _updateEmail();
         } else {
           print(answerJson.toString());
           ScaffoldMessenger.of(context).showSnackBar(
@@ -75,8 +76,6 @@ class _ConfirmMailState extends State<ConfirmMail> {
     isLoading = false;
     setState(() {});
   }
-
-  String _mytoken = '';
 
   Future<int> _addtoportaone() async {
     isLoading = true;
@@ -108,6 +107,54 @@ class _ConfirmMailState extends State<ConfirmMail> {
       return 1;
     } else {
       print('email not send to portaone');
+      print(answerJson.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            answerJson.toString(),
+            textAlign: TextAlign.center,
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      print(response.reasonPhrase);
+      isLoading = false;
+      setState(() {});
+      return 0;
+    }
+    isLoading = false;
+    setState(() {});
+  }
+
+  Future<int> _updateEmail() async {
+    isLoading = true;
+    setState(() {});
+    var headers = {
+      'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
+      'Cookie': 'PHPSESSID=baa6nj4s6682e98sbb1v2gsgr7'
+    };
+    var request = http.MultipartRequest('POST',
+        Uri.parse('https://api.icosnet.com/ibmpp/esb/pbflow_update_email.php'));
+    request.fields.addAll(
+        {'phone': prefs.getString('phone').toString(), 'email': widget.mail});
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
+    if (answerJson["message"] != "Phone not found") {
+      await prefs.setString('mail', widget.mail);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Steps(
+                token: widget.token,
+              )));
+      print(answerJson.toString());
+      isLoading = false;
+      setState(() {});
+      return 1;
+    } else {
+      print('email not found');
       print(answerJson.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

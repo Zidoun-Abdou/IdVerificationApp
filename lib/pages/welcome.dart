@@ -61,14 +61,100 @@ class _WelcomeState extends State<Welcome> {
                               ),
                             ),
                             IconButton(
-                                onPressed: () {
-                                  prefs.clear();
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              HomePage()),
-                                      (Route<dynamic> route) => false);
+                                onPressed: () async{
+                                  showModalBottomSheet(
+                                      backgroundColor: color2,
+                                      context: context,
+                                      builder: (context) {
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 20.w,
+                                                  vertical: 20.h),
+                                              child: Text(
+                                                "Êtes-vous sûr de vouloir quitter Whowiyaty?",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                ElevatedButton(
+                                                  onPressed: () async{
+                                                    await prefs.clear();
+                                                    Navigator.pushAndRemoveUntil(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                HomePage()),
+                                                        (Route<dynamic>
+                                                                route) =>
+                                                            false);
+                                                  },
+                                                  child: Text("Oui"),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          backgroundColor:
+                                                              color3,
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical:
+                                                                      15.h,
+                                                                  horizontal:
+                                                                      30.w),
+                                                          foregroundColor:
+                                                              Colors.white,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5.r),
+                                                          ),
+                                                          elevation: 10,
+                                                          shadowColor: color3),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text("Non"),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          backgroundColor:
+                                                              Colors.red,
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical:
+                                                                      15.h,
+                                                                  horizontal:
+                                                                      30.w),
+                                                          foregroundColor:
+                                                              Colors.white,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5.r),
+                                                          ),
+                                                          elevation: 10,
+                                                          shadowColor:
+                                                              Colors.red),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            )
+                                          ],
+                                        );
+                                      });
                                 },
                                 icon: Icon(
                                   Icons.logout,
@@ -447,7 +533,8 @@ class _WelcomeState extends State<Welcome> {
                               ),
                             ),
                           ),
-                          Container(margin: EdgeInsets.only(top: 20.h),
+                          Container(
+                            margin: EdgeInsets.only(top: 20.h),
                             child: Text(
                               'Votre application d’indentification',
                               textAlign: TextAlign.center,

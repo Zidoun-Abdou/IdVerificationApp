@@ -22,6 +22,8 @@ class WelcomeNfc extends StatefulWidget {
   final String face;
   final String front;
   final String back;
+  final String signature;
+
 
   const WelcomeNfc(
       {Key? key,
@@ -30,7 +32,7 @@ class WelcomeNfc extends StatefulWidget {
       required this.idnumber,
       required this.face,
       required this.front,
-      required this.back})
+      required this.back, required this.signature})
       : super(key: key);
 
   @override
@@ -102,7 +104,7 @@ class _WelcomeNfcState extends State<WelcomeNfc> {
                                     idnumber: widget.idnumber,
                                     face: widget.face,
                                     back: widget.back,
-                                    front: widget.front,
+                                    front: widget.front,signature: widget.signature,
                                   )));
                         },
                         style: ElevatedButton.styleFrom(

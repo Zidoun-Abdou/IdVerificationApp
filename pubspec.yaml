@@ -32,7 +32,8 @@ dependencies:
     sdk: flutter
   dmrtd:
     git:
-      url: https://github.com/ZeroPass/dmrtd.git
+      url: https://github.com/Zidoun-Abdou/dr.az_decoder.git
+      ref: main
   flutter_localizations:
     sdk: flutter
   flutter_platform_widgets: ^2.0.0

@@ -8,6 +8,7 @@ import 'package:whowiyati/pages/seedocument.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/signature_logs.dart';
 import '../const.dart';
+import '../main.dart';
 import 'documents.dart';
 
 class ListOfDocuments extends StatefulWidget {
@@ -36,7 +37,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     String ip = data.toString();
 
     request.fields.addAll({
-      'user_email': 'mousserati@gmail.com',
+      'user_email': prefs.getString("mail").toString(),
       'ip_address': ip,
       'source': '1',
       'action': '1',
@@ -111,7 +112,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     String ip = data.toString();
 
     request.fields.addAll({
-      'user_email': 'mousserati@gmail.com',
+      'user_email': prefs.getString("mail").toString(),
       'ip_address': ip,
       'source': '1',
       'action': '1',
@@ -166,7 +167,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/sign-document/'));
     request.fields.addAll(
-        {'signer_email': "mousserati@gmail.com", 'document_id': id_file});
+        {'signer_email': prefs.getString("mail").toString(), 'document_id': id_file});
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
@@ -241,7 +242,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/cancel-document/'));
     request.fields.addAll({
-      'user_email': "mousserati@gmail.com",
+      'user_email': prefs.getString("mail").toString(),
       'document_id': id_file,
       'ip_address': ip,
       'source': '4'
@@ -266,7 +267,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/documents/'));
-    request.fields.addAll({'user_email': 'mousserati@gmail.com'});
+    request.fields.addAll({'user_email': prefs.getString("mail").toString()});
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,12 +21,14 @@ class VerifyFace extends StatefulWidget {
   final String face;
   final String front;
   final String back;
+  final String signature;
 
   const VerifyFace({
     Key? key,
     required this.face,
     required this.front,
     required this.back,
+    required this.signature,
   }) : super(key: key);
 
   @override
@@ -38,10 +41,20 @@ class _VerifyFaceState extends State<VerifyFace> {
   bool _isShownFace = false;
   late File savedImage;
   bool _is_loading = false;
+  String _myToken = "";
+
+  void getToken() {
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? token = value;
+      _myToken = value.toString();
+      print(_myToken);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    getToken();
     controller = CameraController(
       cameras[1],
       ResolutionPreset.ultraHigh,
@@ -74,8 +87,6 @@ class _VerifyFaceState extends State<VerifyFace> {
   Future<bool> verifyFace(String link) async {
     var headers = {'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0='};
 
-  
-
     /// Initialize Ip Address
     var ipAddress = IpAddress(type: RequestType.text);
 
@@ -101,10 +112,7 @@ class _VerifyFaceState extends State<VerifyFace> {
       await prefs.setString('idinfos', "ok");
 
       controller.dispose();
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Steps(
-                token: "hghjg",
-              )));
+      await sendToAlfresco();
       return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -118,57 +126,59 @@ class _VerifyFaceState extends State<VerifyFace> {
     }
   }
 
-  // Future<bool> sendToAlfresco() async {
-  //   var headers = {
-  //     'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
-  //     'Cookie': 'PHPSESSID=lfn533cru9ah04m0gbsc5hrahv'
-  //   };
-  //   var request = http.MultipartRequest(
-  //       'POST',
-  //       Uri.parse(
-  //           'https://api.icosnet.com/ibmpp/esb/ged_add_user_identification_who.php'));
-  //   request.fields.addAll({
-  //     'folder_name':
-  //         '${widget.name}_${widget.surname}_${widget.document_number}',
-  //     'mrz': widget.mrz
-  //   });
-  //   request.files
-  //       .add(await http.MultipartFile.fromPath('image_recto', widget.front));
-  //   request.files
-  //       .add(await http.MultipartFile.fromPath('image_verso', widget.back));
-  //   request.files
-  //       .add(await http.MultipartFile.fromPath('image_face', widget.face));
-  //   request.headers.addAll(headers);
+  Future<bool> sendToAlfresco() async {
+    var headers = {
+      'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
+    };
+    var request = http.MultipartRequest('POST',
+        Uri.parse('https://api.icosnet.com/ibmpp/esb/create_who_user.php'));
+    request.fields.addAll({
+      'token': _myToken,
+      'french_surname': prefs.getString('surname_latin').toString(),
+      'french_name': prefs.getString('name_latin').toString(),
+      'id_number': prefs.getString('nin').toString(),
+      'creation_date': prefs.getString('deliv_date').toString(),
+      'birth_date': prefs.getString('birth_date').toString(),
+      'expiration_date': prefs.getString('exp_date').toString(),
+      'card_number': prefs.getString('document_number').toString(),
+      'email': prefs.getString('mail').toString()
+    });
+    request.files
+        .add(await http.MultipartFile.fromPath('image_recto', widget.front));
+    request.files
+        .add(await http.MultipartFile.fromPath('image_verso', widget.back));
+    request.files
+        .add(await http.MultipartFile.fromPath('image_face', widget.face));
+    request.files
+        .add(await http.MultipartFile.fromPath('signature', widget.signature));
+    request.headers.addAll(headers);
 
-  //   http.StreamedResponse response = await request.send();
-  //   String answer = await response.stream.bytesToString();
-  //   var answerJson = jsonDecode(answer);
+    http.StreamedResponse response = await request.send();
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
 
-  //   if (answerJson["status"] == "success") {
-  //     print("Alfresco ok");
+    if (answerJson["message"] == "This user  exists" ||
+        answerJson["message"] == "Updated successfully") {
+      print("Alfresco ok");
+      print(answerJson);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => IdInfos()),
+          (Route<dynamic> route) => false);
+      return true;
+    } else {
+      print(answerJson);
 
-  //     Navigator.of(context).push(MaterialPageRoute(
-  //         builder: (context) => IdInfos(
-  //             // name: widget.name,
-  //             // surname: widget.surname,
-  //             // creation_date: widget.birth_date,
-  //             // birth_date: widget.birth_date,
-  //             // expiry_date: widget.expiry_date,
-  //             // nin: widget.nin,
-  //             // document_number: widget.document_number,
-  //             )));
-  //     return true;
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text("Failed to send to Alfresco."),
-  //         duration: Duration(seconds: 5),
-  //       ),
-  //     );
-  //     print(response.reasonPhrase);
-  //     return false;
-  //   }
-  // }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to send to Alfresco."),
+          duration: Duration(seconds: 5),
+        ),
+      );
+      print(response.reasonPhrase);
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

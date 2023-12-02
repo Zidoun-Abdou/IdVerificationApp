@@ -221,9 +221,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: fd682e056e3b16070cd5cf7e81b73dc13edd2532
-      url: "https://github.com/ZeroPass/dmrtd.git"
+      ref: main
+      resolved-ref: d82a209c90ae7fe6094ea84d9b99a903f5415e8d
+      url: "https://github.com/Zidoun-Abdou/dr.az_decoder.git"
     source: git
     version: "1.4.3"
   expandable:

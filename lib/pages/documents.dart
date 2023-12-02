@@ -43,7 +43,7 @@ class _DocumentsState extends State<Documents> {
     }
 
     usersList.add({
-      'email': "mousserati@gmail.com",
+      'email': prefs.getString("mail").toString(),
       'order': 0,
     });
 
@@ -60,7 +60,7 @@ class _DocumentsState extends State<Documents> {
     request.fields.addAll({
       'ip_address': ip,
       'uploaded_by_email':
-          "mousserati@gmail.com", // Assuming the first email is used here
+          prefs.getString("mail").toString(), // Assuming the first email is used here
       'users_signatures': usersJson,
     });
     request.files.add(await http.MultipartFile.fromPath('file', _document));

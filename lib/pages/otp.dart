@@ -66,6 +66,7 @@ class _OtpState extends State<Otp> {
       print(answerJson);
       print("token send with succus");
       await prefs.setString('user_id', answerJson["user_id"].toString());
+      await prefs.setString('phone', "213${_phoneContr.text}");
 
       Navigator.pushAndRemoveUntil(
           context,
@@ -115,8 +116,6 @@ class _OtpState extends State<Otp> {
       var answerJson = jsonDecode(answer);
       if (answerJson["success"] == true) {
         print(answerJson.toString());
-        print(
-            "*************************************sqdqsdqs****************************");
         await sendToken();
         return 1;
       } else {

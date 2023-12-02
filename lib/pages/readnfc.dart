@@ -60,6 +60,8 @@ class ReadNfc extends StatefulWidget {
   final String face;
   final String front;
   final String back;
+  final String signature;
+
   const ReadNfc(
       {Key? key,
       required this.dob,
@@ -67,7 +69,7 @@ class ReadNfc extends StatefulWidget {
       required this.idnumber,
       required this.face,
       required this.front,
-      required this.back})
+      required this.back, required this.signature})
       : super(key: key);
 
   @override
@@ -320,6 +322,8 @@ class _ReadNfcState extends State<ReadNfc> {
       "dg7": _mrtdData!.dg7!.toBytes().hex(),
       "dg2": _mrtdData!.dg2!.toBytes().hex()
     });
+
+        
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -406,6 +410,7 @@ class _ReadNfcState extends State<ReadNfc> {
                 face: _myFile_face.path,
                 front: widget.front,
                 back: widget.back,
+                signature: widget.signature,
               )));
       _isLoading = false;
       setState(() {});

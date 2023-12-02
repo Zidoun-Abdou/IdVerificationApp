@@ -73,17 +73,22 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         String _face = "Face";
         String _front = "front_card";
         String _back = "back_card";
+        String _signature = "signatur";
+
         print("------------------------------------------------------------");
         print(answerJson);
         print("------------------------------------------------------------");
         List<int> imageBytes_face = base64Decode(answerJson[_face]);
         List<int> imageBytes_front = base64Decode(answerJson[_front]);
         List<int> imageBytes_back = base64Decode(answerJson[_back]);
+        List<int> imageBytes_signature = base64Decode(answerJson[_back]);
+
         await prefs.setString("face", answerJson[_face]);
 
         final _tempDir_face = await getTemporaryDirectory();
         final _tempDir_front = await getTemporaryDirectory();
         final _tempDir_back = await getTemporaryDirectory();
+        final _tempDir_signature = await getTemporaryDirectory();
 
         final _myFile_face =
             await File('${_tempDir_face.path}/temp_image_face.png')
@@ -94,6 +99,9 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         final _myFile_back =
             await File('${_tempDir_back.path}/temp_image_back_card.png')
                 .writeAsBytes(imageBytes_back);
+        final _myFile_signature =
+            await File('${_tempDir_signature.path}/temp_image__signature.png')
+                .writeAsBytes(imageBytes_signature);
         //await prefs.setString('idinfos', answerJson["french_name"].toString());
         String name = answerJson["french_name"].toString();
         String surname = answerJson["french_surname"].toString();
@@ -122,6 +130,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                     face: _myFile_face.path,
                     front: _myFile_front.path,
                     back: _myFile_back.path,
+                    signature: _myFile_signature.path,
                   )));
         } else {
           Navigator.of(context).push(
@@ -132,7 +141,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                 back: _myFile_back.path,
                 dob: birth_date,
                 doe: expiry_date,
-                idnumber: document_number,
+                idnumber: document_number,signature: _myFile_signature.path,
               ),
             ),
           );
