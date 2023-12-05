@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/cardnfcinfo.dart';
+import 'package:whowiyati/pages/change_mot_pass.dart';
 import 'package:whowiyati/pages/changepassword.dart';
 import 'package:whowiyati/pages/homepage.dart';
 
@@ -319,9 +320,18 @@ class _WelcomeState extends State<Welcome> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15.r)),
-                                                child: Icon(
-                                                  Icons.person_outline_outlined,
-                                                  color: Colors.white,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ChangeMotPass()));
+                                                  },
+                                                  child: Icon(
+                                                    Icons
+                                                        .person_outline_outlined,
+                                                    color: Colors.white,
+                                                  ),
                                                 )),
                                           ),
                                           SizedBox(
