@@ -4,9 +4,7 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/cardnfcinfo.dart';
 import 'package:whowiyati/pages/changepassword.dart';
-import 'package:whowiyati/pages/documents.dart';
 import 'package:whowiyati/pages/homepage.dart';
-import 'package:whowiyati/pages/steps.dart';
 
 import 'idinfos.dart';
 import 'listofdocuments.dart';
@@ -20,6 +18,7 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+  bool isProfile = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +60,7 @@ class _WelcomeState extends State<Welcome> {
                               ),
                             ),
                             IconButton(
-                                onPressed: () async{
+                                onPressed: () async {
                                   showModalBottomSheet(
                                       backgroundColor: color2,
                                       context: context,
@@ -84,7 +83,7 @@ class _WelcomeState extends State<Welcome> {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 ElevatedButton(
-                                                  onPressed: () async{
+                                                  onPressed: () async {
                                                     await prefs.clear();
                                                     Navigator.pushAndRemoveUntil(
                                                         context,
@@ -284,216 +283,403 @@ class _WelcomeState extends State<Welcome> {
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => Steps(
-                                                  token: widget.token,
-                                                )));
-                                  },
-                                  child: Container(
-                                    height:
-                                        MediaQuery.of(context).size.width / 2 -
-                                            10.h -
-                                            10.h,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.w, vertical: 10.h),
-                                    decoration: BoxDecoration(
-                                        color: color4.withOpacity(0.8),
-                                        borderRadius:
-                                            BorderRadius.circular(15.r)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: color5,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        15.r)),
-                                            child: Icon(
-                                              Icons.person_outline_outlined,
-                                              color: Colors.white,
-                                            )),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        Text(
-                                          "Mon identité",
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => ListOfDocuments(),
+                          AnimatedSwitcher(
+                            duration: Duration(milliseconds: 500),
+                            child: isProfile
+                                ?
+                                // Profile-details
+                                GestureDetector(
+                                    onTap: () {
+                                      isProfile = !isProfile;
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.35,
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 30.w),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.w, vertical: 10.h),
+                                      decoration: BoxDecoration(
+                                          color: color4.withOpacity(0.8),
+                                          borderRadius:
+                                              BorderRadius.circular(15.r)),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topRight,
+                                            child: Container(
+                                                padding: EdgeInsets.all(8.sp),
+                                                decoration: BoxDecoration(
+                                                    color: color5,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.r)),
+                                                child: Icon(
+                                                  Icons.person_outline_outlined,
+                                                  color: Colors.white,
+                                                )),
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Text.rich(
+                                            TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'Nom :',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF666680),
+                                                    fontSize: 14.h,
+                                                    fontFamily: 'Inter',
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: 0.20,
+                                                  )),
+                                              TextSpan(
+                                                  text: 'Derdoukh',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFA2A2B5),
+                                                    fontSize: 14.h,
+                                                    fontFamily: 'Inter',
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: 0.20,
+                                                  )),
+                                            ]),
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          Text.rich(
+                                            TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'Prénom :',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF666680),
+                                                    fontSize: 14.h,
+                                                    fontFamily: 'Inter',
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: 0.20,
+                                                  )),
+                                              TextSpan(
+                                                  text: 'Ayoub',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFA2A2B5),
+                                                    fontSize: 14.h,
+                                                    fontFamily: 'Inter',
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: 0.20,
+                                                  )),
+                                            ]),
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          Text.rich(
+                                            TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'ID :',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF666680),
+                                                    fontSize: 14.h,
+                                                    fontFamily: 'Inter',
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: 0.20,
+                                                  )),
+                                              TextSpan(
+                                                  text: 'DXSY98IJ',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFA2A2B5),
+                                                    fontSize: 14.h,
+                                                    fontFamily: 'Inter',
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: 0.20,
+                                                  )),
+                                            ]),
+                                          ),
+                                          Spacer(
+                                            flex: 2,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "NIN: 009871625417819917525",
+                                                style: TextStyle(
+                                                  color: Color(0xFF666680),
+                                                  fontSize: 12.h,
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing: 0.20,
+                                                ),
+                                              ),
+                                              Image.asset(
+                                                "assets/images/finger_print.png",
+                                                height: 40.h,
+                                                width: 40.w,
+                                              )
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  },
-                                  child: Container(
-                                    height:
-                                        MediaQuery.of(context).size.width / 2 -
-                                            10.h -
-                                            10.h,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.w, vertical: 10.h),
-                                    decoration: BoxDecoration(
-                                        color: color4.withOpacity(0.8),
-                                        borderRadius:
-                                            BorderRadius.circular(15.r)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        15.r)),
-                                            child: Icon(
-                                              Icons.folder_open,
-                                              color: Colors.white,
-                                            )),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        Text(
-                                          "Signature des documents",
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              color: Colors.white),
-                                        )
-                                      ],
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height:
-                                      MediaQuery.of(context).size.width / 2 -
-                                          10.h -
-                                          10.h,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20.w, vertical: 10.h),
-                                  decoration: BoxDecoration(
-                                      color: color4.withOpacity(0.8),
-                                      borderRadius:
-                                          BorderRadius.circular(15.r)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  )
+                                : Column(
                                     children: [
-                                      Container(
-                                          padding: EdgeInsets.all(8.sp),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(15.r)),
-                                          child: Icon(
-                                            Icons.phone,
-                                            color: Colors.white,
-                                          )),
-                                      SizedBox(
-                                        height: 10.h,
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                // Navigator.of(context)
+                                                //     .push(MaterialPageRoute(
+                                                //         builder: (context) => Steps(
+                                                //               token: widget.token,
+                                                //             )));
+                                                isProfile = !isProfile;
+                                                setState(() {});
+                                              },
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        2 -
+                                                    10.h -
+                                                    10.h,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.w,
+                                                    vertical: 10.h),
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        color4.withOpacity(0.8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.r)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                        padding: EdgeInsets.all(
+                                                            8.sp),
+                                                        decoration: BoxDecoration(
+                                                            color: color5,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.r)),
+                                                        child: Icon(
+                                                          Icons
+                                                              .person_outline_outlined,
+                                                          color: Colors.white,
+                                                        )),
+                                                    SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    Text(
+                                                      "Mon identité",
+                                                      style: TextStyle(
+                                                          fontSize: 15.sp,
+                                                          color: Colors.white),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ListOfDocuments(),
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        2 -
+                                                    10.h -
+                                                    10.h,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.w,
+                                                    vertical: 10.h),
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        color4.withOpacity(0.8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.r)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                        padding: EdgeInsets.all(
+                                                            8.sp),
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.grey,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.r)),
+                                                        child: Icon(
+                                                          Icons.folder_open,
+                                                          color: Colors.white,
+                                                        )),
+                                                    SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    Text(
+                                                      "Signature des documents",
+                                                      style: TextStyle(
+                                                          fontSize: 15.sp,
+                                                          color: Colors.white),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "My Number",
-                                        style: TextStyle(
-                                            fontSize: 15.sp,
-                                            color: Colors.white),
-                                      )
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              height: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2 -
+                                                  10.h -
+                                                  10.h,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 20.w,
+                                                  vertical: 10.h),
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      color4.withOpacity(0.8),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.r)),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                      padding:
+                                                          EdgeInsets.all(8.sp),
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.grey,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.r)),
+                                                      child: Icon(
+                                                        Icons.phone,
+                                                        color: Colors.white,
+                                                      )),
+                                                  SizedBox(
+                                                    height: 10.h,
+                                                  ),
+                                                  Text(
+                                                    "My Number",
+                                                    style: TextStyle(
+                                                        fontSize: 15.sp,
+                                                        color: Colors.white),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                prefs.getString("name_arabic") ==
+                                                        null
+                                                    ? Navigator.of(context)
+                                                        .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              IdInfos(),
+                                                        ),
+                                                      )
+                                                    : Navigator.of(context)
+                                                        .push(MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                CardNfcInfo()));
+                                              },
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        2 -
+                                                    10.h -
+                                                    10.h,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.w,
+                                                    vertical: 10.h),
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        color4.withOpacity(0.8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.r)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                        padding: EdgeInsets.all(
+                                                            8.sp),
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.grey,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.r)),
+                                                        child: Icon(
+                                                          Icons
+                                                              .credit_card_outlined,
+                                                          color: Colors.white,
+                                                        )),
+                                                    SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    Text(
+                                                      "My Identity Card",
+                                                      style: TextStyle(
+                                                          fontSize: 15.sp,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    prefs.getString("name_arabic") == null
-                                        ? Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) => IdInfos(),
-                                            ),
-                                          )
-                                        : Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    CardNfcInfo()));
-                                  },
-                                  child: Container(
-                                    height:
-                                        MediaQuery.of(context).size.width / 2 -
-                                            10.h -
-                                            10.h,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.w, vertical: 10.h),
-                                    decoration: BoxDecoration(
-                                        color: color4.withOpacity(0.8),
-                                        borderRadius:
-                                            BorderRadius.circular(15.r)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8.sp),
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        15.r)),
-                                            child: Icon(
-                                              Icons.credit_card_outlined,
-                                              color: Colors.white,
-                                            )),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        Text(
-                                          "My Identity Card",
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              color: Colors.white),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
                           Visibility(
-                            visible: prefs.getString('name_latin') == null,
+                            // visible: prefs.getString('name_latin') == null,
+                            visible: false,
                             child: Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 15.h),
@@ -533,6 +719,12 @@ class _WelcomeState extends State<Welcome> {
                               ),
                             ),
                           ),
+                          Visibility(
+                              visible: isProfile,
+                              child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05,
+                              )),
                           Container(
                             margin: EdgeInsets.only(top: 20.h),
                             child: Text(
