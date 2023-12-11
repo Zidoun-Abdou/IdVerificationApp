@@ -14,6 +14,8 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
   int step = 1;
   bool isObscureText = true;
   bool isHide = true;
+  double? _sizeWidth = 120.w;
+  double _textFontSize = 15.sp;
 
   List<String> title = [
     'Changer le mot de passe',
@@ -28,8 +30,6 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
 
   @override
   Widget build(BuildContext context) {
-    double? sizeWidth = MediaQuery.of(context).size.width * 0.3;
-
     return Scaffold(
       backgroundColor: Color(0xFF1C1C23),
       body: SafeArea(
@@ -50,20 +50,25 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFFA2A2B5),
-                    fontSize: step == 2 ? 12.sp : 15.sp,
+                    fontSize: _textFontSize,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(height: 30.h),
-                Visibility(
-                    visible: step == 3,
-                    child: Image.asset(
-                      "assets/images/tick.png",
-                      height: 100.h,
-                      width: 100.w,
-                      fit: BoxFit.cover,
-                    )),
+                AnimatedOpacity(
+                  opacity: step == 3 ? 1.0 : 0.0,
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                  child: Visibility(
+                      visible: step == 3,
+                      child: Image.asset(
+                        "assets/images/tick.png",
+                        height: 100.h,
+                        width: 100.w,
+                        fit: BoxFit.cover,
+                      )),
+                ),
                 Visibility(
                   visible: step != 3,
                   child: Column(
@@ -131,140 +136,150 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                     ],
                   ),
                 ),
-                Visibility(
-                  visible: !isHide,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 10.h),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 22.w),
-                        child: Text(
-                          'Nouveau',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFF666680),
-                            fontSize: 12.h,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.20,
+                AnimatedOpacity(
+                  opacity: isHide ? 0.0 : 1.0,
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                  child: Visibility(
+                    visible: !isHide,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 22.w),
+                          child: Text(
+                            'Nouveau',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF666680),
+                              fontSize: 12.h,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.20,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 8.h),
-                        child: TextFormField(
-                          // controller: _passwordContr,
-                          validator: (val) {
-                            return validInput(val!, 3, 13);
-                          },
-                          cursorColor: color3,
-                          obscureText: isObscureText,
-                          style: TextStyle(color: Colors.white),
-                          // Set text color to white
-                          decoration: InputDecoration(
-                            label: Text(
-                              "Password",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50.r),
-                              borderSide: BorderSide(
-                                color: color3,
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 8.h),
+                          child: TextFormField(
+                            // controller: _passwordContr,
+                            validator: (val) {
+                              return validInput(val!, 3, 13);
+                            },
+                            cursorColor: color3,
+                            obscureText: isObscureText,
+                            style: TextStyle(color: Colors.white),
+                            // Set text color to white
+                            decoration: InputDecoration(
+                              label: Text(
+                                "Password",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50.r),
+                                borderSide: BorderSide(
+                                  color: color3,
+                                ),
+                              ),
+                              filled: true,
+                              fillColor: Colors.black,
+                              // Set background color to black
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
+                                color: Colors.white,
+                              ),
+                              // suffixIcon: GestureDetector(
+                              //   onTap: () {
+                              //     isObscureText = !isObscureText;
+                              //     setState(() {});
+                              //   },
+                              //   child: Icon(Icons.remove_red_eye_outlined,
+                              //       color: color3),
+                              // ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    50.r), // Set border radius
                               ),
                             ),
-                            filled: true,
-                            fillColor: Colors.black,
-                            // Set background color to black
-                            prefixIcon: Icon(
-                              Icons.lock_outline,
-                              color: Colors.white,
-                            ),
-                            // suffixIcon: GestureDetector(
-                            //   onTap: () {
-                            //     isObscureText = !isObscureText;
-                            //     setState(() {});
-                            //   },
-                            //   child: Icon(Icons.remove_red_eye_outlined,
-                            //       color: color3),
-                            // ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  50.r), // Set border radius
-                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-                Visibility(
-                  visible: !isHide,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 10.h),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 22.w),
-                        child: Text(
-                          'Confirmer',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFF666680),
-                            fontSize: 12.h,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.20,
+                AnimatedOpacity(
+                  opacity: isHide ? 0.0 : 1.0,
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                  child: Visibility(
+                    visible: !isHide,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 22.w),
+                          child: Text(
+                            'Confirmer',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF666680),
+                              fontSize: 12.h,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.20,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 8.h),
-                        child: TextFormField(
-                          // controller: _passwordContr,
-                          validator: (val) {
-                            return validInput(val!, 3, 13);
-                          },
-                          cursorColor: color3,
-                          obscureText: isObscureText,
-                          style: TextStyle(color: Colors.white),
-                          // Set text color to white
-                          decoration: InputDecoration(
-                            label: Text(
-                              "Password",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50.r),
-                              borderSide: BorderSide(
-                                color: color3,
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 8.h),
+                          child: TextFormField(
+                            // controller: _passwordContr,
+                            validator: (val) {
+                              return validInput(val!, 3, 13);
+                            },
+                            cursorColor: color3,
+                            obscureText: isObscureText,
+                            style: TextStyle(color: Colors.white),
+                            // Set text color to white
+                            decoration: InputDecoration(
+                              label: Text(
+                                "Password",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50.r),
+                                borderSide: BorderSide(
+                                  color: color3,
+                                ),
+                              ),
+                              filled: true,
+                              fillColor: Colors.black,
+                              // Set background color to black
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
+                                color: Colors.white,
+                              ),
+                              // suffixIcon: GestureDetector(
+                              //   onTap: () {
+                              //     isObscureText = !isObscureText;
+                              //     setState(() {});
+                              //   },
+                              //   child: Icon(Icons.remove_red_eye_outlined,
+                              //       color: color3),
+                              // ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    50.r), // Set border radius
                               ),
                             ),
-                            filled: true,
-                            fillColor: Colors.black,
-                            // Set background color to black
-                            prefixIcon: Icon(
-                              Icons.lock_outline,
-                              color: Colors.white,
-                            ),
-                            // suffixIcon: GestureDetector(
-                            //   onTap: () {
-                            //     isObscureText = !isObscureText;
-                            //     setState(() {});
-                            //   },
-                            //   child: Icon(Icons.remove_red_eye_outlined,
-                            //       color: color3),
-                            // ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  50.r), // Set border radius
-                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 20.h),
@@ -272,25 +287,32 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                   visible: step != 3,
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Container(
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
                       margin:
                           EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                      width: step == 1 ? sizeWidth : null,
+                      width: _sizeWidth,
                       child: ElevatedButton(
                         onPressed: () {
                           if (isHide) {
                             if (step == 1) {
                               setState(() {
+                                _sizeWidth = MediaQuery.of(context).size.width;
+                                _textFontSize = 12.sp;
                                 step = 2;
                               });
                             } else if (step == 2) {
-                              isHide = false;
-                              setState(() {});
+                              setState(() {
+                                isHide = false;
+                              });
                             }
                           } else {
-                            step = 3;
-                            isHide = true;
-                            setState(() {});
+                            setState(() {
+                              step = 3;
+                              isHide = true;
+                              _textFontSize = 15.sp;
+                            });
                           }
                         },
                         style: ElevatedButton.styleFrom(
