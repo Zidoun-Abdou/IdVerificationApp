@@ -285,7 +285,7 @@ class _WelcomeState extends State<Welcome> {
                       child: Column(
                         children: [
                           AnimatedSwitcher(
-                            duration: Duration(milliseconds: 500),
+                            duration: Duration(milliseconds: 300),
                             child: isProfile
                                 ?
                                 // Profile-details
@@ -320,18 +320,10 @@ class _WelcomeState extends State<Welcome> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15.r)),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ChangeMotPass()));
-                                                  },
-                                                  child: Icon(
-                                                    Icons
-                                                        .person_outline_outlined,
-                                                    color: Colors.white,
-                                                  ),
+                                                child: Icon(
+                                                  Icons
+                                                      .person_outline_outlined,
+                                                  color: Colors.white,
                                                 )),
                                           ),
                                           SizedBox(
@@ -340,7 +332,7 @@ class _WelcomeState extends State<Welcome> {
                                           Text.rich(
                                             TextSpan(children: [
                                               TextSpan(
-                                                  text: 'Nom :',
+                                                  text: 'Nom: ',
                                                   style: TextStyle(
                                                     color: Color(0xFF666680),
                                                     fontSize: 14.h,
@@ -349,7 +341,7 @@ class _WelcomeState extends State<Welcome> {
                                                     letterSpacing: 0.20,
                                                   )),
                                               TextSpan(
-                                                  text: 'Derdoukh',
+                                                  text: prefs.getString('name_latin')?.toUpperCase(),
                                                   style: TextStyle(
                                                     color: Color(0xFFA2A2B5),
                                                     fontSize: 14.h,
@@ -365,7 +357,7 @@ class _WelcomeState extends State<Welcome> {
                                           Text.rich(
                                             TextSpan(children: [
                                               TextSpan(
-                                                  text: 'Prénom :',
+                                                  text: 'Prénom: ',
                                                   style: TextStyle(
                                                     color: Color(0xFF666680),
                                                     fontSize: 14.h,
@@ -374,7 +366,10 @@ class _WelcomeState extends State<Welcome> {
                                                     letterSpacing: 0.20,
                                                   )),
                                               TextSpan(
-                                                  text: 'Ayoub',
+                                                  text: prefs
+                                                                .getString(
+                                                                    'surname_latin')
+                                                                ?.toUpperCase(),
                                                   style: TextStyle(
                                                     color: Color(0xFFA2A2B5),
                                                     fontSize: 14.h,
@@ -399,7 +394,10 @@ class _WelcomeState extends State<Welcome> {
                                                     letterSpacing: 0.20,
                                                   )),
                                               TextSpan(
-                                                  text: 'DXSY98IJ',
+                                                  text:  prefs
+                                                                .getString(
+                                                                    'user_id')
+                                                                ?.toUpperCase(),
                                                   style: TextStyle(
                                                     color: Color(0xFFA2A2B5),
                                                     fontSize: 14.h,
@@ -417,7 +415,7 @@ class _WelcomeState extends State<Welcome> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                "NIN: 009871625417819917525",
+                                                "NIN: ${prefs.getString('nin')?.toUpperCase()}",
                                                 style: TextStyle(
                                                   color: Color(0xFF666680),
                                                   fontSize: 12.h,
