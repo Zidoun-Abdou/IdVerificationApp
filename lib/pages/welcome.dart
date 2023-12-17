@@ -226,16 +226,16 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             InkWell(
                               onTap: () {
-                                // if (prefs.getString('idinfos').toString() !=
-                                //         "null" &&
-                                //     prefs.getString('mail').toString() !=
-                                //         "null") {
-                                //   Navigator.of(context).push(MaterialPageRoute(
-                                //       builder: (context) => CardNfcInfo()));
-                                // }
+                                if (prefs.getString('idinfos').toString() !=
+                                        "null" &&
+                                    prefs.getString('mail').toString() !=
+                                        "null") {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => CardNfcInfo()));
+                                }
 
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ChangePassword()));
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => ChangePassword()));
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
