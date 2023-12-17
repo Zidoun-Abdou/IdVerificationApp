@@ -692,8 +692,7 @@ class _WelcomeState extends State<Welcome> {
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 15.h),
                               child: ElevatedButton(
-                                onPressed: () async {
-                                  Navigator.of(context).pop();
+                                onPressed: ()  {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: color3,
