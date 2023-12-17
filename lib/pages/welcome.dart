@@ -687,7 +687,7 @@ class _WelcomeState extends State<Welcome> {
                           ),
                           Visibility(
                             // visible: prefs.getString('name_latin') == null,
-                            visible: false,
+                            visible: true,
                             child: Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 15.h),
