@@ -6,6 +6,7 @@ import 'package:whowiyati/pages/cardnfcinfo.dart';
 import 'package:whowiyati/pages/change_mot_pass.dart';
 import 'package:whowiyati/pages/changepassword.dart';
 import 'package:whowiyati/pages/homepage.dart';
+import 'package:whowiyati/pages/steps.dart';
 
 import 'idinfos.dart';
 import 'listofdocuments.dart';
@@ -442,13 +443,13 @@ class _WelcomeState extends State<Welcome> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                // Navigator.of(context)
-                                                //     .push(MaterialPageRoute(
-                                                //         builder: (context) => Steps(
-                                                //               token: widget.token,
-                                                //             )));
-                                                isProfile = !isProfile;
-                                                setState(() {});
+                                                if (prefs.getString(
+                                                        'name_latin') !=
+                                                    null) {
+                                                  setState(() {
+                                                    isProfile = !isProfile;
+                                                  });
+                                                }
                                               },
                                               child: Container(
                                                 height: MediaQuery.of(context)
@@ -474,7 +475,11 @@ class _WelcomeState extends State<Welcome> {
                                                         padding: EdgeInsets.all(
                                                             8.sp),
                                                         decoration: BoxDecoration(
-                                                            color: color5,
+                                                            color: prefs.getString(
+                                                                        'name_latin') !=
+                                                                    null
+                                                                ? color5
+                                                                : Colors.grey,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -504,12 +509,16 @@ class _WelcomeState extends State<Welcome> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ListOfDocuments(),
-                                                  ),
-                                                );
+                                                if (prefs.getString(
+                                                        'name_latin') !=
+                                                    null) {
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ListOfDocuments(),
+                                                    ),
+                                                  );
+                                                }
                                               },
                                               child: Container(
                                                 height: MediaQuery.of(context)
@@ -535,7 +544,11 @@ class _WelcomeState extends State<Welcome> {
                                                         padding: EdgeInsets.all(
                                                             8.sp),
                                                         decoration: BoxDecoration(
-                                                            color: Colors.grey,
+                                                            color: prefs.getString(
+                                                                        'name_latin') !=
+                                                                    null
+                                                                ? color5
+                                                                : Colors.grey,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -566,72 +579,8 @@ class _WelcomeState extends State<Welcome> {
                                       Row(
                                         children: [
                                           Expanded(
-                                            child: Container(
-                                              height: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2 -
-                                                  10.h -
-                                                  10.h,
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 20.w,
-                                                  vertical: 10.h),
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      color4.withOpacity(0.8),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.r)),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                      padding:
-                                                          EdgeInsets.all(8.sp),
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.grey,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15.r)),
-                                                      child: Icon(
-                                                        Icons.phone,
-                                                        color: Colors.white,
-                                                      )),
-                                                  SizedBox(
-                                                    height: 10.h,
-                                                  ),
-                                                  Text(
-                                                    "My Number",
-                                                    style: TextStyle(
-                                                        fontSize: 15.sp,
-                                                        color: Colors.white),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          Expanded(
                                             child: InkWell(
-                                              onTap: () {
-                                                prefs.getString("name_arabic") ==
-                                                        null
-                                                    ? Navigator.of(context)
-                                                        .push(
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              IdInfos(),
-                                                        ),
-                                                      )
-                                                    : Navigator.of(context)
-                                                        .push(MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                CardNfcInfo()));
-                                              },
+                                              onTap: () {},
                                               child: Container(
                                                 height: MediaQuery.of(context)
                                                             .size
@@ -662,6 +611,82 @@ class _WelcomeState extends State<Welcome> {
                                                                     .circular(
                                                                         15.r)),
                                                         child: Icon(
+                                                          Icons.phone,
+                                                          color: Colors.white,
+                                                        )),
+                                                    SizedBox(
+                                                      height: 10.h,
+                                                    ),
+                                                    Text(
+                                                      "My Number",
+                                                      style: TextStyle(
+                                                          fontSize: 15.sp,
+                                                          color: Colors.white),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                if (prefs.getString(
+                                                        'name_latin') !=
+                                                    null) {
+                                                  prefs.getString("name_arabic") ==
+                                                          null
+                                                      ? Navigator.of(context)
+                                                          .push(
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    IdInfos(),
+                                                          ),
+                                                        )
+                                                      : Navigator.of(context)
+                                                          .push(MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  CardNfcInfo()));
+                                                }
+                                              },
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        2 -
+                                                    10.h -
+                                                    10.h,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.w,
+                                                    vertical: 10.h),
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        color4.withOpacity(0.8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.r)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                        padding: EdgeInsets.all(
+                                                            8.sp),
+                                                        decoration: BoxDecoration(
+                                                            color: prefs.getString(
+                                                                        'name_latin') !=
+                                                                    null
+                                                                ? color5
+                                                                : Colors.grey,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.r)),
+                                                        child: Icon(
                                                           Icons
                                                               .credit_card_outlined,
                                                           color: Colors.white,
@@ -686,13 +711,16 @@ class _WelcomeState extends State<Welcome> {
                                   ),
                           ),
                           Visibility(
-                            // visible: prefs.getString('name_latin') == null,
                             visible: prefs.getString('name_latin') == null,
                             child: Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 15.h),
                               child: ElevatedButton(
-                                onPressed: ()  {
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Steps(
+                                            token: widget.token,
+                                          )));
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: color3,
