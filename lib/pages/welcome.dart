@@ -50,7 +50,7 @@ class _WelcomeState extends State<Welcome> {
                               height: 1,
                             ),
                             Text(
-                              prefs.getString("user_id").toString(),
+                              "ID: ${prefs.getString("user_id").toString()}",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFFA2A2B5),
@@ -321,8 +321,7 @@ class _WelcomeState extends State<Welcome> {
                                                         BorderRadius.circular(
                                                             15.r)),
                                                 child: Icon(
-                                                  Icons
-                                                      .person_outline_outlined,
+                                                  Icons.person_outline_outlined,
                                                   color: Colors.white,
                                                 )),
                                           ),
@@ -341,7 +340,9 @@ class _WelcomeState extends State<Welcome> {
                                                     letterSpacing: 0.20,
                                                   )),
                                               TextSpan(
-                                                  text: prefs.getString('name_latin')?.toUpperCase(),
+                                                  text: prefs
+                                                      .getString('name_latin')
+                                                      ?.toUpperCase(),
                                                   style: TextStyle(
                                                     color: Color(0xFFA2A2B5),
                                                     fontSize: 14.h,
@@ -367,9 +368,9 @@ class _WelcomeState extends State<Welcome> {
                                                   )),
                                               TextSpan(
                                                   text: prefs
-                                                                .getString(
-                                                                    'surname_latin')
-                                                                ?.toUpperCase(),
+                                                      .getString(
+                                                          'surname_latin')
+                                                      ?.toUpperCase(),
                                                   style: TextStyle(
                                                     color: Color(0xFFA2A2B5),
                                                     fontSize: 14.h,
@@ -394,10 +395,9 @@ class _WelcomeState extends State<Welcome> {
                                                     letterSpacing: 0.20,
                                                   )),
                                               TextSpan(
-                                                  text:  prefs
-                                                                .getString(
-                                                                    'user_id')
-                                                                ?.toUpperCase(),
+                                                  text: prefs
+                                                      .getString('user_id')
+                                                      ?.toUpperCase(),
                                                   style: TextStyle(
                                                     color: Color(0xFFA2A2B5),
                                                     fontSize: 14.h,
