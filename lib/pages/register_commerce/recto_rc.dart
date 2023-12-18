@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_ip_address/get_ip_address.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/register_commerce/verso_rc.dart';
 import 'package:whowiyati/pages/verso.dart';
@@ -20,6 +23,20 @@ class RectoRC extends StatefulWidget {
 class _RectoRCState extends State<RectoRC> {
   // ============== Business Logic ==============
   bool _is_loading = false;
+  String _myToken = "";
+
+  void getToken() {
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? token = value;
+      _myToken = value.toString();
+    });
+  }
+
+  @override
+  void initState() {
+    getToken();
+    super.initState();
+  }
 
   void takeRecto() async {
     final picker = ImagePicker();
@@ -35,13 +52,15 @@ class _RectoRCState extends State<RectoRC> {
       String ip = data.toString();
 
       var headers = {
-        'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ=='
+        'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
+        'Content-Type':
+            'multipart/form-data; boundary=<calculated when request is sent>',
       };
 
       var request = http.MultipartRequest(
           'POST',
           Uri.parse(
-              'https://api.icosnet.com/classifier/nif_nis_rc_classifier?token=ssssss&ip_adress=${ip}&document_types=rc.front'));
+              'https://api.icosnet.com/classifier/nif_nis_rc_classifier?token=${_myToken}&ip_adress=${ip}&document_types=rc.front'));
 
       request.files
           .add(await http.MultipartFile.fromPath('document', rectoPhoto.path));
@@ -51,9 +70,6 @@ class _RectoRCState extends State<RectoRC> {
 
       if (response.statusCode == 200) {
         String answer = await response.stream.bytesToString();
-        print('======================');
-        print(answer);
-        print('======================');
 
         Map<String, dynamic> answerJson = jsonDecode(answer);
 

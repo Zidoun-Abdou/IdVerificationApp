@@ -6,6 +6,7 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -28,6 +29,20 @@ class NifRC extends StatefulWidget {
 class _NifRCState extends State<NifRC> {
   // ============== Business Logic ==============
   bool _is_loading = false;
+  String _myToken = "";
+
+  void getToken() {
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? token = value;
+      _myToken = value.toString();
+    });
+  }
+
+  @override
+  void initState() {
+    getToken();
+    super.initState();
+  }
 
   void takeNif() async {
     final picker = ImagePicker();
@@ -43,13 +58,15 @@ class _NifRCState extends State<NifRC> {
       String ip = data.toString();
 
       var headers = {
-        'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ=='
+        'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
+        'Content-Type':
+            'multipart/form-data; boundary=<calculated when request is sent>'
       };
 
       var request = http.MultipartRequest(
           'POST',
           Uri.parse(
-              'https://api.icosnet.com/classifier/nif_nis_rc_classifier?token=ssssss&ip_adress=${ip}&document_types=nif'));
+              'https://api.icosnet.com/classifier/nif_nis_rc_classifier?token=${_myToken}&ip_adress=${ip}&document_types=nif'));
 
       request.files
           .add(await http.MultipartFile.fromPath('document', nifPhoto.path));
@@ -59,9 +76,6 @@ class _NifRCState extends State<NifRC> {
 
       if (response.statusCode == 200) {
         String answer = await response.stream.bytesToString();
-        print('======================');
-        print(answer);
-        print('======================');
 
         Map<String, dynamic> answerJson = jsonDecode(answer);
 
