@@ -6,6 +6,7 @@ import 'package:whowiyati/pages/cardnfcinfo.dart';
 import 'package:whowiyati/pages/change_mot_pass.dart';
 import 'package:whowiyati/pages/changepassword.dart';
 import 'package:whowiyati/pages/homepage.dart';
+import 'package:whowiyati/pages/register_commerce/registre_commerce.dart';
 import 'package:whowiyati/pages/steps.dart';
 
 import 'idinfos.dart';
@@ -580,7 +581,13 @@ class _WelcomeState extends State<Welcome> {
                                         children: [
                                           Expanded(
                                             child: InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      RegisterCommerce(),
+                                                ));
+                                              },
                                               child: Container(
                                                 height: MediaQuery.of(context)
                                                             .size
