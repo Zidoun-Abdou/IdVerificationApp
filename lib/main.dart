@@ -11,10 +11,11 @@ import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/idcards.dart';
 import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:whowiyati/pages/dealpad.dart';
-import 'package:whowiyati/pages/webviewfile.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';
+
+import 'pages/testing.dart';
 
 late SharedPreferences prefs;
 late List<CameraDescription> cameras;
@@ -68,10 +69,13 @@ class _MyAppState extends State<MyApp> {
                     ? DialpadScreen(
                         status: 1,
                       )
-                    : DialpadScreen(
-                        status: 3,
-                      ),
+                    : Testing(),
+                    // DialpadScreen(
+                    //     status: 3,
+                    //   )
             theme: ThemeData(
+                bottomSheetTheme: BottomSheetThemeData(
+                    backgroundColor: Colors.black.withOpacity(0.5)),
                 fontFamily: "Rubik",
                 canvasColor: Colors.white,
                 accentColor: color3),
