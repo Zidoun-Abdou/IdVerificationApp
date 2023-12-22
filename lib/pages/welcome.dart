@@ -1,7 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:glassmorphism/glassmorphism.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/register_commerce/ajouter_compte_pro.dart';
 import 'package:whowiyati/pages/cardnfcinfo.dart';
 import 'package:whowiyati/pages/change_mot_pass.dart';
 import 'package:whowiyati/pages/changepassword.dart';
@@ -22,6 +26,9 @@ class Welcome extends StatefulWidget {
 
 class _WelcomeState extends State<Welcome> {
   bool isProfile = false;
+  final GlobalKey<State<BottomSheet>> _bottomSheetKey = GlobalKey();
+  double initialSize = 0.7;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,29 +222,208 @@ class _WelcomeState extends State<Welcome> {
                           height: 20.h,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              'Manage your profile ',
-                              style: TextStyle(
-                                color: Color(0xFFA2A2B5),
-                                fontSize: 15.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                            // Text(
+                            //   'Manage your profile ',
+                            //   style: TextStyle(
+                            //     color: Color(0xFFA2A2B5),
+                            //     fontSize: 15.sp,
+                            //     fontFamily: 'Inter',
+                            //     fontWeight: FontWeight.w600,
+                            //   ),
+                            // ),
                             InkWell(
                               onTap: () {
-                                if (prefs.getString('idinfos').toString() !=
-                                        "null" &&
-                                    prefs.getString('mail').toString() !=
-                                        "null") {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => CardNfcInfo()));
-                                }
+                                if (prefs.getString('name_latin') != null) {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      backgroundColor: Colors.transparent,
+                                      barrierColor: Colors.transparent,
+                                      isDismissible: true,
+                                      isScrollControlled: true,
+                                      useSafeArea: true,
+                                      builder: (context) {
+                                        return ClipRect(
+                                          child: BackdropFilter(
+                                            filter: new ImageFilter.blur(
+                                                sigmaX: 20.0, sigmaY: 20.0),
+                                            child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.7,
+                                                decoration: BoxDecoration(
+                                                    border: Border(
+                                                        top: BorderSide(
+                                                            color: color4))),
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(15.h),
+                                                  child: Stack(
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: CircleAvatar(
+                                                            backgroundColor: Colors
+                                                                .white
+                                                                .withOpacity(
+                                                                    0.10000000149011612),
+                                                            child: Icon(
+                                                              Icons.clear,
+                                                              color:
+                                                                  Colors.white,
+                                                              size: 17.sp,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                        top: 90.h,
+                                                        right: 0,
+                                                        left: 0,
+                                                        child: Column(
+                                                          children: [
+                                                            Text(
+                                                              "Souhaitez-vous ajouter un  compte\nprofessionnel ?",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 14.sp,
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                letterSpacing:
+                                                                    0.20,
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                                height: 30.h),
+                                                            ElevatedButton(
+                                                              onPressed: () {
+                                                                // Navigator to ajouter compte pro
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .push(
+                                                                  PageRouteBuilder(
+                                                                    pageBuilder: (context,
+                                                                            animation,
+                                                                            secondaryAnimation) =>
+                                                                        const AjouterComptePro(),
+                                                                    transitionsBuilder: (context,
+                                                                        animation,
+                                                                        secondaryAnimation,
+                                                                        child) {
+                                                                      var tween = Tween<Offset>(
+                                                                              begin: const Offset(0.0, 1.5),
+                                                                              end: Offset.zero)
+                                                                          .chain(CurveTween(curve: Curves.easeInOut));
 
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => ChangePassword()));
+                                                                      var offestAnimation =
+                                                                          animation
+                                                                              .drive(tween);
+
+                                                                      return SlideTransition(
+                                                                        position:
+                                                                            offestAnimation,
+                                                                        child:
+                                                                            child,
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                );
+                                                              },
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                backgroundColor:
+                                                                    color3,
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            15.h),
+                                                                foregroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                minimumSize: Size
+                                                                    .fromHeight(
+                                                                        30.w),
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.r),
+                                                                ),
+                                                                elevation: 20,
+                                                                shadowColor:
+                                                                    color3,
+                                                              ),
+                                                              child: Text(
+                                                                'Ajouter un compte PRO',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      15.sp,
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: Text.rich(
+                                                          TextSpan(children: [
+                                                            TextSpan(
+                                                                text:
+                                                                    'WHOWIATY',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontFamily:
+                                                                        'Inter',
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600)),
+                                                            TextSpan(
+                                                              text:
+                                                                  ' by icosnet',
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ]),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )),
+                                          ),
+                                        );
+                                      });
+                                }
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -251,7 +437,7 @@ class _WelcomeState extends State<Welcome> {
                                   ),
                                 ),
                                 child: Text(
-                                  'Paramètres',
+                                  'Ajoutez Compte PRO',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                     color:

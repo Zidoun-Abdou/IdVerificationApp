@@ -5,7 +5,7 @@ const color2 = Colors.black;
 const color3 = const Color(0xFF24D37F);
 const color4 = const Color(0xFF353542);
 const color5 = const Color(0xFF2656FF);
-
+const color6 = const Color(0xFF666680);
 
 
 validInput(String val, int min, int max) {
