@@ -23,7 +23,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://ibm-p.vazii.com/esb/wh_get_all_requests.php?id=63343047'));
+            'https://ibm-p.vazii.com/esb/wh_get_all_requests.php?id=$id'));
 
     http.StreamedResponse response = await request.send();
 
