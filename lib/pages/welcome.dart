@@ -45,7 +45,7 @@ class _WelcomeState extends State<Welcome> {
                     height: MediaQuery.of(context).size.height / 2.3,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        color: color1,
+                        // color: color1,
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20.r),
                             bottomRight: Radius.circular(20.r))),
@@ -59,7 +59,7 @@ class _WelcomeState extends State<Welcome> {
                               height: 1,
                             ),
                             Text(
-                              "ID: ${prefs.getString("user_id").toString()}",
+                              "My account",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFFA2A2B5),
@@ -178,30 +178,67 @@ class _WelcomeState extends State<Welcome> {
                         SizedBox(
                           height: 15.h,
                         ),
-                        Text.rich(
-                          TextSpan(
-                            children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text.rich(
                               TextSpan(
-                                text: "Bonjour",
-                                //text: 'Hello\n${prefs.getString('idinfos').toString()}',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 40,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
+                                children: [
+                                  TextSpan(
+                                    // text: "Bonjour",
+                                    text:
+                                        'Hello\n${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 40,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '.',
+                                    style: TextStyle(
+                                      color: Color(0xFF1FD15C),
+                                      fontSize: 40,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: 10.h,
+                                  left: 15.w,
+                                  bottom: 10.h,
+                                  right: 10.w),
+                              alignment: Alignment.center,
+                              decoration: ShapeDecoration(
+                                color: Colors.white
+                                    .withOpacity(0.10000000149011612),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.r),
                                 ),
                               ),
-                              TextSpan(
-                                text: '.',
-                                style: TextStyle(
-                                  color: Color(0xFF1FD15C),
-                                  fontSize: 40,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.notifications_none_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    height: 20.h,
+                                    child: CircleAvatar(
+                                      backgroundColor: color5,
+                                      child: Text("0"),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         Visibility(
                           visible: prefs.getString('name_latin') == null,
@@ -219,7 +256,7 @@ class _WelcomeState extends State<Welcome> {
                           ),
                         ),
                         SizedBox(
-                          height: 20.h,
+                          height: 40.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -252,7 +289,7 @@ class _WelcomeState extends State<Welcome> {
                                                 height: MediaQuery.of(context)
                                                         .size
                                                         .height *
-                                                    0.7,
+                                                    0.62,
                                                 decoration: BoxDecoration(
                                                     border: Border(
                                                         top: BorderSide(
@@ -326,7 +363,7 @@ class _WelcomeState extends State<Welcome> {
                                                                         secondaryAnimation,
                                                                         child) {
                                                                       var tween = Tween<Offset>(
-                                                                              begin: const Offset(0.0, 1.5),
+                                                                              begin: const Offset(0.0, 1.0),
                                                                               end: Offset.zero)
                                                                           .chain(CurveTween(curve: Curves.easeInOut));
 
@@ -680,7 +717,7 @@ class _WelcomeState extends State<Welcome> {
                                                       height: 10.h,
                                                     ),
                                                     Text(
-                                                      "Mon identité",
+                                                      "Mon\nprofile",
                                                       style: TextStyle(
                                                           fontSize: 15.sp,
                                                           color: Colors.white),
@@ -748,7 +785,7 @@ class _WelcomeState extends State<Welcome> {
                                                       height: 10.h,
                                                     ),
                                                     Text(
-                                                      "Signature des documents",
+                                                      "Mes\ndocuments",
                                                       style: TextStyle(
                                                           fontSize: 15.sp,
                                                           color: Colors.white),
@@ -767,13 +804,7 @@ class _WelcomeState extends State<Welcome> {
                                         children: [
                                           Expanded(
                                             child: InkWell(
-                                              onTap: () {
-                                                Navigator.of(context)
-                                                    .push(MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RegisterCommerce(),
-                                                ));
-                                              },
+                                              onTap: () {},
                                               child: Container(
                                                 height: MediaQuery.of(context)
                                                             .size
@@ -798,20 +829,25 @@ class _WelcomeState extends State<Welcome> {
                                                         padding: EdgeInsets.all(
                                                             8.sp),
                                                         decoration: BoxDecoration(
-                                                            color: Colors.grey,
+                                                            color: prefs.getString(
+                                                                        'name_latin') !=
+                                                                    null
+                                                                ? color5
+                                                                : Colors.grey,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                         15.r)),
                                                         child: Icon(
-                                                          Icons.phone,
+                                                          Icons
+                                                              .star_border_outlined,
                                                           color: Colors.white,
                                                         )),
                                                     SizedBox(
                                                       height: 10.h,
                                                     ),
                                                     Text(
-                                                      "My Number",
+                                                      "Mes\ncomptes Pro",
                                                       style: TextStyle(
                                                           fontSize: 15.sp,
                                                           color: Colors.white),
@@ -880,15 +916,14 @@ class _WelcomeState extends State<Welcome> {
                                                                     .circular(
                                                                         15.r)),
                                                         child: Icon(
-                                                          Icons
-                                                              .credit_card_outlined,
+                                                          Icons.edit_outlined,
                                                           color: Colors.white,
                                                         )),
                                                     SizedBox(
                                                       height: 10.h,
                                                     ),
                                                     Text(
-                                                      "My Identity Card",
+                                                      "Signature\nélectronique",
                                                       style: TextStyle(
                                                           fontSize: 15.sp,
                                                           color: Colors.white),
