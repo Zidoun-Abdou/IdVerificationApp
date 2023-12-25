@@ -23,16 +23,6 @@ class _AjouterCompteProState extends State<AjouterComptePro> {
   ValueNotifier<bool> _etape3 = ValueNotifier(false);
   ValueNotifier<bool> _etape4 = ValueNotifier(false);
 
-  bool etape1 = true;
-  bool etape2 = false;
-  bool etape3 = false;
-  bool etape4 = false;
-
-  int currentEtape = 1;
-
-  bool isVerificationNum = false;
-  bool isVerificationEmail = false;
-
   @override
   void initState() {
     _currentEtape.addListener(() {
@@ -418,7 +408,7 @@ class _AjouterCompteProState extends State<AjouterComptePro> {
                                 alignment: Alignment.topRight,
                                 child: GestureDetector(
                                   onTap: () {
-                                    if (currentEtape == 0) {
+                                    if (_currentEtape.value == 0) {
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                     } else {
@@ -562,67 +552,6 @@ class _AjouterCompteProState extends State<AjouterComptePro> {
                                       ),
                                     ),
                                   ],
-                                ),
-                              ),
-                              Visibility(
-                                visible: false,
-                                child: Positioned(
-                                  bottom: 50.h,
-                                  right: 0,
-                                  left: 0,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      if (currentEtape == 0) {
-                                        if (etape1 == false) {
-                                          currentEtape = 1;
-                                          setState(() {});
-                                        } else if (etape2 == false) {
-                                          currentEtape = 2;
-                                          setState(() {});
-                                        }
-                                      } else if (currentEtape == 1) {
-                                        if (isVerificationNum == false) {
-                                          isVerificationNum = true;
-                                          setState(() {});
-                                        } else {
-                                          currentEtape = 0;
-                                          etape1 = true;
-                                          setState(() {});
-                                        }
-                                      } else if (currentEtape == 2) {
-                                        if (isVerificationEmail == false) {
-                                          isVerificationEmail = true;
-                                          setState(() {});
-                                        } else {
-                                          currentEtape = 0;
-                                          etape2 = true;
-                                          setState(() {});
-                                        }
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: color5,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15.h),
-                                      foregroundColor: Colors.white,
-                                      minimumSize: Size.fromHeight(30.w),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(50.r),
-                                      ),
-                                      elevation: 20,
-                                      shadowColor: color3,
-                                    ),
-                                    child: Text(
-                                      'Continuer',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ),
                               Align(
