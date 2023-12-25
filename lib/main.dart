@@ -11,7 +11,7 @@ import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/idcards.dart';
 import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:whowiyati/pages/dealpad.dart';
-import 'package:whowiyati/pages/request_handling.dart';
+import 'package:whowiyati/pages/demande_validation.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';
@@ -43,15 +43,42 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     getToken();
+    requestPermissionNotification();
+    firebaseMessagingConfig();
   }
 
+  // Get Token
   String _myToken = "";
-
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
       String? token = value;
       _myToken = value.toString();
       print("token : " + _myToken);
+    });
+  }
+
+  // Notification Permission for ios
+  requestPermissionNotification() async {
+    // ignore: unused_local_variable
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+  }
+
+  // Handling Foreground messages
+  firebaseMessagingConfig() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print(message.notification!.title);
+        print(message.notification!.body);
+      }
     });
   }
 
@@ -64,16 +91,16 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: prefs.getString('user_id').toString() == "null"
-                ? HomePage()
-                : prefs.getString('pasword').toString() == "null"
-                    ? DialpadScreen(
-                        status: 1,
-                      )
-                    : DialpadScreen(
-                        status: 3,
-                      ),
-            // home: RequestHandling(),
+            // home: prefs.getString('user_id').toString() == "null"
+            //     ? HomePage()
+            //     : prefs.getString('pasword').toString() == "null"
+            //         ? DialpadScreen(
+            //             status: 1,
+            //           )
+            //         : DialpadScreen(
+            //             status: 3,
+            //           ),
+            home: DemandeValidation(),
             theme: ThemeData(
                 bottomSheetTheme: BottomSheetThemeData(
                     backgroundColor: Colors.black.withOpacity(0.5)),
