@@ -11,6 +11,7 @@ import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/idcards.dart';
 import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:whowiyati/pages/dealpad.dart';
+import 'package:whowiyati/pages/request_handling.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';
@@ -50,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     FirebaseMessaging.instance.getToken().then((value) {
       String? token = value;
       _myToken = value.toString();
-      print(_myToken);
+      print("token : " + _myToken);
     });
   }
 
@@ -69,10 +70,10 @@ class _MyAppState extends State<MyApp> {
                     ? DialpadScreen(
                         status: 1,
                       )
-                    : Testing(),
-                    // DialpadScreen(
-                    //     status: 3,
-                    //   )
+                    : DialpadScreen(
+                        status: 3,
+                      ),
+            // home: RequestHandling(),
             theme: ThemeData(
                 bottomSheetTheme: BottomSheetThemeData(
                     backgroundColor: Colors.black.withOpacity(0.5)),
