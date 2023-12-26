@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "70986061603",
-    "project_id": "whowiaty",
-    "storage_bucket": "whowiaty.appspot.com"
+    "project_number": "12687051866",
+    "project_id": "whowiaty2",
+    "storage_bucket": "whowiaty2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:70986061603:android:c898542e097def33bb5e96",
+        "mobilesdk_app_id": "1:12687051866:android:e354a997ae0c6602a25c63",
         "android_client_info": {
           "package_name": "com.icosnet.whowiyati"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAjC1cFLu_r6tRZSYsRU1KcygoqGe9IDN0"
+          "current_key": "AIzaSyCtYewlc26fLRF7BQlyJtAYSuriQV16ozc"
         }
       ],
       "services": {
