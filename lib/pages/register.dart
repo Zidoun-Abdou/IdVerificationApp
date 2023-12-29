@@ -71,7 +71,7 @@ class _RegisterState extends State<Register> {
                               children: [
                                 Icon(Icons.person_outline_outlined),
                                 Text(
-                                  ' Mon compt',
+                                  ' Mon compte',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 13.sp,
@@ -117,7 +117,7 @@ class _RegisterState extends State<Register> {
                           height: 20.h,
                         ),
                         Text(
-                          "By registering, you agree to our Terms of Use, Learn\nhow we collect, use and share your data ",
+                          "En vous inscrivant, vous acceptez nos conditions\nd'utilisation. Découvrez comment nous collectons,\nutilisons et partageons vos données.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[700],
