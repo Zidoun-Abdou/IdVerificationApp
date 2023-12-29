@@ -8,6 +8,7 @@ import 'package:whowiyati/pages/register_commerce/verification_telephone.dart';
 
 import '../../main.dart';
 import 'etape_verification_compte_pro.dart';
+import 'verification_registre_commerce.dart';
 
 class AjouterComptePro extends StatefulWidget {
   const AjouterComptePro({super.key});
@@ -64,7 +65,7 @@ class _AjouterCompteProState extends State<AjouterComptePro> {
                                 height: 1,
                               ),
                               Text(
-                                "My account",
+                                "Mon compte",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Color(0xFFA2A2B5),
@@ -93,9 +94,8 @@ class _AjouterCompteProState extends State<AjouterComptePro> {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      // text: "Bonjour",
                                       text:
-                                          'Hello\n${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
+                                          'Bonjour\n${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 40,
@@ -139,7 +139,7 @@ class _AjouterCompteProState extends State<AjouterComptePro> {
                                       height: 20.h,
                                       child: CircleAvatar(
                                         backgroundColor: color5,
-                                        child: Text("3"),
+                                        child: Text("0"),
                                       ),
                                     )
                                   ],
@@ -549,6 +549,14 @@ class _AjouterCompteProState extends State<AjouterComptePro> {
                                         currentEtapeValueNotifier:
                                             _currentEtape,
                                         etape2ValueNotifier: _etape2,
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: _currentEtape.value == 3,
+                                      child: VerificationRegistreCommerce(
+                                        currentEtapeValueNotifier:
+                                            _currentEtape,
+                                        etape3ValueNotifier: _etape3,
                                       ),
                                     ),
                                   ],
