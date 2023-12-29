@@ -125,7 +125,7 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                                       text: ' Fr',
                                       style: TextStyle(
                                         color: color3,
-                                        fontSize: 14.sp,
+                                        fontSize: 12.sp,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.bold,
                                         letterSpacing: 0.20,
@@ -222,47 +222,53 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          _isAr
-                              ? 'تاريخ الميلاد : ' +
-                                  prefs.getString('birth_date').toString()
-                              : 'Date de naissance : ' +
-                                  prefs.getString('birth_date').toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: _isAr ? 14.sp : 12.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 0.20,
+                    child: Directionality(
+                      textDirection:
+                          _isAr ? TextDirection.rtl : TextDirection.ltr,
+                      child: Row(
+                        children: [
+                          Text(
+                            _isAr
+                                ? 'تاريخ الميلاد : ' +
+                                    prefs.getString('birth_date').toString()
+                                : 'Date de naissance : ' +
+                                    prefs.getString('birth_date').toString(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _isAr ? 14.sp : 12.sp,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 0.20,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          _isAr
-                              ? 'رقم التعريف الوطني: ' +
-                                  prefs.getString('nin').toString()
-                              : 'NIN : ' + prefs.getString('nin').toString(),
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: _isAr ? 14.sp : 12.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        )
-                      ],
+                    child: Directionality(
+                      textDirection:
+                          _isAr ? TextDirection.rtl : TextDirection.ltr,
+                      child: Row(
+                        children: [
+                          Text(
+                            _isAr
+                                ? 'رقم التعريف الوطني: ' +
+                                    prefs.getString('nin').toString()
+                                : 'NIN : ' + prefs.getString('nin').toString(),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _isAr ? 14.sp : 12.sp,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -359,13 +365,12 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Directionality(
-                          textDirection:
-                              _isAr ? TextDirection.rtl : TextDirection.ltr,
-                          child: Text(
+                    child: Directionality(
+                      textDirection:
+                          _isAr ? TextDirection.rtl : TextDirection.ltr,
+                      child: Row(
+                        children: [
+                          Text(
                             _isAr
                                 ? 'تاريخ الإصدار : ' +
                                     prefs.getString('deliv_date').toString()
@@ -380,19 +385,18 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                               letterSpacing: 0.20,
                             ),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Directionality(
-                          textDirection:
-                              _isAr ? TextDirection.rtl : TextDirection.ltr,
-                          child: Text(
+                    child: Directionality(
+                      textDirection:
+                          _isAr ? TextDirection.rtl : TextDirection.ltr,
+                      child: Row(
+                        children: [
+                          Text(
                             _isAr
                                 ? 'تاريخ الإنتهاء : ' +
                                     prefs.getString('exp_date').toString()
@@ -407,20 +411,19 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                               letterSpacing: 0.20,
                             ),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Visibility(
                     visible: _isAr,
                     child: Expanded(
                       flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: Text(
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Row(
+                          children: [
+                            Text(
                               'سلطة الإصدار: ' +
                                   prefs.getString('baladia_arab').toString(),
                               textAlign: TextAlign.center,
@@ -432,8 +435,8 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                                 letterSpacing: 0.20,
                               ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -441,22 +444,24 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                     visible: !_isAr,
                     child: Expanded(
                       flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Délivré à : ' +
-                                prefs.getString('baladia_latin').toString(),
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        ],
+                      child: Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Délivré à : ' +
+                                  prefs.getString('baladia_latin').toString(),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.sp,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -510,7 +515,7 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                 shadowColor: color3, // Set the shadow color
               ),
               child: Text(
-                'Continuer',
+                'Retourner',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 15.sp,
