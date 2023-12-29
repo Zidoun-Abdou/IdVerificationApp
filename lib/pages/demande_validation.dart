@@ -20,18 +20,19 @@ class _DemandeValidationState extends State<DemandeValidation> {
   getDemandeValidation() async {
     String? id = prefs.getString('user_id');
 
+    var headers = {'Cookie': 'PHPSESSID=si51hjts93j3lkual21emqe540'};
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://ibm-p.vazii.com/esb/wh_get_all_requests.php?id=$id'));
+            'https://ibm-p.vazii.com/esb/wh_get_all_requests.php?id=63343047'));
+
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
-    String answer = await response.stream.bytesToString();
-    var answerJson = jsonDecode(answer);
-
-    if (answerJson.isNotEmpty) {
-      print(answerJson);
+    if (response.statusCode == 200) {
+      String answer = await response.stream.bytesToString();
+      var answerJson = jsonDecode(answer);
       return answerJson;
     } else {
       print(response.reasonPhrase);
@@ -105,18 +106,21 @@ class _DemandeValidationState extends State<DemandeValidation> {
                           }
                           if (enAttenteList.isNotEmpty) {
                             return ListView.separated(
-                              separatorBuilder: (context, index) => Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.h),
-                                child: Divider(
-                                  color: color6,
-                                  thickness: 1,
-                                ),
+                              separatorBuilder: (context, index) => SizedBox(
+                                height: 20.h,
                               ),
                               itemCount: enAttenteList.length,
                               itemBuilder: (context, index) => Container(
                                 height:
                                     MediaQuery.of(context).size.height * 0.23,
                                 width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 15.w,
+                                  horizontal: 20.w,
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20.r)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -127,30 +131,31 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'ID : ',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: color2,
                                                 fontSize: 15.sp,
                                                 fontWeight: FontWeight.w600)),
                                         TextSpan(
                                             text: enAttenteList[index].id,
                                             style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15.sp,
-                                            ))
+                                                color: color2,
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeight.w600))
                                       ]),
                                     ),
+                                    Divider(color: color6),
                                     Text.rich(
                                       TextSpan(children: [
                                         TextSpan(
                                             text: 'Source demande: ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text: enAttenteList[index]
                                                 .requestSource,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),
@@ -160,14 +165,14 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'Créer à : ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text:
                                                 enAttenteList[index].createdAt,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),
@@ -177,14 +182,14 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'type demande : ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text: enAttenteList[index]
                                                 .typeRequest,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),
@@ -208,7 +213,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                               borderRadius:
                                                   BorderRadius.circular(60.r),
                                             ),
-                                            elevation: 20,
+                                            elevation: 10,
                                             shadowColor: Color(0xFFD32424),
                                           ),
                                           child: Text(
@@ -235,7 +240,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                               borderRadius:
                                                   BorderRadius.circular(50.r),
                                             ),
-                                            elevation: 20,
+                                            elevation: 10,
                                             shadowColor: color3,
                                           ),
                                           child: Text(
@@ -345,18 +350,21 @@ class _DemandeValidationState extends State<DemandeValidation> {
 
                           if (accepteList.isNotEmpty) {
                             return ListView.separated(
-                              separatorBuilder: (context, index) => Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.h),
-                                child: Divider(
-                                  color: color6,
-                                  thickness: 1,
-                                ),
+                              separatorBuilder: (context, index) => SizedBox(
+                                height: 20.h,
                               ),
                               itemCount: accepteList.length,
                               itemBuilder: (context, index) => Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.23,
+                                    MediaQuery.of(context).size.height * 0.2,
                                 width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 15.w,
+                                  horizontal: 20.w,
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.r)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -367,30 +375,31 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'ID : ',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: color3,
                                                 fontSize: 15.sp,
                                                 fontWeight: FontWeight.w600)),
                                         TextSpan(
                                             text: accepteList[index].id,
                                             style: TextStyle(
-                                              color: color3,
-                                              fontSize: 15.sp,
-                                            ))
+                                                color: color3,
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeight.w600))
                                       ]),
                                     ),
+                                    Divider(color: color6),
                                     Text.rich(
                                       TextSpan(children: [
                                         TextSpan(
                                             text: 'Source demande: ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text: accepteList[index]
                                                 .requestSource,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),
@@ -400,13 +409,13 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'Créer à : ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text: accepteList[index].createdAt,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),
@@ -416,14 +425,14 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'type demande : ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text:
                                                 accepteList[index].typeRequest,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),
@@ -533,8 +542,15 @@ class _DemandeValidationState extends State<DemandeValidation> {
                               itemCount: refuseList.length,
                               itemBuilder: (context, index) => Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.23,
+                                    MediaQuery.of(context).size.height * 0.2,
                                 width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 15.w,
+                                  horizontal: 20.w,
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20.r)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -545,30 +561,31 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'ID : ',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Color(0xFFD32424),
                                                 fontSize: 15.sp,
                                                 fontWeight: FontWeight.w600)),
                                         TextSpan(
                                             text: refuseList[index].id,
                                             style: TextStyle(
-                                              color: Color(0xFFD32424),
-                                              fontSize: 15.sp,
-                                            ))
+                                                color: Color(0xFFD32424),
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeight.w600))
                                       ]),
                                     ),
+                                    Divider(color: color6),
                                     Text.rich(
                                       TextSpan(children: [
                                         TextSpan(
                                             text: 'Source demande: ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text:
                                                 refuseList[index].requestSource,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),
@@ -578,13 +595,13 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'Créer à : ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text: refuseList[index].createdAt,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),
@@ -594,13 +611,13 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         TextSpan(
                                             text: 'type demande : ',
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600)),
+                                              color: color9,
+                                              fontSize: 15.sp,
+                                            )),
                                         TextSpan(
                                             text: refuseList[index].typeRequest,
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: color9,
                                               fontSize: 15.sp,
                                             ))
                                       ]),

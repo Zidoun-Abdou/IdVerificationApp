@@ -1,16 +1,20 @@
 import 'dart:ui';
 
+import 'package:another_flushbar/flushbar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/demande_validation.dart';
 import 'package:whowiyati/pages/register_commerce/ajouter_compte_pro.dart';
 import 'package:whowiyati/pages/cardnfcinfo.dart';
 import 'package:whowiyati/pages/change_mot_pass.dart';
 import 'package:whowiyati/pages/changepassword.dart';
 import 'package:whowiyati/pages/homepage.dart';
-import 'package:whowiyati/pages/register_commerce/registre_commerce.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whowiyati/pages/steps.dart';
 
 import 'idinfos.dart';
@@ -28,6 +32,67 @@ class _WelcomeState extends State<Welcome> {
   bool isProfile = false;
   final GlobalKey<State<BottomSheet>> _bottomSheetKey = GlobalKey();
   double initialSize = 0.7;
+
+  // Handling Interaction with Notification when application is opened from a terminated state
+  getInit() async {
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    if (initialMessage != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => DemandeValidation(),
+        ),
+      );
+    }
+  }
+
+  // Handling Foreground messages
+  firebaseMessagingConfig() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        Flushbar(
+          onTap: (flushbar) {
+            // ******* Check If is Not Current Route setState Else Push to DemandeValidation *******
+            // if (Navigator.canPop(context)) {
+            //   print("true");
+            //   setState(() {});
+            // } else {
+            //   print("false");
+            //   Navigator.of(context).push(
+            //     MaterialPageRoute(builder: (context) => DemandeValidation()),
+            //   );
+            // }
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => DemandeValidation()),
+            );
+          },
+          flushbarPosition: FlushbarPosition.TOP,
+          duration: Duration(seconds: 2),
+          title: message.notification!.title,
+          message: message.notification!.body,
+          backgroundColor: color1,
+          flushbarStyle: FlushbarStyle.FLOATING,
+          icon: Image.asset("assets/images/logo1.png"),
+        )..show(context);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    getInit();
+    // Handling Interaction with Notification when application is opened from a background state
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => DemandeValidation(),
+        ),
+      );
+    });
+    firebaseMessagingConfig();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +124,7 @@ class _WelcomeState extends State<Welcome> {
                               height: 1,
                             ),
                             Text(
-                              "My account",
+                              "Mon compte",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFFA2A2B5),
@@ -69,110 +134,384 @@ class _WelcomeState extends State<Welcome> {
                                 letterSpacing: 0.20,
                               ),
                             ),
-                            IconButton(
-                                onPressed: () async {
+                            GestureDetector(
+                                onTap: () {
                                   showModalBottomSheet(
-                                      backgroundColor: color2,
                                       context: context,
+                                      backgroundColor: color7,
+                                      isDismissible: true,
+                                      isScrollControlled: true,
+                                      useSafeArea: true,
                                       builder: (context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 20.w,
-                                                  vertical: 20.h),
-                                              child: Text(
-                                                "Êtes-vous sûr de vouloir quitter Whowiyaty?",
-                                                style: TextStyle(
-                                                    color: Colors.white),
+                                        return Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.88,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(15.h),
+                                              child: Stack(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Paramètre",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 20.sp,
+                                                          fontFamily: 'Inter',
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          letterSpacing: 0.20,
+                                                        ),
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: CircleAvatar(
+                                                          backgroundColor:
+                                                              color8,
+                                                          child: Icon(
+                                                            Icons.clear,
+                                                            color: Colors.white,
+                                                            size: 17.sp,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Positioned(
+                                                    top: 60.h,
+                                                    right: 0,
+                                                    left: 0,
+                                                    child: Column(
+                                                      children: [
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context).push(MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        DemandeValidation(),
+                                                                settings:
+                                                                    RouteSettings(
+                                                                        name:
+                                                                            "demandeValidation")));
+                                                          },
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            backgroundColor:
+                                                                color8,
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    vertical:
+                                                                        5.h,
+                                                                    horizontal:
+                                                                        10.w),
+                                                            minimumSize:
+                                                                Size.fromHeight(
+                                                                    30.w),
+                                                            maximumSize:
+                                                                Size.fromHeight(
+                                                                    60.w),
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.r),
+                                                            ),
+                                                          ),
+                                                          child: Stack(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            children: [
+                                                              Align(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: SvgPicture
+                                                                    .asset(
+                                                                        "assets/images/demande_validation.svg"),
+                                                              ),
+                                                              Positioned(
+                                                                left: 70.w,
+                                                                right: 0.w,
+                                                                child: Text(
+                                                                  'Mes Demandes de Validation',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        15.sp,
+                                                                    fontFamily:
+                                                                        'Inter',
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    bottom: 20.h,
+                                                    left: 0,
+                                                    right: 0,
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        showModalBottomSheet(
+                                                            backgroundColor:
+                                                                color2,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                        horizontal: 20
+                                                                            .w,
+                                                                        vertical:
+                                                                            20.h),
+                                                                    child: Text(
+                                                                      "Êtes-vous sûr de vouloir quitter Whowiyaty?",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceEvenly,
+                                                                    children: [
+                                                                      ElevatedButton(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          // await prefs.clear();
+                                                                          await prefs.setString(
+                                                                              'login',
+                                                                              'false');
+                                                                          Navigator.pushAndRemoveUntil(
+                                                                              context,
+                                                                              MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+                                                                              (Route<dynamic> route) => false);
+                                                                        },
+                                                                        child: Text(
+                                                                            "Oui"),
+                                                                        style: ElevatedButton.styleFrom(
+                                                                            backgroundColor: color3,
+                                                                            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 30.w),
+                                                                            foregroundColor: Colors.white,
+                                                                            shape: RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(5.r),
+                                                                            ),
+                                                                            elevation: 10,
+                                                                            shadowColor: color3),
+                                                                      ),
+                                                                      ElevatedButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.of(context)
+                                                                              .pop();
+                                                                        },
+                                                                        child: Text(
+                                                                            "Non"),
+                                                                        style: ElevatedButton.styleFrom(
+                                                                            backgroundColor: Colors.red,
+                                                                            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 30.w),
+                                                                            foregroundColor: Colors.white,
+                                                                            shape: RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(5.r),
+                                                                            ),
+                                                                            elevation: 10,
+                                                                            shadowColor: Colors.red),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 20,
+                                                                  )
+                                                                ],
+                                                              );
+                                                            });
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor: color7,
+                                                        elevation: 0,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 5.h,
+                                                                horizontal:
+                                                                    10.w),
+                                                        minimumSize:
+                                                            Size.fromHeight(
+                                                                30.w),
+                                                        maximumSize:
+                                                            Size.fromHeight(
+                                                                60.w),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      50.r),
+                                                        ),
+                                                      ),
+                                                      child: Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          Align(
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            child: SvgPicture.asset(
+                                                                "assets/images/logout.svg"),
+                                                          ),
+                                                          Positioned(
+                                                            left: 70.w,
+                                                            right: 0.w,
+                                                            child: Text(
+                                                              'Se déconnecter',
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 15.sp,
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                ElevatedButton(
-                                                  onPressed: () async {
-                                                    await prefs.clear();
-                                                    Navigator.pushAndRemoveUntil(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                HomePage()),
-                                                        (Route<dynamic>
-                                                                route) =>
-                                                            false);
-                                                  },
-                                                  child: Text("Oui"),
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                              color3,
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical:
-                                                                      15.h,
-                                                                  horizontal:
-                                                                      30.w),
-                                                          foregroundColor:
-                                                              Colors.white,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.r),
-                                                          ),
-                                                          elevation: 10,
-                                                          shadowColor: color3),
-                                                ),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text("Non"),
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical:
-                                                                      15.h,
-                                                                  horizontal:
-                                                                      30.w),
-                                                          foregroundColor:
-                                                              Colors.white,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.r),
-                                                          ),
-                                                          elevation: 10,
-                                                          shadowColor:
-                                                              Colors.red),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                            )
-                                          ],
-                                        );
+                                            ));
                                       });
                                 },
-                                icon: Icon(
-                                  Icons.logout,
-                                  color: Colors.grey,
-                                ))
-                            // Icon(
-                            //   Icons.logout,
-                            //   color: Colors.grey,
-                            // )
+                                child: SvgPicture.asset(
+                                  "assets/images/menu.svg",
+                                  height: 22.h,
+                                )),
+                            // IconButton(
+                            //     onPressed: () async {
+                            //       showModalBottomSheet(
+                            //           backgroundColor: color2,
+                            //           context: context,
+                            //           builder: (context) {
+                            //             return Column(
+                            //               mainAxisSize: MainAxisSize.min,
+                            //               children: [
+                            //                 Padding(
+                            //                   padding: EdgeInsets.symmetric(
+                            //                       horizontal: 20.w,
+                            //                       vertical: 20.h),
+                            //                   child: Text(
+                            //                     "Êtes-vous sûr de vouloir quitter Whowiyaty?",
+                            //                     style: TextStyle(
+                            //                         color: Colors.white),
+                            //                   ),
+                            //                 ),
+                            //                 Row(
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment.spaceEvenly,
+                            //                   children: [
+                            //                     ElevatedButton(
+                            //                       onPressed: () async {
+                            //                         // await prefs.clear();
+                            //                         await prefs.setString(
+                            //                             'login', 'false');
+                            //                         Navigator.pushAndRemoveUntil(
+                            //                             context,
+                            //                             MaterialPageRoute(
+                            //                                 builder: (BuildContext
+                            //                                         context) =>
+                            //                                     HomePage()),
+                            //                             (Route<dynamic>
+                            //                                     route) =>
+                            //                                 false);
+                            //                       },
+                            //                       child: Text("Oui"),
+                            //                       style:
+                            //                           ElevatedButton.styleFrom(
+                            //                               backgroundColor:
+                            //                                   color3,
+                            //                               padding: EdgeInsets
+                            //                                   .symmetric(
+                            //                                       vertical:
+                            //                                           15.h,
+                            //                                       horizontal:
+                            //                                           30.w),
+                            //                               foregroundColor:
+                            //                                   Colors.white,
+                            //                               shape:
+                            //                                   RoundedRectangleBorder(
+                            //                                 borderRadius:
+                            //                                     BorderRadius
+                            //                                         .circular(
+                            //                                             5.r),
+                            //                               ),
+                            //                               elevation: 10,
+                            //                               shadowColor: color3),
+                            //                     ),
+                            //                     ElevatedButton(
+                            //                       onPressed: () {
+                            //                         Navigator.of(context).pop();
+                            //                       },
+                            //                       child: Text("Non"),
+                            //                       style:
+                            //                           ElevatedButton.styleFrom(
+                            //                               backgroundColor:
+                            //                                   Colors.red,
+                            //                               padding: EdgeInsets
+                            //                                   .symmetric(
+                            //                                       vertical:
+                            //                                           15.h,
+                            //                                       horizontal:
+                            //                                           30.w),
+                            //                               foregroundColor:
+                            //                                   Colors.white,
+                            //                               shape:
+                            //                                   RoundedRectangleBorder(
+                            //                                 borderRadius:
+                            //                                     BorderRadius
+                            //                                         .circular(
+                            //                                             5.r),
+                            //                               ),
+                            //                               elevation: 10,
+                            //                               shadowColor:
+                            //                                   Colors.red),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //                 SizedBox(
+                            //                   height: 20,
+                            //                 )
+                            //               ],
+                            //             );
+                            //           });
+                            //     },
+                            //     icon: Icon(
+                            //       Icons.logout,
+                            //       color: Colors.grey,
+                            //     ))
                           ],
                         ),
                         SizedBox(
@@ -186,9 +525,9 @@ class _WelcomeState extends State<Welcome> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    // text: "Bonjour",
-                                    text:
-                                        'Hello\n${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
+                                    text: prefs.getString('name_latin') == null
+                                        ? "Bonjour"
+                                        : 'Bonjour\n${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 40,
@@ -224,9 +563,9 @@ class _WelcomeState extends State<Welcome> {
                               ),
                               child: Row(
                                 children: [
-                                  Icon(
-                                    Icons.notifications_none_outlined,
-                                    color: Colors.white,
+                                  SvgPicture.asset(
+                                    "assets/images/notif.svg",
+                                    height: 20.h,
                                   ),
                                   SizedBox(
                                     height: 20.h,
@@ -270,7 +609,7 @@ class _WelcomeState extends State<Welcome> {
                             //     fontWeight: FontWeight.w600,
                             //   ),
                             // ),
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
                                 if (prefs.getString('name_latin') != null) {
                                   showModalBottomSheet(
@@ -696,23 +1035,24 @@ class _WelcomeState extends State<Welcome> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Container(
-                                                        padding: EdgeInsets.all(
-                                                            8.sp),
-                                                        decoration: BoxDecoration(
-                                                            color: prefs.getString(
-                                                                        'name_latin') !=
-                                                                    null
-                                                                ? color5
-                                                                : Colors.grey,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.r)),
-                                                        child: Icon(
-                                                          Icons
-                                                              .person_outline_outlined,
-                                                          color: Colors.white,
-                                                        )),
+                                                      width: 38.w,
+                                                      padding:
+                                                          EdgeInsets.all(8.sp),
+                                                      decoration: BoxDecoration(
+                                                          color: prefs.getString(
+                                                                      'name_latin') !=
+                                                                  null
+                                                              ? color5
+                                                              : Colors.grey,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.r)),
+                                                      child: SvgPicture.asset(
+                                                        "assets/images/profil.svg",
+                                                        height: 20.h,
+                                                      ),
+                                                    ),
                                                     SizedBox(
                                                       height: 10.h,
                                                     ),
@@ -765,22 +1105,24 @@ class _WelcomeState extends State<Welcome> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Container(
-                                                        padding: EdgeInsets.all(
-                                                            8.sp),
-                                                        decoration: BoxDecoration(
-                                                            color: prefs.getString(
-                                                                        'name_latin') !=
-                                                                    null
-                                                                ? color5
-                                                                : Colors.grey,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.r)),
-                                                        child: Icon(
-                                                          Icons.folder_open,
-                                                          color: Colors.white,
-                                                        )),
+                                                      width: 38.w,
+                                                      padding:
+                                                          EdgeInsets.all(8.sp),
+                                                      decoration: BoxDecoration(
+                                                          color: prefs.getString(
+                                                                      'name_latin') !=
+                                                                  null
+                                                              ? color5
+                                                              : Colors.grey,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.r)),
+                                                      child: SvgPicture.asset(
+                                                        "assets/images/document.svg",
+                                                        height: 20.h,
+                                                      ),
+                                                    ),
                                                     SizedBox(
                                                       height: 10.h,
                                                     ),
@@ -826,23 +1168,24 @@ class _WelcomeState extends State<Welcome> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Container(
-                                                        padding: EdgeInsets.all(
-                                                            8.sp),
-                                                        decoration: BoxDecoration(
-                                                            color: prefs.getString(
-                                                                        'name_latin') !=
-                                                                    null
-                                                                ? color5
-                                                                : Colors.grey,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.r)),
-                                                        child: Icon(
-                                                          Icons
-                                                              .star_border_outlined,
-                                                          color: Colors.white,
-                                                        )),
+                                                      width: 38.w,
+                                                      padding:
+                                                          EdgeInsets.all(8.sp),
+                                                      decoration: BoxDecoration(
+                                                          color: prefs.getString(
+                                                                      'name_latin') !=
+                                                                  null
+                                                              ? color5
+                                                              : Colors.grey,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.r)),
+                                                      child: SvgPicture.asset(
+                                                        "assets/images/star.svg",
+                                                        height: 20.h,
+                                                      ),
+                                                    ),
                                                     SizedBox(
                                                       height: 10.h,
                                                     ),
@@ -903,22 +1246,24 @@ class _WelcomeState extends State<Welcome> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Container(
-                                                        padding: EdgeInsets.all(
-                                                            8.sp),
-                                                        decoration: BoxDecoration(
-                                                            color: prefs.getString(
-                                                                        'name_latin') !=
-                                                                    null
-                                                                ? color5
-                                                                : Colors.grey,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.r)),
-                                                        child: Icon(
-                                                          Icons.edit_outlined,
-                                                          color: Colors.white,
-                                                        )),
+                                                      width: 38.w,
+                                                      padding:
+                                                          EdgeInsets.all(8.sp),
+                                                      decoration: BoxDecoration(
+                                                          color: prefs.getString(
+                                                                      'name_latin') !=
+                                                                  null
+                                                              ? color5
+                                                              : Colors.grey,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15.r)),
+                                                      child: SvgPicture.asset(
+                                                        "assets/images/edit.svg",
+                                                        height: 20.h,
+                                                      ),
+                                                    ),
                                                     SizedBox(
                                                       height: 10.h,
                                                     ),
