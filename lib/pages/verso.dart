@@ -43,7 +43,11 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
     if (widget.rectoPath != null && versoPath != null) {
       String _token = prefs.getString('mail').toString();
 
-      var headers = {'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0='};
+      var headers = {
+        'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
+        'Content-Type':
+            'multipart/form-data; boundary=<calculated when request is sent>'
+      };
       var request = http.MultipartRequest('POST',
           Uri.parse('https://api.icosnet.com/whowiyati/Whowiyati_KYC/'));
       request.files.add(await http.MultipartFile.fromPath(
@@ -141,7 +145,8 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                 back: _myFile_back.path,
                 dob: birth_date,
                 doe: expiry_date,
-                idnumber: document_number,signature: _myFile_signature.path,
+                idnumber: document_number,
+                signature: _myFile_signature.path,
               ),
             ),
           );

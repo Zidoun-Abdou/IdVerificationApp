@@ -16,8 +16,6 @@ import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';
 
-import 'pages/testing.dart';
-
 late SharedPreferences prefs;
 late List<CameraDescription> cameras;
 
@@ -44,7 +42,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     getToken();
     requestPermissionNotification();
-    firebaseMessagingConfig();
   }
 
   // Get Token
@@ -72,16 +69,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  // Handling Foreground messages
-  firebaseMessagingConfig() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.notification != null) {
-        print(message.notification!.title);
-        print(message.notification!.body);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -92,15 +79,16 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             // home: prefs.getString('user_id').toString() == "null"
-            //     ? HomePage()
-            //     : prefs.getString('pasword').toString() == "null"
-            //         ? DialpadScreen(
-            //             status: 1,
-            //           )
-            //         : DialpadScreen(
-            //             status: 3,
-            //           ),
-            home: DemandeValidation(),
+            home: prefs.getString('login').toString() == "null" ||
+                    prefs.getString('login') == "false"
+                ? HomePage()
+                : prefs.getString('pasword').toString() == "null"
+                    ? DialpadScreen(
+                        status: 1,
+                      )
+                    : DialpadScreen(
+                        status: 3,
+                      ),
             theme: ThemeData(
                 bottomSheetTheme: BottomSheetThemeData(
                     backgroundColor: Colors.black.withOpacity(0.5)),

@@ -195,119 +195,122 @@ class _OtpState extends State<Otp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: color1,
-      body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                color: color3,
-              ),
-            )
-          : SafeArea(
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      // Replace with the actual path to your image file
-                      fit: BoxFit.contain,
-                      height: 100.h,
-                      width: 200.w,
-                      // Adjust the image's fit property as needed
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        backgroundColor: color1,
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: color3,
+                ),
+              )
+            : SafeArea(
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        // Replace with the actual path to your image file
+                        fit: BoxFit.contain,
+                        height: 100.h,
+                        width: 200.w,
+                        // Adjust the image's fit property as needed
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Verification du numéro de téléphone",
-                          textAlign: TextAlign.center,
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Verification du numéro de téléphone",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.sp,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                              height: 1.1.h,
+                              letterSpacing: 0.20.w,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Text(
+                            "Veuillez saisir le code SMS à 4 chiffres qui a été envoyé à ${widget.phone}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12.5.sp,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                              height: 1.1.h,
+                              letterSpacing: 0.20.w,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30.h,
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 40.w),
+                            child: PinFieldAutoFill(
+                              controller: _phoneContr,
+                              codeLength: 4, autoFocus: true,
+                              textInputAction: TextInputAction.none,
+                              // cursor: Cursor(color: color3,enabled: true),
+                              decoration: UnderlineDecoration(
+                                lineHeight: 2,
+                                lineStrokeCap: StrokeCap.square,
+                                textStyle:
+                                    TextStyle(color: color3, fontSize: 20.sp),
+                                bgColorBuilder:
+                                    PinListenColorBuilder(color4, color4),
+                                colorBuilder: FixedColorBuilder(color3),
+                              ),
+                              onCodeChanged: (code) {
+                                otp = code.toString();
+                                print(otp);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 20.w, vertical: 30.h),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          verifySms();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: color3,
+                          padding: EdgeInsets.symmetric(vertical: 15.h),
+                          foregroundColor: Colors.white,
+                          minimumSize: Size.fromHeight(30.w),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.r),
+                          ),
+                          elevation: 20,
+                          shadowColor: color3, // Set the shadow color
+                        ),
+                        child: Text(
+                          'Continuer',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.sp,
                             fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 1.1.h,
-                            letterSpacing: 0.20.w,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Text(
-                          "Veuillez saisir le code SMS à 4 chiffres qui a été envoyé à ${widget.phone}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12.5.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 1.1.h,
-                            letterSpacing: 0.20.w,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 40.w),
-                          child: PinFieldAutoFill(
-                            controller: _phoneContr,
-                            codeLength: 4, autoFocus: true,
-                            textInputAction: TextInputAction.none,
-                            // cursor: Cursor(color: color3,enabled: true),
-                            decoration: UnderlineDecoration(
-                              lineHeight: 2,
-                              lineStrokeCap: StrokeCap.square,
-                              textStyle:
-                                  TextStyle(color: color3, fontSize: 20.sp),
-                              bgColorBuilder:
-                                  PinListenColorBuilder(color4, color4),
-                              colorBuilder: FixedColorBuilder(color3),
-                            ),
-                            onCodeChanged: (code) {
-                              otp = code.toString();
-                              print(otp);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        verifySms();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: color3,
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
-                        foregroundColor: Colors.white,
-                        minimumSize: Size.fromHeight(30.w),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.r),
-                        ),
-                        elevation: 20,
-                        shadowColor: color3, // Set the shadow color
-                      ),
-                      child: Text(
-                        'Continuer',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }

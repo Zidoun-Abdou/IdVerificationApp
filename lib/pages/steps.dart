@@ -65,165 +65,201 @@ class _StepsState extends State<Steps> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
                           children: [
-                            Expanded(
-                              flex: 1,
-                              child: Icon(
-                                Icons.verified_outlined,
-                                color: color3,
-                                size: 50.sp,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 30.w,
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Confirmation par téléphone\n',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 0.20,
-                                      ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: CircleAvatar(
+                                    backgroundColor: color3,
+                                    child: Icon(
+                                      Icons.check_rounded,
+                                      color: Colors.white,
+                                      size: 30.sp,
                                     ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 30.w,
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text.rich(
                                     TextSpan(
-                                      text: 'Vérifié',
-                                      style: TextStyle(
-                                        color: Color(0xFF00FF84),
-                                        fontSize: 12.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 0.20,
-                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: 'Confirmation par téléphone\n',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15.sp,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.20,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'Vérifié',
+                                          style: TextStyle(
+                                            color: Color(0xFF00FF84),
+                                            fontSize: 12.sp,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.20,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                height: 30.h,
+                                padding: EdgeInsets.only(left: 30.w),
+                                child: VerticalDivider(
+                                  color: Colors.grey,
+                                  thickness: 1,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Icon(
-                                Icons.verified_outlined,
-                                color:
-                                    prefs.getString('mail').toString() == "null"
-                                        ? Colors.grey
-                                        : color3,
-                                size: 50.sp,
-                              ),
                             ),
-                            SizedBox(
-                              width: 30.w,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                        // prefs.containsKey('mail').toString() ==
+                                        //         "null"
+                                        // ? Colors.grey
+                                        //     : color3
+                                        prefs.containsKey('mail')
+                                            ? color3
+                                            : Colors.grey,
+                                    child: Icon(
+                                      Icons.check_rounded,
+                                      color: Colors.white,
+                                      size: 30.sp,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 30.w,
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Confirmation par mail\n',
+                                          style: TextStyle(
+                                            color: // prefs.containsKey('mail').toString() ==
+                                                //         "null"
+                                                prefs.containsKey('mail')
+                                                    ? Colors.white
+                                                    : Colors.grey,
+                                            fontSize: 15.sp,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.20,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'Vérifié',
+                                          style: TextStyle(
+                                            color: // prefs.containsKey('mail').toString() ==
+                                                //         "null"
+                                                prefs.containsKey('mail')
+                                                    ? color3
+                                                    : Colors.grey,
+                                            fontSize: 12.sp,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Expanded(
-                              flex: 3,
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Confirmation par mail\n',
-                                      style: TextStyle(
-                                        color: prefs
-                                                    .getString('mail')
-                                                    .toString() ==
-                                                "null"
-                                            ? Colors.grey
-                                            : Colors.white,
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 0.20,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: 'Vérifié',
-                                      style: TextStyle(
-                                        color: prefs
-                                                    .getString('mail')
-                                                    .toString() ==
-                                                "null"
-                                            ? Colors.grey
-                                            : color3,
-                                        fontSize: 12.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 0.20,
-                                      ),
-                                    ),
-                                  ],
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                height: 30.h,
+                                padding: EdgeInsets.only(left: 30.w),
+                                child: VerticalDivider(
+                                  color: Colors.grey,
+                                  thickness: 1,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Icon(
-                                Icons.verified_outlined,
-                                color: prefs.getString('idinfos').toString() ==
-                                        "null"
-                                    ? Colors.grey
-                                    : color3,
-                                size: 50.sp,
-                              ),
                             ),
-                            SizedBox(
-                              width: 30.w,
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Confirmation par Id Card\n',
-                                      style: TextStyle(
-                                        color: prefs
-                                                    .getString('idinfos')
-                                                    .toString() ==
-                                                "null"
-                                            ? Colors.grey
-                                            : Colors.white,
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 0.20,
-                                      ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                        // prefs.getBool('visage') == true
+                                        prefs.containsKey("visage")
+                                            ? color3
+                                            : Colors.grey,
+                                    child: Icon(
+                                      Icons.check_rounded,
+                                      color: Colors.white,
+                                      size: 30.sp,
                                     ),
-                                    TextSpan(
-                                      text: 'Vérifié',
-                                      style: TextStyle(
-                                        color: prefs
-                                                    .getString('idinfos')
-                                                    .toString() ==
-                                                "null"
-                                            ? Colors.grey
-                                            : color3,
-                                        fontSize: 12.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 0.20,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            )
+                                SizedBox(
+                                  width: 30.w,
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Confirmation par Id Card\n',
+                                          style: TextStyle(
+                                            color:
+                                                // prefs.getBool('visage') == true
+                                                prefs.containsKey("visage")
+                                                    ? Colors.white
+                                                    : Colors.grey,
+                                            fontSize: 15.sp,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.20,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'Vérifié',
+                                          style: TextStyle(
+                                            color:
+                                                // prefs.getBool('visage') == true
+                                                prefs.containsKey("visage")
+                                                    ? color3
+                                                    : Colors.grey,
+                                            fontSize: 12.sp,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       ],
@@ -256,8 +292,7 @@ class _StepsState extends State<Steps> {
                                   builder: (context) => Email(
                                         token: widget.token,
                                       )));
-                            } else if (prefs.getString('idinfos').toString() ==
-                                "null") {
+                            } else if (prefs.getBool('visage') != true) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => IdCards()));
                             } else if (prefs.getString('idinfos').toString() !=

@@ -85,7 +85,11 @@ class _VerifyFaceState extends State<VerifyFace> {
   }
 
   Future<bool> verifyFace(String link) async {
-    var headers = {'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0='};
+    var headers = {
+      'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
+      'Content-Type':
+          'multipart/form-data; boundary=<calculated when request is sent>',
+    };
 
     /// Initialize Ip Address
     var ipAddress = IpAddress(type: RequestType.text);
@@ -159,6 +163,8 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     if (answerJson["message"] == "This user  exists" ||
         answerJson["message"] == "Updated successfully") {
+      // shared pref visage 
+      prefs.setBool('visage', true);
       print("Alfresco ok");
       print(answerJson);
       Navigator.pushAndRemoveUntil(
