@@ -32,6 +32,7 @@ class _WelcomeState extends State<Welcome> {
   bool isProfile = false;
   final GlobalKey<State<BottomSheet>> _bottomSheetKey = GlobalKey();
   double initialSize = 0.7;
+  bool isDemandeValidationOpen = false;
 
   // Handling Interaction with Notification when application is opened from a terminated state
   getInit() async {
@@ -41,9 +42,16 @@ class _WelcomeState extends State<Welcome> {
     if (initialMessage != null) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => DemandeValidation(),
+          builder: (context) => DemandeValidation(
+            onPop: () {
+              setState(() {
+                isDemandeValidationOpen = false;
+              });
+            },
+          ),
         ),
       );
+      isDemandeValidationOpen = true;
     }
   }
 
@@ -51,21 +59,28 @@ class _WelcomeState extends State<Welcome> {
   firebaseMessagingConfig() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
+        if (isDemandeValidationOpen) {
+          setState(() {});
+        }
         Flushbar(
           onTap: (flushbar) {
             // ******* Check If is Not Current Route setState Else Push to DemandeValidation *******
-            // if (Navigator.canPop(context)) {
-            //   print("true");
-            //   setState(() {});
-            // } else {
-            //   print("false");
-            //   Navigator.of(context).push(
-            //     MaterialPageRoute(builder: (context) => DemandeValidation()),
-            //   );
-            // }
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => DemandeValidation()),
-            );
+            if (isDemandeValidationOpen) {
+              setState(() {});
+            } else {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => DemandeValidation(
+                    onPop: () {
+                      setState(() {
+                        isDemandeValidationOpen = false;
+                      });
+                    },
+                  ),
+                ),
+              );
+              isDemandeValidationOpen = true;
+            }
           },
           flushbarPosition: FlushbarPosition.TOP,
           duration: Duration(seconds: 2),
@@ -84,11 +99,22 @@ class _WelcomeState extends State<Welcome> {
     getInit();
     // Handling Interaction with Notification when application is opened from a background state
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => DemandeValidation(),
-        ),
-      );
+      if (isDemandeValidationOpen) {
+        setState(() {});
+      } else {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DemandeValidation(
+              onPop: () {
+                setState(() {
+                  isDemandeValidationOpen = false;
+                });
+              },
+            ),
+          ),
+        );
+        isDemandeValidationOpen = true;
+      }
     });
     firebaseMessagingConfig();
     super.initState();
@@ -193,14 +219,19 @@ class _WelcomeState extends State<Welcome> {
                                                       children: [
                                                         ElevatedButton(
                                                           onPressed: () {
-                                                            Navigator.of(context).push(MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        DemandeValidation(),
-                                                                settings:
-                                                                    RouteSettings(
-                                                                        name:
-                                                                            "demandeValidation")));
+                                                            Navigator.of(context).push(
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            DemandeValidation(
+                                                                              onPop: () {
+                                                                                setState(() {
+                                                                                  isDemandeValidationOpen = false;
+                                                                                });
+                                                                              },
+                                                                            )));
+                                                            isDemandeValidationOpen =
+                                                                true;
                                                           },
                                                           style: ElevatedButton
                                                               .styleFrom(
