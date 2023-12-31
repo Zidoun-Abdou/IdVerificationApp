@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/demande_validation.dart';
 import 'package:whowiyati/pages/register.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:whowiyati/pages/welcome.dart';
@@ -10,9 +11,13 @@ import 'package:whowiyati/pages/welcome.dart';
 class DialpadScreen extends StatefulWidget {
   final int status;
   final String password;
+  final Future<void> Function()? onPressedDemandeValidationAction;
 
   const DialpadScreen(
-      {Key? key, required this.status, this.password = "******"})
+      {Key? key,
+      required this.status,
+      this.password = "******",
+      this.onPressedDemandeValidationAction})
       : super(key: key);
 
   @override
@@ -304,6 +309,40 @@ class _DialpadScreenState extends State<DialpadScreen> {
                 textColor: Colors.white,
                 fontSize: 16.0);
           } else if (widget.status == 3 &&
+              displayedNumber != prefs.getString('pasword').toString()) {
+            Fluttertoast.showToast(
+                msg: "Mot de passe incorrect",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+
+            setState(() {
+              displayedNumber = '******'; // Reset to the initial value
+              // Shuffle the dialpad numbers randomly when the clear button is pressed
+              dialpadNumbers.shuffle();
+            });
+          }
+
+          /////////////////////////////////////////////////////////////////////
+
+          if (widget.status == 4 &&
+              displayedNumber == prefs.getString('pasword').toString()) {
+            await widget.onPressedDemandeValidationAction!();
+            Navigator.of(context).pop();
+          } else if (widget.status == 4 &&
+              displayedNumber.substring(displayedNumber.length - 1) == "*") {
+            Fluttertoast.showToast(
+                msg: "Mot de passe incomplet",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          } else if (widget.status == 4 &&
               displayedNumber != prefs.getString('pasword').toString()) {
             Fluttertoast.showToast(
                 msg: "Mot de passe incorrect",
