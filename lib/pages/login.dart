@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
   bool _isChecked = false;
   var _formKey = GlobalKey<FormState>();
   bool isLoading = false;
-  TextEditingController _mailContr = TextEditingController();
+  TextEditingController _useridContr = TextEditingController();
   TextEditingController _passwordContr = TextEditingController();
 
   //functions
@@ -46,26 +46,39 @@ class _LoginState extends State<Login> {
       if (_formKey.currentState!.validate()) {
         isLoading = true;
         setState(() {});
-        var headers = {
-          'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
-          'Cookie': 'PHPSESSID=gfkpgdr28le107p7mndtubhr23'
-        };
-        var request = http.MultipartRequest('POST',
-            Uri.parse('https://api.icosnet.com/ibmpp/esb/pbflow_login.php'));
+        // var headers = {
+        //   'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
+        //   'Cookie': 'PHPSESSID=gfkpgdr28le107p7mndtubhr23'
+        // };
+        var request = http.MultipartRequest(
+            'POST', Uri.parse('http://10.0.2.2:8000/wh/login/'));
+
         request.fields.addAll(
-            {'user_id': _mailContr.text, 'password': _passwordContr.text});
-        request.headers.addAll(headers);
+            {'user_id': _useridContr.text, 'password': _passwordContr.text});
+
+        // request.headers.addAll(headers);
+
         http.StreamedResponse response = await request.send();
-        String answer = await response.stream.bytesToString();
-        var answerJson = jsonDecode(answer);
-        if (answerJson["success"] == true) {
-          await prefs.setString('user_id', _mailContr.text);
-          await prefs.setString('login', 'true');
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => Welcome(token: _myToken)),
-              (Route<dynamic> route) => false);
+
+        if (response.statusCode == 200) {
+          String answer = await response.stream.bytesToString();
+          var answerJson = jsonDecode(answer);
+          if (answerJson["success"] == true) {
+            await prefs.setString("status", answerJson["user"]['status']);
+            await prefs.setString("username", answerJson["user"]['username']);
+            await prefs.setString("user_id", answerJson["user"]['user_id']);
+            await prefs.setString("phone", answerJson["user"]['phone']);
+            await prefs.setString("email", answerJson["user"]['email']);
+            await prefs.setString("nin", answerJson["user"]['nin']);
+            await prefs.setString('login', 'true');
+
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Welcome(token: _myToken)),
+                (Route<dynamic> route) => false);
+          }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -142,7 +155,7 @@ class _LoginState extends State<Login> {
                                       },
                                       cursorColor: color3,
                                       keyboardType: TextInputType.number,
-                                      controller: _mailContr,
+                                      controller: _useridContr,
                                       style: TextStyle(color: Colors.white),
                                       maxLength: 8,
                                       // Set text color to white

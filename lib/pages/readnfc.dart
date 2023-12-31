@@ -69,7 +69,8 @@ class ReadNfc extends StatefulWidget {
       required this.idnumber,
       required this.face,
       required this.front,
-      required this.back, required this.signature})
+      required this.back,
+      required this.signature})
       : super(key: key);
 
   @override
@@ -323,7 +324,6 @@ class _ReadNfcState extends State<ReadNfc> {
       "dg2": _mrtdData!.dg2!.toBytes().hex()
     });
 
-        
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -361,7 +361,7 @@ class _ReadNfcState extends State<ReadNfc> {
           "birthplace_arabic", answerJson["dg11"]["birthplace_arabic"]);
       await prefs.setString("birth_date", answerJson["dg11"]["birth_date"]);
       await prefs.setString("sexe_latin", answerJson["dg11"]["sexe_latin"]);
-      await prefs.setString("sex_arabic", answerJson["dg11"]["sex_arabic"]);
+      await prefs.setString("sexe_arabic", answerJson["dg11"]["sexe_arabic"]);
       await prefs.setString("blood_type", answerJson["dg11"]["blood_type"]);
       await prefs.setString("nin", answerJson["dg11"]["nin"]);
       await prefs.setString('idinfos', answerJson["dg11"]["nin"]);

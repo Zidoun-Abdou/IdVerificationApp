@@ -441,113 +441,9 @@ class _WelcomeState extends State<Welcome> {
                                   "assets/images/menu.svg",
                                   height: 22.h,
                                 )),
-                            // IconButton(
-                            //     onPressed: () async {
-                            //       showModalBottomSheet(
-                            //           backgroundColor: color2,
-                            //           context: context,
-                            //           builder: (context) {
-                            //             return Column(
-                            //               mainAxisSize: MainAxisSize.min,
-                            //               children: [
-                            //                 Padding(
-                            //                   padding: EdgeInsets.symmetric(
-                            //                       horizontal: 20.w,
-                            //                       vertical: 20.h),
-                            //                   child: Text(
-                            //                     "Êtes-vous sûr de vouloir quitter Whowiyaty?",
-                            //                     style: TextStyle(
-                            //                         color: Colors.white),
-                            //                   ),
-                            //                 ),
-                            //                 Row(
-                            //                   mainAxisAlignment:
-                            //                       MainAxisAlignment.spaceEvenly,
-                            //                   children: [
-                            //                     ElevatedButton(
-                            //                       onPressed: () async {
-                            //                         // await prefs.clear();
-                            //                         await prefs.setString(
-                            //                             'login', 'false');
-                            //                         Navigator.pushAndRemoveUntil(
-                            //                             context,
-                            //                             MaterialPageRoute(
-                            //                                 builder: (BuildContext
-                            //                                         context) =>
-                            //                                     HomePage()),
-                            //                             (Route<dynamic>
-                            //                                     route) =>
-                            //                                 false);
-                            //                       },
-                            //                       child: Text("Oui"),
-                            //                       style:
-                            //                           ElevatedButton.styleFrom(
-                            //                               backgroundColor:
-                            //                                   color3,
-                            //                               padding: EdgeInsets
-                            //                                   .symmetric(
-                            //                                       vertical:
-                            //                                           15.h,
-                            //                                       horizontal:
-                            //                                           30.w),
-                            //                               foregroundColor:
-                            //                                   Colors.white,
-                            //                               shape:
-                            //                                   RoundedRectangleBorder(
-                            //                                 borderRadius:
-                            //                                     BorderRadius
-                            //                                         .circular(
-                            //                                             5.r),
-                            //                               ),
-                            //                               elevation: 10,
-                            //                               shadowColor: color3),
-                            //                     ),
-                            //                     ElevatedButton(
-                            //                       onPressed: () {
-                            //                         Navigator.of(context).pop();
-                            //                       },
-                            //                       child: Text("Non"),
-                            //                       style:
-                            //                           ElevatedButton.styleFrom(
-                            //                               backgroundColor:
-                            //                                   Colors.red,
-                            //                               padding: EdgeInsets
-                            //                                   .symmetric(
-                            //                                       vertical:
-                            //                                           15.h,
-                            //                                       horizontal:
-                            //                                           30.w),
-                            //                               foregroundColor:
-                            //                                   Colors.white,
-                            //                               shape:
-                            //                                   RoundedRectangleBorder(
-                            //                                 borderRadius:
-                            //                                     BorderRadius
-                            //                                         .circular(
-                            //                                             5.r),
-                            //                               ),
-                            //                               elevation: 10,
-                            //                               shadowColor:
-                            //                                   Colors.red),
-                            //                     ),
-                            //                   ],
-                            //                 ),
-                            //                 SizedBox(
-                            //                   height: 20,
-                            //                 )
-                            //               ],
-                            //             );
-                            //           });
-                            //     },
-                            //     icon: Icon(
-                            //       Icons.logout,
-                            //       color: Colors.grey,
-                            //     ))
                           ],
                         ),
-                        SizedBox(
-                          height: 15.h,
-                        ),
+                        SizedBox(height: 15.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -556,7 +452,7 @@ class _WelcomeState extends State<Welcome> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: prefs.getString('name_latin') == null
+                                    text: prefs.getString('status') != "5"
                                         ? "Bonjour"
                                         : 'Bonjour\n${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
                                     style: TextStyle(
@@ -611,7 +507,7 @@ class _WelcomeState extends State<Welcome> {
                           ],
                         ),
                         Visibility(
-                          visible: prefs.getString('name_latin') == null,
+                          visible: prefs.getString('status') != "5",
                           child: Container(
                             margin: EdgeInsets.all(5.sp),
                             padding: EdgeInsets.symmetric(
@@ -625,9 +521,7 @@ class _WelcomeState extends State<Welcome> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 40.h,
-                        ),
+                        SizedBox(height: 40.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -642,7 +536,7 @@ class _WelcomeState extends State<Welcome> {
                             // ),
                             GestureDetector(
                               onTap: () {
-                                if (prefs.getString('name_latin') != null) {
+                                if (prefs.getString('status') == "5") {
                                   showModalBottomSheet(
                                       context: context,
                                       backgroundColor: Colors.transparent,
@@ -847,15 +741,9 @@ class _WelcomeState extends State<Welcome> {
                                   'Ajoutez Compte PRO',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                    color:
-                                        prefs.getString('idinfos').toString() !=
-                                                    "null" &&
-                                                prefs
-                                                        .getString('mail')
-                                                        .toString() !=
-                                                    "null"
-                                            ? Colors.white
-                                            : Colors.grey,
+                                    color: prefs.getString('status') == "5"
+                                        ? Colors.white
+                                        : Colors.grey,
                                     fontSize: 12.sp,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -1037,9 +925,8 @@ class _WelcomeState extends State<Welcome> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                if (prefs.getString(
-                                                        'name_latin') !=
-                                                    null) {
+                                                if (prefs.getString('status') ==
+                                                    "5") {
                                                   setState(() {
                                                     isProfile = !isProfile;
                                                   });
@@ -1071,8 +958,8 @@ class _WelcomeState extends State<Welcome> {
                                                           EdgeInsets.all(8.sp),
                                                       decoration: BoxDecoration(
                                                           color: prefs.getString(
-                                                                      'name_latin') !=
-                                                                  null
+                                                                      'status') ==
+                                                                  "5"
                                                               ? color5
                                                               : Colors.grey,
                                                           borderRadius:
@@ -1098,15 +985,12 @@ class _WelcomeState extends State<Welcome> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
+                                          SizedBox(width: 10.w),
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                if (prefs.getString(
-                                                        'name_latin') !=
-                                                    null) {
+                                                if (prefs.getString('status') ==
+                                                    "5") {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (context) =>
@@ -1141,8 +1025,8 @@ class _WelcomeState extends State<Welcome> {
                                                           EdgeInsets.all(8.sp),
                                                       decoration: BoxDecoration(
                                                           color: prefs.getString(
-                                                                      'name_latin') !=
-                                                                  null
+                                                                      'status') ==
+                                                                  "5"
                                                               ? color5
                                                               : Colors.grey,
                                                           borderRadius:
@@ -1170,14 +1054,15 @@ class _WelcomeState extends State<Welcome> {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
-                                        height: 15.h,
-                                      ),
+                                      SizedBox(height: 15.h),
                                       Row(
                                         children: [
                                           Expanded(
                                             child: InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                if (prefs.getString('status') ==
+                                                    "5") {}
+                                              },
                                               child: Container(
                                                 height: MediaQuery.of(context)
                                                             .size
@@ -1204,8 +1089,8 @@ class _WelcomeState extends State<Welcome> {
                                                           EdgeInsets.all(8.sp),
                                                       decoration: BoxDecoration(
                                                           color: prefs.getString(
-                                                                      'name_latin') !=
-                                                                  null
+                                                                      'status') ==
+                                                                  "5"
                                                               ? color5
                                                               : Colors.grey,
                                                           borderRadius:
@@ -1217,9 +1102,7 @@ class _WelcomeState extends State<Welcome> {
                                                         height: 20.h,
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 10.h,
-                                                    ),
+                                                    SizedBox(height: 10.h),
                                                     Text(
                                                       "Mes\ncomptes Pro",
                                                       style: TextStyle(
@@ -1231,15 +1114,12 @@ class _WelcomeState extends State<Welcome> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
+                                          SizedBox(width: 10.w),
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                if (prefs.getString(
-                                                        'name_latin') !=
-                                                    null) {
+                                                if (prefs.getString('status') ==
+                                                    "5") {
                                                   prefs.getString("name_arabic") ==
                                                           null
                                                       ? Navigator.of(context)
@@ -1282,8 +1162,8 @@ class _WelcomeState extends State<Welcome> {
                                                           EdgeInsets.all(8.sp),
                                                       decoration: BoxDecoration(
                                                           color: prefs.getString(
-                                                                      'name_latin') !=
-                                                                  null
+                                                                      'status') ==
+                                                                  "5"
                                                               ? color5
                                                               : Colors.grey,
                                                           borderRadius:
@@ -1315,7 +1195,7 @@ class _WelcomeState extends State<Welcome> {
                                   ),
                           ),
                           Visibility(
-                            visible: prefs.getString('name_latin') == null,
+                            visible: prefs.getString('status') != "5",
                             child: Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 15.h),
