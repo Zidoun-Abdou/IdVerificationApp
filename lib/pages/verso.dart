@@ -122,38 +122,72 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         await prefs.setString("exp_date", expiry_date);
         await prefs.setString("document_number", document_number);
 
-        NfcStatus status = await NfcProvider.nfcStatus;
+        // ******** send Phone and UserId and Email and Nin & Set Status 4
+        var headers = {'Content-Type': 'application/json'};
+        var request = http.Request(
+            'PUT', Uri.parse('http://10.0.2.2:8000/wh/verify/nin/'));
+        request.body = json.encode({
+          "phone": prefs.getString('phone').toString(),
+          "user_id": prefs.getString('user_id').toString(),
+          "email": prefs.getString('mail').toString(),
+          "nin": nin
+        });
+        request.headers.addAll(headers);
 
-        print(status.toString());
+        http.StreamedResponse response = await request.send();
 
-        if (status.toString() == "NfcStatus.notSupported") {
-          print("NFC Step ignored");
-          await prefs.setString("face", _myFile_face.path);
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => VerifyFace(
-                    face: _myFile_face.path,
-                    front: _myFile_front.path,
-                    back: _myFile_back.path,
-                    signature: _myFile_signature.path,
-                  )));
-        } else {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => WelcomeNfc(
-                face: _myFile_face.path,
-                front: _myFile_front.path,
-                back: _myFile_back.path,
-                dob: birth_date,
-                doe: expiry_date,
-                idnumber: document_number,
-                signature: _myFile_signature.path,
+        if (response.statusCode == 200) {
+          print(await response.stream.bytesToString());
+          await prefs.setString("status", "4");
+          NfcStatus status = await NfcProvider.nfcStatus;
+
+          print(status.toString());
+
+          if (status.toString() == "NfcStatus.notSupported") {
+            print("NFC Step ignored");
+            await prefs.setString("face", _myFile_face.path);
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => VerifyFace(
+                      face: _myFile_face.path,
+                      front: _myFile_front.path,
+                      back: _myFile_back.path,
+                      signature: _myFile_signature.path,
+                    )));
+          } else {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => WelcomeNfc(
+                  face: _myFile_face.path,
+                  front: _myFile_front.path,
+                  back: _myFile_back.path,
+                  dob: birth_date,
+                  doe: expiry_date,
+                  idnumber: document_number,
+                  signature: _myFile_signature.path,
+                ),
               ),
+            );
+          }
+
+          _is_loading = false;
+          setState(() {});
+        } else {
+          print(response.reasonPhrase);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "User not found",
+                textAlign: TextAlign.center,
+              ),
+              duration: Duration(seconds: 3),
             ),
           );
-        }
 
-        _is_loading = false;
-        setState(() {});
+          _is_loading = false;
+          setState(() {});
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        }
       } else {
         print(answerJson.toString());
 

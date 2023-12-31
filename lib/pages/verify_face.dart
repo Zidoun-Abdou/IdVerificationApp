@@ -163,7 +163,7 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     if (answerJson["message"] == "This user  exists" ||
         answerJson["message"] == "Updated successfully") {
-      // shared pref visage 
+      // shared pref visage
       prefs.setBool('visage', true);
       print("Alfresco ok");
       print(answerJson);

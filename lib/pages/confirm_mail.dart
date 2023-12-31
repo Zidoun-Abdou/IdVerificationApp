@@ -129,21 +129,24 @@ class _ConfirmMailState extends State<ConfirmMail> {
   Future<int> _updateEmail() async {
     isLoading = true;
     setState(() {});
-    var headers = {
-      'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
-      'Cookie': 'PHPSESSID=baa6nj4s6682e98sbb1v2gsgr7'
-    };
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://api.icosnet.com/ibmpp/esb/pbflow_update_email.php'));
-    request.fields.addAll(
-        {'phone': prefs.getString('phone').toString(), 'email': widget.mail});
+    // ******** send Phone and UserId and Email & Set Status 3
+    var headers = {'Content-Type': 'application/json'};
+    var request =
+        http.Request('PUT', Uri.parse('http://10.0.2.2:8000/wh/verify/email/'));
+
+    request.body = json.encode({
+      "phone": prefs.getString('phone').toString(),
+      "user_id": prefs.getString('user_id').toString(),
+      "email": widget.mail
+    });
 
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-    String answer = await response.stream.bytesToString();
-    var answerJson = jsonDecode(answer);
-    if (answerJson["message"] != "Phone not found") {
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      await prefs.setString("status", "3");
       await prefs.setString('mail', widget.mail);
       Navigator.of(context).pop();
       Navigator.of(context).pop();
@@ -154,22 +157,14 @@ class _ConfirmMailState extends State<ConfirmMail> {
           ),
         ),
       );
-
-      // Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (context) => Steps(
-      //           token: widget.token,
-      //         )));
-      print(answerJson.toString());
-      isLoading = false;
-      setState(() {});
       return 1;
     } else {
-      print('email not found');
-      print(answerJson.toString());
+      String answer = await response.stream.bytesToString();
+      var answerJson = jsonDecode(answer);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            answerJson.toString(),
+            answerJson["error"].toString(),
             textAlign: TextAlign.center,
           ),
           duration: Duration(seconds: 3),

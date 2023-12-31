@@ -329,7 +329,7 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                         Text(
                           _isAr
                               ? 'الجنس: ' +
-                                  prefs.getString('sex_arabic').toString()
+                                  prefs.getString('sexe_arabic').toString()
                               : 'Sexe: ' +
                                   prefs.getString('sexe_latin').toString(),
                           textAlign: TextAlign.center,

@@ -1,36 +1,40 @@
 class DemandeValidationModel {
-  String? id;
-  String? requestSource;
+  int? id;
+  String? requestIdentify;
+  String? sourceDemande;
   String? createdAt;
-  String? typeRequest;
+  String? typeDemande;
   String? status;
-  String? idWhowiyati;
+  int? user;
 
   DemandeValidationModel(
       {this.id,
-      this.requestSource,
+      this.requestIdentify,
+      this.sourceDemande,
       this.createdAt,
-      this.typeRequest,
+      this.typeDemande,
       this.status,
-      this.idWhowiyati});
+      this.user});
 
   DemandeValidationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    requestSource = json['request_source'];
+    requestIdentify = json['request_identify'];
+    sourceDemande = json['source_demande'];
     createdAt = json['created_at'];
-    typeRequest = json['type_request'];
-    status = json['status'];
-    idWhowiyati = json['id_whowiyati'];
+    typeDemande = json['type_demande'];
+    status = json['Status'];
+    user = json['user'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['request_source'] = this.requestSource;
+    data['request_identify'] = this.requestIdentify;
+    data['source_demande'] = this.sourceDemande;
     data['created_at'] = this.createdAt;
-    data['type_request'] = this.typeRequest;
-    data['status'] = this.status;
-    data['id_whowiyati'] = this.idWhowiyati;
+    data['type_demande'] = this.typeDemande;
+    data['Status'] = this.status;
+    data['user'] = this.user;
     return data;
   }
 }

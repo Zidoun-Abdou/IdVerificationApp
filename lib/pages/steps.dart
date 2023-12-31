@@ -73,7 +73,11 @@ class _StepsState extends State<Steps> {
                                 Expanded(
                                   flex: 1,
                                   child: CircleAvatar(
-                                    backgroundColor: color3,
+                                    backgroundColor:
+                                        int.parse(prefs.getString("status")!) >=
+                                                2
+                                            ? color3
+                                            : Colors.grey,
                                     child: Icon(
                                       Icons.check_rounded,
                                       color: Colors.white,
@@ -92,7 +96,11 @@ class _StepsState extends State<Steps> {
                                         TextSpan(
                                           text: 'Confirmation par téléphone\n',
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: int.parse(prefs.getString(
+                                                        "status")!) >=
+                                                    2
+                                                ? Colors.white
+                                                : Colors.grey,
                                             fontSize: 15.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
@@ -102,7 +110,11 @@ class _StepsState extends State<Steps> {
                                         TextSpan(
                                           text: 'Vérifié',
                                           style: TextStyle(
-                                            color: Color(0xFF00FF84),
+                                            color: int.parse(prefs.getString(
+                                                        "status")!) >=
+                                                    2
+                                                ? color3
+                                                : Colors.grey,
                                             fontSize: 12.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
@@ -133,11 +145,8 @@ class _StepsState extends State<Steps> {
                                   flex: 1,
                                   child: CircleAvatar(
                                     backgroundColor:
-                                        // prefs.containsKey('mail').toString() ==
-                                        //         "null"
-                                        // ? Colors.grey
-                                        //     : color3
-                                        prefs.containsKey('mail')
+                                        int.parse(prefs.getString("status")!) >=
+                                                3
                                             ? color3
                                             : Colors.grey,
                                     child: Icon(
@@ -158,11 +167,11 @@ class _StepsState extends State<Steps> {
                                         TextSpan(
                                           text: 'Confirmation par mail\n',
                                           style: TextStyle(
-                                            color: // prefs.containsKey('mail').toString() ==
-                                                //         "null"
-                                                prefs.containsKey('mail')
-                                                    ? Colors.white
-                                                    : Colors.grey,
+                                            color: int.parse(prefs.getString(
+                                                        "status")!) >=
+                                                    3
+                                                ? Colors.white
+                                                : Colors.grey,
                                             fontSize: 15.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
@@ -172,11 +181,11 @@ class _StepsState extends State<Steps> {
                                         TextSpan(
                                           text: 'Vérifié',
                                           style: TextStyle(
-                                            color: // prefs.containsKey('mail').toString() ==
-                                                //         "null"
-                                                prefs.containsKey('mail')
-                                                    ? color3
-                                                    : Colors.grey,
+                                            color: int.parse(prefs.getString(
+                                                        "status")!) >=
+                                                    3
+                                                ? color3
+                                                : Colors.grey,
                                             fontSize: 12.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
@@ -207,8 +216,8 @@ class _StepsState extends State<Steps> {
                                   flex: 1,
                                   child: CircleAvatar(
                                     backgroundColor:
-                                        // prefs.getBool('visage') == true
-                                        prefs.containsKey("visage")
+                                        int.parse(prefs.getString("status")!) >=
+                                                4
                                             ? color3
                                             : Colors.grey,
                                     child: Icon(
@@ -229,11 +238,11 @@ class _StepsState extends State<Steps> {
                                         TextSpan(
                                           text: 'Confirmation par Id Card\n',
                                           style: TextStyle(
-                                            color:
-                                                // prefs.getBool('visage') == true
-                                                prefs.containsKey("visage")
-                                                    ? Colors.white
-                                                    : Colors.grey,
+                                            color: int.parse(prefs.getString(
+                                                        "status")!) >=
+                                                    4
+                                                ? Colors.white
+                                                : Colors.grey,
                                             fontSize: 15.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
@@ -243,11 +252,11 @@ class _StepsState extends State<Steps> {
                                         TextSpan(
                                           text: 'Vérifié',
                                           style: TextStyle(
-                                            color:
-                                                // prefs.getBool('visage') == true
-                                                prefs.containsKey("visage")
-                                                    ? color3
-                                                    : Colors.grey,
+                                            color: int.parse(prefs.getString(
+                                                        "status")!) >=
+                                                    4
+                                                ? color3
+                                                : Colors.grey,
                                             fontSize: 12.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
@@ -287,12 +296,13 @@ class _StepsState extends State<Steps> {
                             horizontal: 20.w, vertical: 8.h),
                         child: ElevatedButton(
                           onPressed: () {
-                            if (prefs.getString('mail').toString() == "null") {
+                            if (int.parse(prefs.getString("status")!) == 2) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => Email(
                                         token: widget.token,
                                       )));
-                            } else if (prefs.getBool('visage') != true) {
+                            } else if (int.parse(prefs.getString("status")!) ==
+                                3) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => IdCards()));
                             } else if (prefs.getString('idinfos').toString() !=

@@ -64,16 +64,42 @@ class _OtpState extends State<Otp> {
     var answerJson = jsonDecode(answer);
     if (answerJson["success"] == true) {
       print(answerJson);
-      print("token send with succus");
-      await prefs.setString('user_id', answerJson["user_id"].toString());
-      await prefs.setString('phone', "213${_phoneContr.text}");
+      // ******** send Phone and UserId & Set Status 2
+      var headers = {'Content-Type': 'application/json'};
+      var request =
+          http.Request('PUT', Uri.parse('http://10.0.2.2:8000/wh/verify/sms/'));
+      request.body = json.encode({
+        "phone": "213${_phoneContr.text}",
+        "user_id": answerJson["user_id"].toString()
+      });
+      request.headers.addAll(headers);
 
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => DialpadScreen(status: 1)),
-          (Route<dynamic> route) => false);
-      return true;
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+        await prefs.setString('user_id', answerJson["user_id"].toString());
+        await prefs.setString('phone', "213${_phoneContr.text}");
+        await prefs.setString("status", "2");
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => DialpadScreen(status: 1)),
+            (Route<dynamic> route) => false);
+        return true;
+      } else {
+        print(response.reasonPhrase);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("User not found"),
+            duration: Duration(seconds: 5),
+          ),
+        );
+        _isLoading = false;
+        setState(() {});
+        return false;
+      }
     } else {
       print(answerJson.toString());
       ScaffoldMessenger.of(context).showSnackBar(

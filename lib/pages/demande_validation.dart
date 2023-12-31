@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/models/demande_validation_model.dart';
+import 'package:whowiyati/pages/dealpad.dart';
 
 import '../const.dart';
 
@@ -19,38 +20,36 @@ class DemandeValidation extends StatefulWidget {
 class _DemandeValidationState extends State<DemandeValidation> {
   // ************** Logic **************
   getDemandeValidation() async {
-    String? id = prefs.getString('user_id');
+    String? userId = prefs.getString('user_id');
 
-    var headers = {'Cookie': 'PHPSESSID=si51hjts93j3lkual21emqe540'};
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://ibm-p.vazii.com/esb/wh_get_all_requests.php?id=63343047'));
-
-    request.headers.addAll(headers);
+        'GET', Uri.parse('http://10.0.2.2:8000/wh/requests/$userId'));
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       String answer = await response.stream.bytesToString();
       var answerJson = jsonDecode(answer);
+      print(answerJson);
       return answerJson;
     } else {
       print(response.reasonPhrase);
     }
   }
 
-  updateDemandeStatus(String id, String statusCode) async {
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://ibm-p.vazii.com/esb/who_user_validation.php'));
+  updateDemandeStatus(String requestId, String statusCode) async {
+    var request = http.MultipartRequest(
+        'PUT', Uri.parse('http://10.0.2.2:8000/wh/validate/request/'));
 
-    request.fields.addAll({'id': id, 'code': statusCode});
+    request.fields.addAll({'id': requestId, 'code': statusCode});
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       String answer = await response.stream.bytesToString();
       var answerJson = jsonDecode(answer);
+      print("====================");
+      print(answerJson);
     } else {
       print(response.reasonPhrase);
     }
@@ -106,7 +105,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                           if (snapshot.data["status"] == true) {
                             List<DemandeValidationModel> enAttenteList = [];
                             for (var element in snapshot.data["data"]) {
-                              if (element["status"] == "0") {
+                              if (element["Status"] == "0") {
                                 enAttenteList.add(
                                     DemandeValidationModel.fromJson(element));
                               }
@@ -144,7 +143,8 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.w600)),
                                           TextSpan(
-                                              text: enAttenteList[index].id,
+                                              text: enAttenteList[index]
+                                                  .requestIdentify,
                                               style: TextStyle(
                                                   color: color2,
                                                   fontSize: 15.sp,
@@ -162,7 +162,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                               )),
                                           TextSpan(
                                               text: enAttenteList[index]
-                                                  .requestSource,
+                                                  .sourceDemande,
                                               style: TextStyle(
                                                 color: color9,
                                                 fontSize: 15.sp,
@@ -196,7 +196,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                               )),
                                           TextSpan(
                                               text: enAttenteList[index]
-                                                  .typeRequest,
+                                                  .typeDemande,
                                               style: TextStyle(
                                                 color: color9,
                                                 fontSize: 15.sp,
@@ -210,10 +210,27 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                         children: [
                                           ElevatedButton(
                                             onPressed: () async {
-                                              await updateDemandeStatus(
-                                                  enAttenteList[index].id!,
-                                                  "-1");
-                                              setState(() {});
+                                              // await updateDemandeStatus(
+                                              //     enAttenteList[index]
+                                              //         .requestIdentify!,
+                                              //     "-1");
+                                              // setState(() {});
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DialpadScreen(
+                                                    status: 4,
+                                                    onPressedDemandeValidationAction:
+                                                        () async {
+                                                      await updateDemandeStatus(
+                                                          enAttenteList[index]
+                                                              .requestIdentify!,
+                                                          "-1");
+                                                      setState(() {});
+                                                    },
+                                                  ),
+                                                ),
+                                              );
                                             },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
@@ -239,10 +256,27 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                           ),
                                           ElevatedButton(
                                             onPressed: () async {
-                                              await updateDemandeStatus(
-                                                  enAttenteList[index].id!,
-                                                  "1");
-                                              setState(() {});
+                                              // await updateDemandeStatus(
+                                              //     enAttenteList[index]
+                                              //         .requestIdentify!,
+                                              //     "1");
+                                              // setState(() {});
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DialpadScreen(
+                                                    status: 4,
+                                                    onPressedDemandeValidationAction:
+                                                        () async {
+                                                      await updateDemandeStatus(
+                                                          enAttenteList[index]
+                                                              .requestIdentify!,
+                                                          "1");
+                                                      setState(() {});
+                                                    },
+                                                  ),
+                                                ),
+                                              );
                                             },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor: color3,
@@ -355,7 +389,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                           if (snapshot.data["status"] == true) {
                             List<DemandeValidationModel> accepteList = [];
                             for (var element in snapshot.data["data"]) {
-                              if (element["status"] == "1") {
+                              if (element["Status"] == "1") {
                                 accepteList.add(
                                     DemandeValidationModel.fromJson(element));
                               }
@@ -394,7 +428,8 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.w600)),
                                           TextSpan(
-                                              text: accepteList[index].id,
+                                              text: accepteList[index]
+                                                  .requestIdentify,
                                               style: TextStyle(
                                                   color: color3,
                                                   fontSize: 15.sp,
@@ -412,7 +447,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                               )),
                                           TextSpan(
                                               text: accepteList[index]
-                                                  .requestSource,
+                                                  .sourceDemande,
                                               style: TextStyle(
                                                 color: color9,
                                                 fontSize: 15.sp,
@@ -446,7 +481,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                               )),
                                           TextSpan(
                                               text: accepteList[index]
-                                                  .typeRequest,
+                                                  .typeDemande,
                                               style: TextStyle(
                                                 color: color9,
                                                 fontSize: 15.sp,
@@ -541,7 +576,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                           if (snapshot.data["status"] == true) {
                             List<DemandeValidationModel> refuseList = [];
                             for (var element in snapshot.data["data"]) {
-                              if (element["status"] == "-1") {
+                              if (element["Status"] == "-1") {
                                 refuseList.add(
                                     DemandeValidationModel.fromJson(element));
                               }
@@ -549,12 +584,8 @@ class _DemandeValidationState extends State<DemandeValidation> {
 
                             if (refuseList.isNotEmpty) {
                               return ListView.separated(
-                                separatorBuilder: (context, index) => Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                                  child: Divider(
-                                    color: color6,
-                                    thickness: 1,
-                                  ),
+                                separatorBuilder: (context, index) => SizedBox(
+                                  height: 20.h,
                                 ),
                                 itemCount: refuseList.length,
                                 itemBuilder: (context, index) => Container(
@@ -584,7 +615,8 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.w600)),
                                           TextSpan(
-                                              text: refuseList[index].id,
+                                              text: refuseList[index]
+                                                  .requestIdentify,
                                               style: TextStyle(
                                                   color: Color(0xFFD32424),
                                                   fontSize: 15.sp,
@@ -602,7 +634,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                               )),
                                           TextSpan(
                                               text: refuseList[index]
-                                                  .requestSource,
+                                                  .sourceDemande,
                                               style: TextStyle(
                                                 color: color9,
                                                 fontSize: 15.sp,
@@ -635,7 +667,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                               )),
                                           TextSpan(
                                               text:
-                                                  refuseList[index].typeRequest,
+                                                  refuseList[index].typeDemande,
                                               style: TextStyle(
                                                 color: color9,
                                                 fontSize: 15.sp,
