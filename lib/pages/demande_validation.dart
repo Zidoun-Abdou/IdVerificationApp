@@ -26,15 +26,10 @@ class _DemandeValidationState extends State<DemandeValidation> {
         'GET', Uri.parse('http://10.0.2.2:8000/wh/requests/$userId'));
 
     http.StreamedResponse response = await request.send();
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
 
-    if (response.statusCode == 200) {
-      String answer = await response.stream.bytesToString();
-      var answerJson = jsonDecode(answer);
-      print(answerJson);
-      return answerJson;
-    } else {
-      print(response.reasonPhrase);
-    }
+    return answerJson;
   }
 
   updateDemandeStatus(String requestId, String statusCode) async {
@@ -44,14 +39,25 @@ class _DemandeValidationState extends State<DemandeValidation> {
     request.fields.addAll({'id': requestId, 'code': statusCode});
 
     http.StreamedResponse response = await request.send();
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
 
-    if (response.statusCode == 200) {
-      String answer = await response.stream.bytesToString();
-      var answerJson = jsonDecode(answer);
-      print("====================");
-      print(answerJson);
+    if (answerJson["status"] == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(statusCode == "1"
+              ? "Votre demande accepter"
+              : "Votre demande refuser"),
+          duration: Duration(seconds: 5),
+        ),
+      );
     } else {
-      print(response.reasonPhrase);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(answerJson["message"].toString()),
+          duration: Duration(seconds: 5),
+        ),
+      );
     }
   }
 
@@ -305,27 +311,6 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                   ),
                                 ),
                               );
-                            } else {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Image.asset(
-                                  //   'assets/images/documentpending.png',
-                                  // ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  Text(
-                                    "Vous n'avez pas encore des demandes en attente",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp,
-                                        color: Colors.white,
-                                        height: 1.h),
-                                  )
-                                ],
-                              );
                             }
                           }
                         }
@@ -492,27 +477,6 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                   ),
                                 ),
                               );
-                            } else {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Image.asset(
-                                  //   'assets/images/documentpending.png',
-                                  // ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  Text(
-                                    "Vous n'avez pas encore des demandes accepté",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp,
-                                        color: Colors.white,
-                                        height: 1.h),
-                                  )
-                                ],
-                              );
                             }
                           }
                         }
@@ -677,27 +641,6 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                     ],
                                   ),
                                 ),
-                              );
-                            } else {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Image.asset(
-                                  //   'assets/images/documentpending.png',
-                                  // ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  Text(
-                                    "Vous n'avez pas encore des demandes refusé",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp,
-                                        color: Colors.white,
-                                        height: 1.h),
-                                  )
-                                ],
                               );
                             }
                           }

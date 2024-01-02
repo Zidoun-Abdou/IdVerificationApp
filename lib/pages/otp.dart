@@ -44,42 +44,47 @@ class _OtpState extends State<Otp> {
         connectivityResult == ConnectivityResult.wifi) {*/
     _isLoading = true;
     setState(() {});
-    var headers = {
-      'Authorization': 'Basic aWNvc25ldF9hcHBzOkttNGFHVGxiZU1sNEFOcmh0U0xy',
-    };
+    // var headers = {
+    //   'Authorization': 'Basic aWNvc25ldF9hcHBzOkttNGFHVGxiZU1sNEFOcmh0U0xy',
+    // };
     var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            'https://api.icosnet.com/ibmpp/esb/pbflow_customer_create.php'));
+        'POST', Uri.parse('http://10.0.2.2:8000/wh/create/account/'));
 
     request.fields.addAll({
-      'phone': "213${_phoneContr.text}",
+      'phone': widget.phone,
       'token': widget.token.toString(),
       'password': widget.password
     });
+    print("phone ${widget.phone}");
+    print("token" + widget.token.toString());
+    print('password' + widget.password);
 
-    request.headers.addAll(headers);
+    // request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     String answer = await response.stream.bytesToString();
     var answerJson = jsonDecode(answer);
-    if (answerJson["success"] == true) {
-      print(answerJson);
+    print("=====================");
+    print(answerJson);
+    print("=====================");
+
+    if (answerJson["status"] == true) {
       // ******** send Phone and UserId & Set Status 2
       var headers = {'Content-Type': 'application/json'};
       var request =
           http.Request('PUT', Uri.parse('http://10.0.2.2:8000/wh/verify/sms/'));
-      request.body = json.encode({
-        "phone": "213${_phoneContr.text}",
-        "user_id": answerJson["user_id"].toString()
-      });
+      request.body = json.encode(
+          {"phone": widget.phone, "user_id": answerJson["user_id"].toString()});
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
+      String answer2 = await response.stream.bytesToString();
+      var answerJs = jsonDecode(answer2);
+
+      if (answerJs["status"] == true) {
         await prefs.setString('user_id', answerJson["user_id"].toString());
-        await prefs.setString('phone', "213${_phoneContr.text}");
+        await prefs.setString('phone', widget.phone);
+        await prefs.setString('login', 'true');
         await prefs.setString("status", "2");
 
         Navigator.pushAndRemoveUntil(
@@ -122,8 +127,6 @@ class _OtpState extends State<Otp> {
       isLoading = false;
       setState(() {});
     }*/
-    _isLoading = false;
-    setState(() {});
   }
 
   Future<int> verifySms() async {

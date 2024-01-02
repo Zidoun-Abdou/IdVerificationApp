@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +18,20 @@ class IdInfos extends StatefulWidget {
 class _IdInfosState extends State<IdInfos> {
   bool? _is_loading = false;
   GlobalKey<FlipCardState> _cardKey = GlobalKey<FlipCardState>();
+  @override
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  String _myToken = "";
+
+  void getToken() {
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? token = value;
+      _myToken = value.toString();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -507,7 +522,7 @@ class _IdInfosState extends State<IdInfos> {
                                 onPressed: () async {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => Welcome(
-                                            token: '46545454655456',
+                                            token: _myToken,
                                           )));
                                 },
                                 style: ElevatedButton.styleFrom(
