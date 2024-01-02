@@ -130,9 +130,12 @@ class _ConfirmMailState extends State<ConfirmMail> {
     isLoading = true;
     setState(() {});
     // ******** send Phone and UserId and Email & Set Status 3
-    var headers = {'Content-Type': 'application/json'};
-    var request =
-        http.Request('PUT', Uri.parse('http://10.0.2.2:8000/wh/verify/email/'));
+    var headers = {
+      'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request(
+        'PUT', Uri.parse('https://api.icosnet.com/sign/wh/verify/email/'));
 
     request.body = json.encode({
       "phone": prefs.getString('phone').toString(),

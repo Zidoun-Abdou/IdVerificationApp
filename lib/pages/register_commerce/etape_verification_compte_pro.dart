@@ -341,11 +341,12 @@ class _EtapeVerificationCompteProState
                   widget.currentEtapeValueNotifier.value = 1;
                 } else if (widget.etape2ValueNotifier.value == false) {
                   widget.currentEtapeValueNotifier.value = 2;
+                } else if (widget.etape3ValueNotifier.value == false ||
+                    widget.etape4ValueNotifier.value == false) {
+                  widget.currentEtapeValueNotifier.value = 3;
                 }
-                // else if (widget.etape3ValueNotifier.value == false) {
+                // else if (widget.etape4ValueNotifier.value == false) {
                 //   widget.currentEtapeValueNotifier.value = 3;
-                // } else if (widget.etape4ValueNotifier.value == false) {
-                //   widget.currentEtapeValueNotifier.value = 4;
                 // }
               },
               style: ElevatedButton.styleFrom(

@@ -150,7 +150,7 @@ class _WelcomeState extends State<Welcome> {
                               height: 1,
                             ),
                             Text(
-                              "Mon compte",
+                              "ID : ${prefs.getString("user_id")}",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFFA2A2B5),

@@ -123,9 +123,13 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         await prefs.setString("document_number", document_number);
 
         // ******** send Phone and UserId and Email and Nin & Set Status 4
-        var headers = {'Content-Type': 'application/json'};
+        var headers = {
+          'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
+          'Content-Type': 'application/json'
+        };
         var request = http.Request(
-            'PUT', Uri.parse('http://10.0.2.2:8000/wh/verify/nin/'));
+            'PUT', Uri.parse('https://api.icosnet.com/sign/wh/verify/nin/'));
+
         request.body = json.encode({
           "phone": prefs.getString('phone').toString(),
           "user_id": prefs.getString('user_id').toString(),

@@ -8,7 +8,7 @@ import 'package:whowiyati/pages/register_commerce/verification_telephone.dart';
 
 import '../../main.dart';
 import 'etape_verification_compte_pro.dart';
-import 'verification_registre_commerce.dart';
+import 'verification_documents.dart';
 
 class AjouterComptePro extends StatefulWidget {
   const AjouterComptePro({super.key});
@@ -553,10 +553,11 @@ class _AjouterCompteProState extends State<AjouterComptePro> {
                                     ),
                                     Visibility(
                                       visible: _currentEtape.value == 3,
-                                      child: VerificationRegistreCommerce(
+                                      child: VerificationDocuments(
                                         currentEtapeValueNotifier:
                                             _currentEtape,
                                         etape3ValueNotifier: _etape3,
+                                        etape4ValueNotifier: _etape4,
                                       ),
                                     ),
                                   ],

@@ -44,11 +44,11 @@ class _OtpState extends State<Otp> {
         connectivityResult == ConnectivityResult.wifi) {*/
     _isLoading = true;
     setState(() {});
-    // var headers = {
-    //   'Authorization': 'Basic aWNvc25ldF9hcHBzOkttNGFHVGxiZU1sNEFOcmh0U0xy',
-    // };
+    var headers = {
+      'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
+    };
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://10.0.2.2:8000/wh/create/account/'));
+        'POST', Uri.parse('https://api.icosnet.com/sign/wh/create/account/'));
 
     request.fields.addAll({
       'phone': widget.phone,
@@ -59,7 +59,7 @@ class _OtpState extends State<Otp> {
     print("token" + widget.token.toString());
     print('password' + widget.password);
 
-    // request.headers.addAll(headers);
+    request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     String answer = await response.stream.bytesToString();
     var answerJson = jsonDecode(answer);
@@ -67,11 +67,14 @@ class _OtpState extends State<Otp> {
     print(answerJson);
     print("=====================");
 
-    if (answerJson["status"] == true) {
+    if (answerJson["success"] == true) {
       // ******** send Phone and UserId & Set Status 2
-      var headers = {'Content-Type': 'application/json'};
-      var request =
-          http.Request('PUT', Uri.parse('http://10.0.2.2:8000/wh/verify/sms/'));
+      var headers = {
+        'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request(
+          'PUT', Uri.parse('https://api.icosnet.com/sign/wh/verify/sms/'));
       request.body = json.encode(
           {"phone": widget.phone, "user_id": answerJson["user_id"].toString()});
       request.headers.addAll(headers);

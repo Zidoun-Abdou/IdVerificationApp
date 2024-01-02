@@ -131,11 +131,11 @@ class _VerifyFaceState extends State<VerifyFace> {
   }
 
   Future<bool> sendToAlfresco() async {
-    // var headers = {
-    //   'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
-    // };
+    var headers = {
+      'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
+    };
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://10.0.2.2:8000/wh/alfresco/'));
+        'POST', Uri.parse('https://api.icosnet.com/sign/wh/alfresco/'));
 
     request.fields.addAll({
       'token': _myToken,
@@ -157,7 +157,7 @@ class _VerifyFaceState extends State<VerifyFace> {
         .add(await http.MultipartFile.fromPath('image_face', widget.face));
     request.files
         .add(await http.MultipartFile.fromPath('signature', widget.signature));
-    // request.headers.addAll(headers);
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
     String answer = await response.stream.bytesToString();

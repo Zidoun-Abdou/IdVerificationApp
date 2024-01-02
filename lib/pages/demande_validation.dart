@@ -22,8 +22,12 @@ class _DemandeValidationState extends State<DemandeValidation> {
   getDemandeValidation() async {
     String? userId = prefs.getString('user_id');
 
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
+
     var request = http.Request(
-        'GET', Uri.parse('http://10.0.2.2:8000/wh/requests/$userId'));
+        'GET', Uri.parse('https://api.icosnet.com/sign/wh/requests/$userId'));
+
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
     String answer = await response.stream.bytesToString();
@@ -33,10 +37,14 @@ class _DemandeValidationState extends State<DemandeValidation> {
   }
 
   updateDemandeStatus(String requestId, String statusCode) async {
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
+
     var request = http.MultipartRequest(
-        'PUT', Uri.parse('http://10.0.2.2:8000/wh/validate/request/'));
+        'PUT', Uri.parse('https://api.icosnet.com/sign/wh/validate/request/'));
 
     request.fields.addAll({'id': requestId, 'code': statusCode});
+
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
     String answer = await response.stream.bytesToString();

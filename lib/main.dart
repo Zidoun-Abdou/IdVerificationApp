@@ -12,6 +12,7 @@ import 'package:whowiyati/pages/idcards.dart';
 import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:whowiyati/pages/dealpad.dart';
 import 'package:whowiyati/pages/demande_validation.dart';
+import 'package:whowiyati/pages/register_commerce/ajouter_compte_pro.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';
@@ -78,7 +79,6 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            // home: prefs.getString('user_id').toString() == "null"
             home: prefs.getString('login').toString() == "null" ||
                     prefs.getString('login') == "false"
                 ? HomePage()
