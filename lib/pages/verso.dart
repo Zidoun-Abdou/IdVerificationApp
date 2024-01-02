@@ -134,10 +134,11 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         });
         request.headers.addAll(headers);
 
-        http.StreamedResponse response = await request.send();
+        http.StreamedResponse response2 = await request.send();
+        String answer = await response2.stream.bytesToString();
+        var answerJs = jsonDecode(answer);
 
-        if (response.statusCode == 200) {
-          print(await response.stream.bytesToString());
+        if (answerJs["status"] == true) {
           await prefs.setString("status", "4");
           NfcStatus status = await NfcProvider.nfcStatus;
 

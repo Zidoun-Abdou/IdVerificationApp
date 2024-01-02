@@ -142,10 +142,11 @@ class _ConfirmMailState extends State<ConfirmMail> {
 
     request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+    http.StreamedResponse response2 = await request.send();
+    String answer = await response2.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+    if (answerJson["status"] == true) {
       await prefs.setString("status", "3");
       await prefs.setString('mail', widget.mail);
       Navigator.of(context).pop();
@@ -159,18 +160,16 @@ class _ConfirmMailState extends State<ConfirmMail> {
       );
       return 1;
     } else {
-      String answer = await response.stream.bytesToString();
-      var answerJson = jsonDecode(answer);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            answerJson["error"].toString(),
+            answerJson["message"].toString(),
             textAlign: TextAlign.center,
           ),
           duration: Duration(seconds: 3),
         ),
       );
-      print(response.reasonPhrase);
+      print(response2.reasonPhrase);
       isLoading = false;
       setState(() {});
       return 0;

@@ -59,35 +59,69 @@ class _LoginState extends State<Login> {
         // request.headers.addAll(headers);
 
         http.StreamedResponse response = await request.send();
+        String answer = await response.stream.bytesToString();
+        var answerJson = jsonDecode(answer);
+        print(answer);
+        print(answerJson["status"]);
 
-        if (response.statusCode == 200) {
-          String answer = await response.stream.bytesToString();
-          var answerJson = jsonDecode(answer);
-          if (answerJson["success"] == true) {
-            await prefs.setString("status", answerJson["user"]['status']);
-            await prefs.setString("username", answerJson["user"]['username']);
-            await prefs.setString("user_id", answerJson["user"]['user_id']);
-            await prefs.setString("phone", answerJson["user"]['phone']);
-            await prefs.setString("email", answerJson["user"]['email']);
-            await prefs.setString("nin", answerJson["user"]['nin']);
-            await prefs.setString('login', 'true');
+        if (answerJson["status"] == true) {
+          await prefs.setString("status", answerJson["user"]['status']);
+          await prefs.setString("username", answerJson["user"]['username']);
+          await prefs.setString("user_id", answerJson["user"]['user_id']);
+          await prefs.setString("phone", answerJson["user"]['phone']);
+          await prefs.setString("email", answerJson["user"]['email']);
+          await prefs.setString("nin", answerJson["user"]['nin'] ?? "");
 
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Welcome(token: _myToken)),
-                (Route<dynamic> route) => false);
-          }
+          // await prefs.setString("daira", answerJson["dg12"]["daira"]);
+          // await prefs.setString(
+          //     "baladia_latin", answerJson["dg12"]["baladia_latin"]);
+          // await prefs.setString(
+          //     "baladia_arab", answerJson["dg12"]["baladia_arab"]);
+          // await prefs.setString("deliv_date", answerJson["dg12"]["deliv_date"]);
+          // await prefs.setString("exp_date", answerJson["dg12"]["exp_date"]);
+          // await prefs.setString(
+          //     "surname_latin", answerJson["dg11"]["surname_latin"]);
+          // await prefs.setString(
+          //     "surname_arabic", answerJson["dg11"]["surname_arabic"]);
+          // await prefs.setString("name_latin", answerJson["dg11"]["name_latin"]);
+          // await prefs.setString(
+          //     "name_arabic", answerJson["dg11"]["name_arabic"]);
+          // await prefs.setString(
+          //     "birthplace_latin", answerJson["dg11"]["birthplace_latin"]);
+          // await prefs.setString(
+          //     "birthplace_arabic", answerJson["dg11"]["birthplace_arabic"]);
+          // await prefs.setString("birth_date", answerJson["dg11"]["birth_date"]);
+          // await prefs.setString("sexe_latin", answerJson["dg11"]["sexe_latin"]);
+          // await prefs.setString(
+          //     "sexe_arabic", answerJson["dg11"]["sexe_arabic"]);
+          // await prefs.setString("blood_type", answerJson["dg11"]["blood_type"]);
+          // await prefs.setString('idinfos', answerJson["dg11"]["nin"]);
+          // await prefs.setString("face", answerJson["dg2"]["face"]);
+          // await prefs.setString("signature", answerJson["dg7"]["signature"]);
+          // await prefs.setString("document_number", document_number);
+
+          await prefs.setString('login', 'true');
+
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => Welcome(token: _myToken)),
+              (Route<dynamic> route) => false);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content:
-                  Text("Informations incorrects, Veillez les vérifier svp"),
+              content: Text("Invalid credentials"),
               duration: Duration(seconds: 5),
             ),
           );
         }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Informations incorrects, Veillez les vérifier svp"),
+            duration: Duration(seconds: 5),
+          ),
+        );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

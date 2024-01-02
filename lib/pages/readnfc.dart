@@ -83,6 +83,15 @@ class _ReadNfcState extends State<ReadNfc> {
   var _isNfcAvailable = false;
   var _isReading = false;
   bool _isLoading = false;
+  String _myToken = "";
+
+  void getToken() {
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? token = value;
+      _myToken = value.toString();
+      print(_myToken);
+    });
+  }
 
   MrtdData? _mrtdData;
 
@@ -104,6 +113,7 @@ class _ReadNfcState extends State<ReadNfc> {
     _timerStateUpdater = Timer.periodic(Duration(seconds: 2), (Timer t) {
       _initPlatformState();
     });
+    getToken();
   }
 
   Future<void> _initPlatformState() async {
@@ -315,8 +325,10 @@ class _ReadNfcState extends State<ReadNfc> {
       'Content-Type': 'application/json',
       'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0='
     };
-    var request = http.Request('POST',
-        Uri.parse('https://api.icosnet.com/kyc/decode_dg_idcard?token=dsqdqs'));
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'https://api.icosnet.com/kyc/decode_dg_idcard?token=${_myToken}'));
     request.body = json.encode({
       "dg11": _mrtdData!.dg11!.toBytes().hex(),
       "dg12": _mrtdData!.dg12!.toBytes().hex(),

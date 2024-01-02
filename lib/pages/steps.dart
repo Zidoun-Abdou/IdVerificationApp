@@ -216,8 +216,8 @@ class _StepsState extends State<Steps> {
                                   flex: 1,
                                   child: CircleAvatar(
                                     backgroundColor:
-                                        int.parse(prefs.getString("status")!) >=
-                                                4
+                                        int.parse(prefs.getString("status")!) ==
+                                                5
                                             ? color3
                                             : Colors.grey,
                                     child: Icon(
@@ -239,8 +239,8 @@ class _StepsState extends State<Steps> {
                                           text: 'Confirmation par Id Card\n',
                                           style: TextStyle(
                                             color: int.parse(prefs.getString(
-                                                        "status")!) >=
-                                                    4
+                                                        "status")!) ==
+                                                    5
                                                 ? Colors.white
                                                 : Colors.grey,
                                             fontSize: 15.sp,
@@ -253,8 +253,8 @@ class _StepsState extends State<Steps> {
                                           text: 'Vérifié',
                                           style: TextStyle(
                                             color: int.parse(prefs.getString(
-                                                        "status")!) >=
-                                                    4
+                                                        "status")!) ==
+                                                    5
                                                 ? color3
                                                 : Colors.grey,
                                             fontSize: 12.sp,
@@ -302,18 +302,20 @@ class _StepsState extends State<Steps> {
                                         token: widget.token,
                                       )));
                             } else if (int.parse(prefs.getString("status")!) ==
-                                3) {
+                                    3 ||
+                                int.parse(prefs.getString("status")!) == 4) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => IdCards()));
-                            } else if (prefs.getString('idinfos').toString() !=
-                                    "null" &&
-                                prefs.getString('mail').toString() != "null") {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => IdInfos(),
-                                ),
-                              );
                             }
+                            // else if (prefs.getString('idinfos').toString() !=
+                            //         "null" &&
+                            //     prefs.getString('mail').toString() != "null") {
+                            //   Navigator.of(context).push(
+                            //     MaterialPageRoute(
+                            //       builder: (context) => IdInfos(),
+                            //     ),
+                            //   );
+                            // }
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: color3,

@@ -102,7 +102,7 @@ class _VerifyFaceState extends State<VerifyFace> {
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'https://api.icosnet.com/kyc_liveness/liveness?token=ffffffff&question=neutral&ip_adress=${ip}'));
+            'https://api.icosnet.com/kyc_liveness/liveness?token=${_myToken}&question=neutral&ip_adress=${ip}'));
     request.files.add(await http.MultipartFile.fromPath('video', link));
     request.files.add(await http.MultipartFile.fromPath('face', widget.face));
     request.headers.addAll(headers);
@@ -131,11 +131,12 @@ class _VerifyFaceState extends State<VerifyFace> {
   }
 
   Future<bool> sendToAlfresco() async {
-    var headers = {
-      'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
-    };
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://api.icosnet.com/ibmpp/esb/create_who_user.php'));
+    // var headers = {
+    //   'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
+    // };
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://10.0.2.2:8000/wh/alfresco/'));
+
     request.fields.addAll({
       'token': _myToken,
       'french_surname': prefs.getString('surname_latin').toString(),
@@ -145,7 +146,8 @@ class _VerifyFaceState extends State<VerifyFace> {
       'birth_date': prefs.getString('birth_date').toString(),
       'expiration_date': prefs.getString('exp_date').toString(),
       'card_number': prefs.getString('document_number').toString(),
-      'email': prefs.getString('mail').toString()
+      'email': prefs.getString('mail').toString(),
+      'user_id': prefs.getString('user_id').toString(),
     });
     request.files
         .add(await http.MultipartFile.fromPath('image_recto', widget.front));
@@ -155,16 +157,14 @@ class _VerifyFaceState extends State<VerifyFace> {
         .add(await http.MultipartFile.fromPath('image_face', widget.face));
     request.files
         .add(await http.MultipartFile.fromPath('signature', widget.signature));
-    request.headers.addAll(headers);
+    // request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
     String answer = await response.stream.bytesToString();
     var answerJson = jsonDecode(answer);
 
-    if (answerJson["message"] == "This user  exists" ||
-        answerJson["message"] == "Updated successfully") {
-      // shared pref visage
-      prefs.setBool('visage', true);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      await prefs.setString("status", "5");
       print("Alfresco ok");
       print(answerJson);
       Navigator.pushAndRemoveUntil(
