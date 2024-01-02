@@ -46,25 +46,24 @@ class _LoginState extends State<Login> {
       if (_formKey.currentState!.validate()) {
         isLoading = true;
         setState(() {});
-        // var headers = {
-        //   'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
-        //   'Cookie': 'PHPSESSID=gfkpgdr28le107p7mndtubhr23'
-        // };
+        var headers = {
+          'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
+        };
         var request = http.MultipartRequest(
-            'POST', Uri.parse('http://10.0.2.2:8000/wh/login/'));
+            'POST', Uri.parse('https://api.icosnet.com/sign/wh/login/'));
 
         request.fields.addAll(
             {'user_id': _useridContr.text, 'password': _passwordContr.text});
 
-        // request.headers.addAll(headers);
+        request.headers.addAll(headers);
 
         http.StreamedResponse response = await request.send();
         String answer = await response.stream.bytesToString();
         var answerJson = jsonDecode(answer);
         print(answer);
-        print(answerJson["status"]);
+        print(answerJson["success"]);
 
-        if (answerJson["status"] == true) {
+        if (answerJson["success"] == true) {
           await prefs.setString("status", answerJson["user"]['status']);
           await prefs.setString("username", answerJson["user"]['username']);
           await prefs.setString("user_id", answerJson["user"]['user_id']);
