@@ -32,7 +32,6 @@ class _LoginState extends State<Login> {
     });
   }
 
-  bool _isChecked = false;
   var _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   TextEditingController _useridContr = TextEditingController();
@@ -109,7 +108,7 @@ class _LoginState extends State<Login> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Invalid credentials"),
+              content: Text("les informations d'identification invalides"),
               duration: Duration(seconds: 5),
             ),
           );
@@ -227,7 +226,7 @@ class _LoginState extends State<Login> {
                                     child: TextFormField(
                                       controller: _passwordContr,
                                       validator: (val) {
-                                        return validInput(val!, 3, 13);
+                                        return validInput(val!, 8, 50);
                                       },
                                       cursorColor: color3,
                                       obscureText: true,

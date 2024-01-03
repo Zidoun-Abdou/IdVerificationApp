@@ -100,7 +100,7 @@ class _OtpState extends State<Otp> {
         print(response.reasonPhrase);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("User not found"),
+            content: Text("Utilisateur non trouvé"),
             duration: Duration(seconds: 5),
           ),
         );
@@ -112,7 +112,8 @@ class _OtpState extends State<Otp> {
       print(answerJson.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Number or phone already used, Please Login"),
+          content:
+              Text("Numéro ou téléphone déjà utilisé, veuillez vous connecter"),
           duration: Duration(seconds: 5),
         ),
       );
@@ -156,7 +157,7 @@ class _OtpState extends State<Otp> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              "OTP non valid ",
+              "OTP non valide",
               textAlign: TextAlign.center,
             ),
             duration: Duration(seconds: 3),

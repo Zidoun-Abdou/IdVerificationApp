@@ -4,18 +4,13 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:glassmorphism/glassmorphism.dart';
-import 'package:whowiyati/const.dart';
-import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/demande_validation.dart';
-import 'package:whowiyati/pages/register_commerce/ajouter_compte_pro.dart';
-import 'package:whowiyati/pages/cardnfcinfo.dart';
-import 'package:whowiyati/pages/change_mot_pass.dart';
-import 'package:whowiyati/pages/changepassword.dart';
-import 'package:whowiyati/pages/homepage.dart';
+import '../const.dart';
+import '../main.dart';
+import 'demande_validation.dart';
+import 'cardnfcinfo.dart';
+import 'homepage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:whowiyati/pages/steps.dart';
+import 'steps.dart';
 
 import 'idinfos.dart';
 import 'listofdocuments.dart';
@@ -525,17 +520,9 @@ class _WelcomeState extends State<Welcome> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            // Text(
-                            //   'Manage your profile ',
-                            //   style: TextStyle(
-                            //     color: Color(0xFFA2A2B5),
-                            //     fontSize: 15.sp,
-                            //     fontFamily: 'Inter',
-                            //     fontWeight: FontWeight.w600,
-                            //   ),
-                            // ),
                             GestureDetector(
                               onTap: () {
+                                /*
                                 if (prefs.getString('status') == "5") {
                                   showModalBottomSheet(
                                       context: context,
@@ -725,6 +712,7 @@ class _WelcomeState extends State<Welcome> {
                                         );
                                       });
                                 }
+                                */
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -741,9 +729,11 @@ class _WelcomeState extends State<Welcome> {
                                   'Ajoutez Compte PRO',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                    color: prefs.getString('status') == "5"
-                                        ? Colors.white
-                                        : Colors.grey,
+                                    color:
+                                        // prefs.getString('status') == "5"
+                                        //     ? Colors.white
+                                        //     :
+                                        Colors.grey,
                                     fontSize: 12.sp,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -923,7 +913,7 @@ class _WelcomeState extends State<Welcome> {
                                       Row(
                                         children: [
                                           Expanded(
-                                            child: InkWell(
+                                            child: GestureDetector(
                                               onTap: () {
                                                 if (prefs.getString('status') ==
                                                     "5") {
@@ -987,7 +977,7 @@ class _WelcomeState extends State<Welcome> {
                                           ),
                                           SizedBox(width: 10.w),
                                           Expanded(
-                                            child: InkWell(
+                                            child: GestureDetector(
                                               onTap: () {
                                                 if (prefs.getString('status') ==
                                                     "5") {
@@ -1058,10 +1048,17 @@ class _WelcomeState extends State<Welcome> {
                                       Row(
                                         children: [
                                           Expanded(
-                                            child: InkWell(
+                                            child: GestureDetector(
                                               onTap: () {
-                                                if (prefs.getString('status') ==
-                                                    "5") {}
+                                                // if (prefs.getString('status') ==
+                                                //     "5")
+                                                //      {
+                                                //   Navigator.of(context)
+                                                //       .push(MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         MesComptesPro(),
+                                                //   ));
+                                                // }
                                               },
                                               child: Container(
                                                 height: MediaQuery.of(context)
@@ -1088,11 +1085,13 @@ class _WelcomeState extends State<Welcome> {
                                                       padding:
                                                           EdgeInsets.all(8.sp),
                                                       decoration: BoxDecoration(
-                                                          color: prefs.getString(
-                                                                      'status') ==
-                                                                  "5"
-                                                              ? color5
-                                                              : Colors.grey,
+                                                          color:
+                                                              // prefs.getString(
+                                                              //             'status') ==
+                                                              //         "5"
+                                                              //     ? color5
+                                                              //     :
+                                                              Colors.grey,
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
@@ -1116,7 +1115,7 @@ class _WelcomeState extends State<Welcome> {
                                           ),
                                           SizedBox(width: 10.w),
                                           Expanded(
-                                            child: InkWell(
+                                            child: GestureDetector(
                                               onTap: () {
                                                 if (prefs.getString('status') ==
                                                     "5") {

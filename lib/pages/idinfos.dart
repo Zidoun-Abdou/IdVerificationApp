@@ -520,10 +520,7 @@ class _IdInfosState extends State<IdInfos> {
                                   horizontal: 20.w, vertical: 5.h),
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => Welcome(
-                                            token: _myToken,
-                                          )));
+                                  Navigator.of(context).pop();
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: color3,
@@ -537,7 +534,7 @@ class _IdInfosState extends State<IdInfos> {
                                   shadowColor: color3, // Set the shadow color
                                 ),
                                 child: Text(
-                                  'Continuer',
+                                  'Retourner',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15.sp,

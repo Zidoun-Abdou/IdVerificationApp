@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:dmrtd/dmrtd.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_ip_address/get_ip_address.dart';
 import 'package:http/http.dart' as http;
@@ -9,14 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:whowiyati/const.dart';
-import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/register_commerce/registre_commerce.dart';
-import 'package:whowiyati/pages/register_commerce/success.dart';
-import 'package:whowiyati/pages/verify_face.dart';
-import 'package:whowiyati/pages/welcome.dart';
-import 'package:whowiyati/pages/welcomenfc.dart';
+import '../../const.dart';
+import 'success.dart';
 
 class NisRC extends StatefulWidget {
   const NisRC({

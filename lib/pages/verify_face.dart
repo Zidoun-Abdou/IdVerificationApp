@@ -16,6 +16,7 @@ import 'package:whowiyati/pages/idinfos.dart';
 import 'package:whowiyati/pages/steps.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
+import 'package:whowiyati/pages/welcome.dart';
 
 class VerifyFace extends StatefulWidget {
   final String face;
@@ -115,13 +116,13 @@ class _VerifyFaceState extends State<VerifyFace> {
       print("face ok");
       await prefs.setString('idinfos', "ok");
 
-      controller.dispose();
       await sendToAlfresco();
       return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Face verification failed, Please try again."),
+          content:
+              Text("La vérification faciale a échoué. Veuillez réessayer."),
           duration: Duration(seconds: 5),
         ),
       );
@@ -137,17 +138,24 @@ class _VerifyFaceState extends State<VerifyFace> {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/wh/alfresco/'));
 
+    String creation_date = prefs.getString('deliv_date').toString();
+    creation_date = creation_date.replaceAll("/", "-");
+    String birth_date = prefs.getString('birth_date').toString();
+    birth_date = birth_date.replaceAll("/", "-");
+    String expiry_date = prefs.getString('exp_date').toString();
+    expiry_date = expiry_date.replaceAll("/", "-");
+
     request.fields.addAll({
       'token': _myToken,
       'french_surname': prefs.getString('surname_latin').toString(),
       'french_name': prefs.getString('name_latin').toString(),
       'id_number': prefs.getString('nin').toString(),
-      'creation_date': prefs.getString('deliv_date').toString(),
-      'birth_date': prefs.getString('birth_date').toString(),
-      'expiration_date': prefs.getString('exp_date').toString(),
+      'creation_date': creation_date,
+      'birth_date': birth_date,
+      'expiration_date': expiry_date,
       'card_number': prefs.getString('document_number').toString(),
       'email': prefs.getString('mail').toString(),
-      'user_id': prefs.getString('user_id').toString(),
+      'user_id': prefs.getString('user_id').toString()
     });
     request.files
         .add(await http.MultipartFile.fromPath('image_recto', widget.front));
@@ -160,24 +168,27 @@ class _VerifyFaceState extends State<VerifyFace> {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-    String answer = await response.stream.bytesToString();
-    var answerJson = jsonDecode(answer);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       await prefs.setString("status", "5");
       print("Alfresco ok");
-      print(answerJson);
+      print(await response.stream.bytesToString());
+      controller.dispose();
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (BuildContext context) => IdInfos()),
+          MaterialPageRoute(
+              builder: (BuildContext context) => Welcome(
+                    token: _myToken,
+                  )),
           (Route<dynamic> route) => false);
       return true;
     } else {
-      print(answerJson);
+      print(response.reasonPhrase);
+      print(await response.stream.bytesToString());
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Failed to send to Alfresco."),
+          content: Text("Échec de l'envoi, réessayez"),
           duration: Duration(seconds: 5),
         ),
       );
@@ -351,20 +362,22 @@ class _VerifyFaceState extends State<VerifyFace> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 20.h,
-                    right: 0,
-                    left: 0,
-                    child: Text(
-                      'Powered by ICOSNET',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 0.20,
-                      ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text.rich(
+                      TextSpan(children: [
+                        TextSpan(
+                            text: 'WHOWIATY',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600)),
+                        TextSpan(
+                          text: ' by icosnet',
+                          style: TextStyle(
+                              fontFamily: 'Inter', color: Colors.white),
+                        ),
+                      ]),
                     ),
                   )
                 ],

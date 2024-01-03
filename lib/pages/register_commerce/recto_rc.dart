@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:whowiyati/const.dart';
-import 'package:whowiyati/pages/register_commerce/verso_rc.dart';
-import 'package:whowiyati/pages/verso.dart';
+import '../../const.dart';
+import 'verso_rc.dart';
+import '../verso.dart';
 
 class RectoRC extends StatefulWidget {
   const RectoRC({super.key});
