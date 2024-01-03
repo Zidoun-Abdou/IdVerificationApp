@@ -342,7 +342,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                 height: 20.h,
                               ),
                               Text(
-                                "Vous n'avez pas encore de documents en attente",
+                                "Vous n'avez pas encore de demandes en attentes",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.sp,
@@ -364,7 +364,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                               height: 20.h,
                             ),
                             Text(
-                              "Vous n'avez pas encore de documents en attente",
+                              "Vous n'avez pas encore de demandes en attentes",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -508,7 +508,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                 height: 20.h,
                               ),
                               Text(
-                                "Vous n'avez pas encore des demandes accepté",
+                                "Vous n'avez pas encore des demandes acceptés",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -530,7 +530,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                               height: 20.h,
                             ),
                             Text(
-                              "Vous n'avez pas encore des demandes accepté",
+                              "Vous n'avez pas encore des demandes acceptés",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -673,7 +673,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                 height: 20.h,
                               ),
                               Text(
-                                "Vous n'avez pas encore des demandes refusé",
+                                "Vous n'avez pas encore des demandes refusés",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -695,7 +695,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                               height: 20.h,
                             ),
                             Text(
-                              "Vous n'avez pas encore des demandes refusé",
+                              "Vous n'avez pas encore des demandes refusés",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
