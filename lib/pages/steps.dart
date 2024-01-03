@@ -2,17 +2,17 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:whowiyati/const.dart';
+import '../const.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:http/http.dart' as http;
-import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/email.dart';
-import 'package:whowiyati/pages/idcards.dart';
-import 'package:whowiyati/pages/idinfos.dart';
+import '../main.dart';
+import 'email.dart';
+import 'idcards.dart';
+import 'idinfos.dart';
 import 'dart:convert';
 
-import 'package:whowiyati/pages/otp.dart';
-import 'package:whowiyati/pages/welcome.dart';
+import 'otp.dart';
+import 'welcome.dart';
 
 class Steps extends StatefulWidget {
   final String token;

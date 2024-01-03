@@ -5,15 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import 'package:whowiyati/const.dart';
-import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/idinfos.dart';
-import 'package:whowiyati/pages/readnfc.dart';
-import 'package:whowiyati/pages/recto.dart';
-import 'package:whowiyati/pages/verify_face.dart';
+import '../const.dart';
+import 'readnfc.dart';
 
 class WelcomeNfc extends StatefulWidget {
   final String dob;
@@ -24,7 +17,6 @@ class WelcomeNfc extends StatefulWidget {
   final String back;
   final String signature;
 
-
   const WelcomeNfc(
       {Key? key,
       required this.dob,
@@ -32,7 +24,8 @@ class WelcomeNfc extends StatefulWidget {
       required this.idnumber,
       required this.face,
       required this.front,
-      required this.back, required this.signature})
+      required this.back,
+      required this.signature})
       : super(key: key);
 
   @override
@@ -104,7 +97,8 @@ class _WelcomeNfcState extends State<WelcomeNfc> {
                                     idnumber: widget.idnumber,
                                     face: widget.face,
                                     back: widget.back,
-                                    front: widget.front,signature: widget.signature,
+                                    front: widget.front,
+                                    signature: widget.signature,
                                   )));
                         },
                         style: ElevatedButton.styleFrom(

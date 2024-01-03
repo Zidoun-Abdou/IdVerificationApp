@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:whowiyati/const.dart';
-import 'package:whowiyati/pages/register_commerce/recto_rc.dart';
+import '../../const.dart';
+import 'recto_rc.dart';
 
 class RegisterCommerce extends StatefulWidget {
   const RegisterCommerce({super.key});

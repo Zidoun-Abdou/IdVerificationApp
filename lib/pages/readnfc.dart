@@ -373,7 +373,7 @@ class _ReadNfcState extends State<ReadNfc> {
           "birthplace_arabic", answerJson["dg11"]["birthplace_arabic"]);
       await prefs.setString("birth_date", answerJson["dg11"]["birth_date"]);
       await prefs.setString("sexe_latin", answerJson["dg11"]["sexe_latin"]);
-      await prefs.setString("sexe_arabic", answerJson["dg11"]["sexe_arabic"]);
+      await prefs.setString("sexe_arabic", answerJson["dg11"]["sex_arabic"]);
       await prefs.setString("blood_type", answerJson["dg11"]["blood_type"]);
       await prefs.setString("nin", answerJson["dg11"]["nin"]);
       await prefs.setString('idinfos', answerJson["dg11"]["nin"]);

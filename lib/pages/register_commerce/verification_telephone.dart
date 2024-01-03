@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:whowiyati/const.dart';
-import 'package:whowiyati/pages/register_commerce/etape_verification_compte_pro.dart';
+import '../../const.dart';
+import 'etape_verification_compte_pro.dart';
 
 class VerificationTelephone extends StatefulWidget {
   final ValueNotifier<int> currentEtapeValueNotifier;
@@ -301,7 +301,7 @@ class _VerificationTelephoneState extends State<VerificationTelephone> {
                                 ),
                               ),
                               Positioned(
-                                bottom: 90.h,
+                                bottom: 130.h,
                                 right: 0,
                                 left: 0,
                                 child: ElevatedButton(
@@ -341,7 +341,7 @@ class _VerificationTelephoneState extends State<VerificationTelephone> {
                   ),
                 ),
                 Positioned(
-                  bottom: 20.h,
+                  bottom: 60.h,
                   right: 0,
                   left: 0,
                   child: ElevatedButton(
@@ -365,6 +365,36 @@ class _VerificationTelephoneState extends State<VerificationTelephone> {
                       'Continuer',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 15.sp,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      widget.currentEtapeValueNotifier.value = 0;
+                      widget.etape1ValueNotifier.value = true;
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 15.h),
+                      foregroundColor: Colors.white,
+                      minimumSize: Size.fromHeight(30.w),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: color3, width: 1),
+                        borderRadius: BorderRadius.circular(50.r),
+                      ),
+                    ),
+                    child: Text(
+                      'Passer l\'étape',
+                      style: TextStyle(
+                        color: color3,
                         fontSize: 15.sp,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,

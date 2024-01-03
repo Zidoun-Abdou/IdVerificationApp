@@ -202,7 +202,7 @@ class _PhoneState extends State<Phone> {
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.next,
                       validator: (val) {
-                        return validInput(val!, 5, 50);
+                        return validInput(val!, 8, 50);
                       },
                       onChanged: (value) {
                         setState(() {});
@@ -242,7 +242,7 @@ class _PhoneState extends State<Phone> {
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.next,
                       validator: (val) {
-                        return validInput(val!, 5, 50);
+                        return validInput(val!, 8, 50);
                       },
                       cursorColor: color3,
                       onChanged: (value) {

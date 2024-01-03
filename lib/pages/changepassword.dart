@@ -2,12 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:whowiyati/const.dart';
-import 'package:http/http.dart' as http;
-import 'package:whowiyati/main.dart';
-import 'dart:convert';
-
-import 'package:whowiyati/pages/welcome.dart';
+import '../const.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);

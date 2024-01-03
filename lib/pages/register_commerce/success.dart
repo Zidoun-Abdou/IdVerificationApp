@@ -1,9 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:whowiyati/const.dart';
-import 'package:whowiyati/pages/register_commerce/recto_rc.dart';
-import 'package:whowiyati/pages/welcome.dart';
+import '../../const.dart';
+import 'recto_rc.dart';
+import '../welcome.dart';
 
 class Success extends StatefulWidget {
   const Success({super.key});

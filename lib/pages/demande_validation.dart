@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
-import 'package:whowiyati/main.dart';
-import 'package:whowiyati/models/demande_validation_model.dart';
-import 'package:whowiyati/pages/dealpad.dart';
+import '../main.dart';
+import '../models/demande_validation_model.dart';
+import 'dealpad.dart';
 
 import '../const.dart';
 

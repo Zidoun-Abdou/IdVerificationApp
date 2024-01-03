@@ -1,10 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:whowiyati/const.dart';
+import '../const.dart';
 import 'package:http/http.dart' as http;
-import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/confirm_mail.dart';
+import 'confirm_mail.dart';
 import 'dart:convert';
 
 import 'package:whowiyati/pages/login.dart';

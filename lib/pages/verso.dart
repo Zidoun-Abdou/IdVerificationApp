@@ -9,11 +9,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:whowiyati/const.dart';
-import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/idinfos.dart';
-import 'package:whowiyati/pages/verify_face.dart';
-import 'package:whowiyati/pages/welcomenfc.dart';
+import '../const.dart';
+import '../main.dart';
+import 'verify_face.dart';
+import 'welcomenfc.dart';
 
 class Verso extends StatefulWidget {
   final String rectoPath;
@@ -33,6 +32,34 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
   static const Duration durationToChangeWidget = Duration(milliseconds: 50);
   bool? _is_loading = false;
 
+  Future<bool> verifyNin(String nin) async {
+    var headers2 = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
+
+    var request2 = http.MultipartRequest(
+        'PUT', Uri.parse('https://api.icosnet.com/sign/wh/verify/nin/'));
+
+    request2.fields.addAll({
+      'phone': prefs.getString('phone').toString(),
+      'user_id': prefs.getString('user_id').toString(),
+      'email': prefs.getString('mail').toString(),
+      'nin': nin
+    });
+
+    request2.headers.addAll(headers2);
+
+    http.StreamedResponse response2 = await request2.send();
+
+    try {
+      String answer2 = await response2.stream.bytesToString();
+
+      var answerJs2 = jsonDecode(answer2);
+
+      return answerJs2["status"];
+    } catch (e) {
+      return false;
+    }
+  }
+
   void takePhotos() async {
     _is_loading = true;
     setState(() {});
@@ -44,7 +71,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
       String _token = prefs.getString('mail').toString();
 
       var headers = {
-        'Authorization': 'Basic YXBpc3J2OmxvcmVtaXBzdW0=',
+        'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
         'Content-Type':
             'multipart/form-data; boundary=<calculated when request is sent>'
       };
@@ -85,28 +112,32 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         List<int> imageBytes_face = base64Decode(answerJson[_face]);
         List<int> imageBytes_front = base64Decode(answerJson[_front]);
         List<int> imageBytes_back = base64Decode(answerJson[_back]);
-        List<int> imageBytes_signature = base64Decode(answerJson[_back]);
+        List<int> imageBytes_signature = base64Decode(answerJson[_signature]);
 
         await prefs.setString("face", answerJson[_face]);
 
-        final _tempDir_face = await getTemporaryDirectory();
-        final _tempDir_front = await getTemporaryDirectory();
-        final _tempDir_back = await getTemporaryDirectory();
-        final _tempDir_signature = await getTemporaryDirectory();
+        final _tempDir_face = await getApplicationDocumentsDirectory();
+        final _tempDir_front = await getApplicationDocumentsDirectory();
+        final _tempDir_back = await getApplicationDocumentsDirectory();
+        final _tempDir_signature = await getApplicationDocumentsDirectory();
 
         final _myFile_face =
             await File('${_tempDir_face.path}/temp_image_face.png')
                 .writeAsBytes(imageBytes_face);
+        print(_myFile_face.path);
         final _myFile_front =
             await File('${_tempDir_front.path}/temp_image_front_card.png')
                 .writeAsBytes(imageBytes_front);
+        print(_myFile_front.path);
         final _myFile_back =
             await File('${_tempDir_back.path}/temp_image_back_card.png')
                 .writeAsBytes(imageBytes_back);
+        print(_myFile_back.path);
         final _myFile_signature =
             await File('${_tempDir_signature.path}/temp_image__signature.png')
                 .writeAsBytes(imageBytes_signature);
-        //await prefs.setString('idinfos', answerJson["french_name"].toString());
+        print(_myFile_signature.path);
+        //await prefs.setStrin.pathg('idinfos', answerJson["french_name"].toString());
         String name = answerJson["french_name"].toString();
         String surname = answerJson["french_surname"].toString();
         String nin = answerJson["id_number"].toString();
@@ -123,26 +154,14 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         await prefs.setString("document_number", document_number);
 
         // ******** send Phone and UserId and Email and Nin & Set Status 4
-        var headers = {
-          'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
-          'Content-Type': 'application/json'
-        };
-        var request = http.Request(
-            'PUT', Uri.parse('https://api.icosnet.com/sign/wh/verify/nin/'));
+        bool _isSuccess = false;
+        if (prefs.getString("status").toString() == "3") {
+          _isSuccess = await verifyNin(nin);
+        } else if (prefs.getString("status").toString() == "4") {
+          _isSuccess = true;
+        }
 
-        request.body = json.encode({
-          "phone": prefs.getString('phone').toString(),
-          "user_id": prefs.getString('user_id').toString(),
-          "email": prefs.getString('mail').toString(),
-          "nin": nin
-        });
-        request.headers.addAll(headers);
-
-        http.StreamedResponse response2 = await request.send();
-        String answer = await response2.stream.bytesToString();
-        var answerJs = jsonDecode(answer);
-
-        if (answerJs["status"] == true) {
+        if (_isSuccess == true) {
           await prefs.setString("status", "4");
           NfcStatus status = await NfcProvider.nfcStatus;
 
@@ -181,7 +200,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                "User not found",
+                "Utilisateur non trouvé",
                 textAlign: TextAlign.center,
               ),
               duration: Duration(seconds: 3),
@@ -200,7 +219,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              "non valid cards, try again",
+              "Cartes non valides, réessayez",
               textAlign: TextAlign.center,
             ),
             duration: Duration(seconds: 3),
