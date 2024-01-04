@@ -236,7 +236,8 @@ class _StepsState extends State<Steps> {
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'Confirmation par Id Card\n',
+                                          text:
+                                              'Confirmation de votre carte d’identité\n',
                                           style: TextStyle(
                                             color: int.parse(prefs.getString(
                                                         "status")!) ==

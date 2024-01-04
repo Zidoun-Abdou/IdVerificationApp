@@ -174,7 +174,7 @@ class _EmailState extends State<Email> {
                                           elevation: 20,
                                           shadowColor: color3),
                                       child: Text(
-                                        "Send code",
+                                        "Envoyer le code",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 13.sp,

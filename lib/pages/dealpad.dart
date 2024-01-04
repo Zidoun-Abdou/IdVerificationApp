@@ -77,10 +77,10 @@ class _DialpadScreenState extends State<DialpadScreen> {
             ),
             Text(
               widget.status == 1
-                  ? 'Veuillez saisir votre nouveau code secret'
+                  ? 'Veuillez saisir votre nouveau mot de passe'
                   : widget.status == 2
-                      ? 'Veuillez confirmer votre nouveau code secret'
-                      : 'Veuillez saisir votre code secret',
+                      ? 'Veuillez confirmer votre nouveau mot de passe'
+                      : 'Veuillez saisir votre mot de passe',
               style: TextStyle(fontSize: 15.0, color: Colors.grey),
             ),
             SizedBox(

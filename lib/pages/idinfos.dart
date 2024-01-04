@@ -506,7 +506,7 @@ class _IdInfosState extends State<IdInfos> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 30.w, vertical: 30.h),
                               child: Text(
-                                "Bienvenue sur Whowiaty Votre application d’identification en ligne",
+                                "Bienvenue sur Whowiaty Votre application d’identification\net de signature électronique en ligne",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
