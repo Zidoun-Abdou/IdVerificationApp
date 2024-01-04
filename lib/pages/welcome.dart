@@ -1119,20 +1119,26 @@ class _WelcomeState extends State<Welcome> {
                                               onTap: () {
                                                 if (prefs.getString('status') ==
                                                     "5") {
-                                                  prefs.getString("name_arabic") ==
-                                                          null
-                                                      ? Navigator.of(context)
-                                                          .push(
-                                                          MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    IdInfos(),
-                                                          ),
-                                                        )
-                                                      : Navigator.of(context)
-                                                          .push(MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  CardNfcInfo()));
+                                                  // prefs.getString("name_arabic") ==
+                                                  //         null
+                                                  //     ? Navigator.of(context)
+                                                  //         .push(
+                                                  //         MaterialPageRoute(
+                                                  //           builder:
+                                                  //               (context) =>
+                                                  //                   IdInfos(),
+                                                  //         ),
+                                                  //       )
+                                                  //     : Navigator.of(context)
+                                                  //         .push(MaterialPageRoute(
+                                                  //             builder: (context) =>
+                                                  //                 CardNfcInfo()));
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          IdInfos(),
+                                                    ),
+                                                  );
                                                 }
                                               },
                                               child: Container(

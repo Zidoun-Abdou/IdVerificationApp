@@ -314,9 +314,10 @@ class _IdInfosState extends State<IdInfos> {
                                                           ),
                                                           TextSpan(
                                                             text: prefs
-                                                                .getString(
-                                                                    'deliv_date')
-                                                                ?.toUpperCase(),
+                                                                    .getString(
+                                                                        'deliv_date')
+                                                                    ?.toUpperCase() ??
+                                                                "",
                                                             style: TextStyle(
                                                               overflow:
                                                                   TextOverflow
@@ -364,9 +365,10 @@ class _IdInfosState extends State<IdInfos> {
                                                           ),
                                                           TextSpan(
                                                             text: prefs
-                                                                .getString(
-                                                                    'exp_date')
-                                                                ?.toUpperCase(),
+                                                                    .getString(
+                                                                        'exp_date')
+                                                                    ?.toUpperCase() ??
+                                                                "",
                                                             style: TextStyle(
                                                               overflow:
                                                                   TextOverflow
