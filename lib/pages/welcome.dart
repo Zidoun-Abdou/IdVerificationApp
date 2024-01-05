@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
 import '../main.dart';
+import 'compte_pro/ajoute_compte_pro.dart';
+import 'compte_pro/mes_comptes_pro.dart';
 import 'demande_validation.dart';
-import 'cardnfcinfo.dart';
 import 'homepage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'steps.dart';
@@ -522,7 +523,6 @@ class _WelcomeState extends State<Welcome> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                /*
                                 if (prefs.getString('status') == "5") {
                                   showModalBottomSheet(
                                       context: context,
@@ -608,7 +608,7 @@ class _WelcomeState extends State<Welcome> {
                                                                     pageBuilder: (context,
                                                                             animation,
                                                                             secondaryAnimation) =>
-                                                                        const AjouterComptePro(),
+                                                                        const AjouteComptePro(),
                                                                     transitionsBuilder: (context,
                                                                         animation,
                                                                         secondaryAnimation,
@@ -712,7 +712,6 @@ class _WelcomeState extends State<Welcome> {
                                         );
                                       });
                                 }
-                                */
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -729,11 +728,9 @@ class _WelcomeState extends State<Welcome> {
                                   'Ajoutez Compte PRO',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                    color:
-                                        // prefs.getString('status') == "5"
-                                        //     ? Colors.white
-                                        //     :
-                                        Colors.grey,
+                                    color: prefs.getString('status') == "5"
+                                        ? Colors.white
+                                        : Colors.grey,
                                     fontSize: 12.sp,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -1050,15 +1047,14 @@ class _WelcomeState extends State<Welcome> {
                                           Expanded(
                                             child: GestureDetector(
                                               onTap: () {
-                                                // if (prefs.getString('status') ==
-                                                //     "5")
-                                                //      {
-                                                //   Navigator.of(context)
-                                                //       .push(MaterialPageRoute(
-                                                //     builder: (context) =>
-                                                //         MesComptesPro(),
-                                                //   ));
-                                                // }
+                                                if (prefs.getString('status') ==
+                                                    "5") {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MesComptesPro(),
+                                                  ));
+                                                }
                                               },
                                               child: Container(
                                                 height: MediaQuery.of(context)
@@ -1085,13 +1081,11 @@ class _WelcomeState extends State<Welcome> {
                                                       padding:
                                                           EdgeInsets.all(8.sp),
                                                       decoration: BoxDecoration(
-                                                          color:
-                                                              // prefs.getString(
-                                                              //             'status') ==
-                                                              //         "5"
-                                                              //     ? color5
-                                                              //     :
-                                                              Colors.grey,
+                                                          color: prefs.getString(
+                                                                      'status') ==
+                                                                  "5"
+                                                              ? color5
+                                                              : Colors.grey,
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(

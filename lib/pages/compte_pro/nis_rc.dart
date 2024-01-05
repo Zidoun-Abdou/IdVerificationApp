@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_ip_address/get_ip_address.dart';
 import 'package:http/http.dart' as http;
@@ -7,12 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
 import '../../const.dart';
-import 'success.dart';
 
 class NisRC extends StatefulWidget {
+  final String companyId;
+  final String companyUserId;
   const NisRC({
     super.key,
+    required this.companyId,
+    required this.companyUserId,
   });
 
   @override
@@ -41,73 +47,118 @@ class _NisRCState extends State<NisRC> {
     final picker = ImagePicker();
     final nisPhoto =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
-
+    _is_loading = true;
+    setState(() {});
     if (nisPhoto != null) {
-      _is_loading = true;
-      setState(() {});
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.mobile ||
+          connectivityResult == ConnectivityResult.wifi) {
+        var ipAddress = IpAddress(type: RequestType.text);
+        dynamic data = await ipAddress.getIpAddress();
+        String ip = data.toString();
 
-      var ipAddress = IpAddress(type: RequestType.text);
-      dynamic data = await ipAddress.getIpAddress();
-      String ip = data.toString();
+        var headers = {
+          'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
+          'Content-Type':
+              'multipart/form-data; boundary=<calculated when request is sent>'
+        };
 
-      var headers = {
-        'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
-        'Content-Type':
-            'multipart/form-data; boundary=<calculated when request is sent>'
-      };
+        var request = http.MultipartRequest(
+            'POST',
+            Uri.parse(
+                'https://api.icosnet.com/classifier/nif_nis_rc_classifier?token=${_myToken}&ip_adress=${ip}&document_types=nis'));
 
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              'https://api.icosnet.com/classifier/nif_nis_rc_classifier?token=${_myToken}&ip_adress=${ip}&document_types=nis'));
+        request.files
+            .add(await http.MultipartFile.fromPath('document', nisPhoto.path));
+        request.headers.addAll(headers);
 
-      request.files
-          .add(await http.MultipartFile.fromPath('document', nisPhoto.path));
-      request.headers.addAll(headers);
+        http.StreamedResponse response = await request.send();
 
-      http.StreamedResponse response = await request.send();
+        if (response.statusCode == 200) {
+          String answer = await response.stream.bytesToString();
 
-      if (response.statusCode == 200) {
-        String answer = await response.stream.bytesToString();
+          Map<String, dynamic> answerJson = jsonDecode(answer);
 
-        Map<String, dynamic> answerJson = jsonDecode(answer);
+          Map<String, dynamic> detailData = answerJson["detail"];
 
-        Map<String, dynamic> detailData = answerJson["detail"];
+          List validityList = detailData['validity'];
 
-        List validityList = detailData['validity'];
-
-        if (listEquals(validityList, [])) {
-          _is_loading = false;
-          setState(() {});
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                "Nis non valid, try again",
-                textAlign: TextAlign.center,
+          if (listEquals(validityList, [])) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  "Carte statistique non valid, try again",
+                  textAlign: TextAlign.center,
+                ),
+                duration: Duration(seconds: 3),
               ),
-              duration: Duration(seconds: 3),
-            ),
-          );
+            );
+          } else {
+            await addDoc(nisPhoto.path);
+          }
         } else {
+          print(response.reasonPhrase);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                "Nis valid",
-                textAlign: TextAlign.center,
-              ),
+              content: Text("Une erreur s'est produite, réessayer"),
               duration: Duration(seconds: 3),
-            ),
-          );
-
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => Success(),
             ),
           );
         }
       } else {
-        print(response.reasonPhrase);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Veillez vérifier votre connection internet"),
+            duration: Duration(seconds: 5),
+          ),
+        );
       }
+    }
+    _is_loading = false;
+    setState(() {});
+  }
+
+  addDoc(String nisPath) async {
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
+
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://api.icosnet.com/sign/wh/add/company/doc/'));
+
+    request.fields.addAll({'id_company': widget.companyId, 'doc_type': 'NIS'});
+
+    request.files.add(await http.MultipartFile.fromPath('file', nisPath));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
+    print(answer);
+
+    if (answerJson["success"] == true) {
+      await prefs.setString("step", "5");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Votre carte statistique est ajouté"),
+          duration: Duration(seconds: 5),
+        ),
+      );
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => StepsVerifyComptePro(
+          companyId: widget.companyId,
+          companyUserId: widget.companyUserId,
+        ),
+      ));
+    } else {
+      print(response.reasonPhrase);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Votre carte statistique n'est pas ajouté, réessayez"),
+          duration: Duration(seconds: 5),
+        ),
+      );
     }
   }
 
@@ -126,29 +177,30 @@ class _NisRCState extends State<NisRC> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 1,
                       child: Center(
                         child: Image.asset(
                           'assets/images/logo.png',
                           fit: BoxFit.contain,
                           height: 150.h,
-                          width: 150.w,
+                          width: 200.w,
                         ),
                       ),
                     ),
                     Expanded(
-                      flex: 1,
+                      flex: 3,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30.w, vertical: 10.h),
                             child: Text(
-                              "Mettez votre Nis en position horizontale et votre téléphone en position verticale pour prendre une photo",
+                              "Mettez votre carte statistique en position horizontale et votre téléphone en position verticale pour prendre une photo",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 15.sp,
+                                fontSize: 14.sp,
                                 fontFamily: 'Inter',
                                 height: 1.1.h,
                                 letterSpacing: 0.20.w,
