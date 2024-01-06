@@ -504,22 +504,22 @@ class _IdInfosState extends State<IdInfos> {
                           children: [
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 30.w, vertical: 30.h),
+                                  horizontal: 20.w, vertical: 30.h),
                               child: Text(
-                                "Bienvenue sur Whowiaty Votre application d’identification\net de signature électronique en ligne",
+                                "Bienvenue sur Whowiaty\nVotre application d’identification\net de signature électronique en ligne",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15.sp,
+                                  fontSize: 12.5.sp,
                                   fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
                                   height: 1.1.h,
                                   letterSpacing: 0.20.w,
                                 ),
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 20.w, vertical: 5.h),
+                              margin: EdgeInsets.symmetric(horizontal: 20.w),
                               child: ElevatedButton(
                                 onPressed: () async {
                                   Navigator.of(context).pop();
