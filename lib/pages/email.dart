@@ -52,7 +52,7 @@ class _EmailState extends State<Email> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Email incorrect, Veillez vérifier svp"),
-              duration: Duration(seconds: 5),
+              duration: Duration(seconds: 3),
               backgroundColor: colorRed,
             ),
           );
@@ -62,7 +62,7 @@ class _EmailState extends State<Email> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

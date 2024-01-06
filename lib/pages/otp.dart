@@ -101,7 +101,7 @@ class _OtpState extends State<Otp> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Utilisateur non trouvé"),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -115,7 +115,7 @@ class _OtpState extends State<Otp> {
         SnackBar(
           content:
               Text("Numéro ou téléphone déjà utilisé, veuillez vous connecter"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
@@ -127,7 +127,7 @@ class _OtpState extends State<Otp> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
@@ -163,7 +163,7 @@ class _OtpState extends State<Otp> {
               "OTP non valide",
               textAlign: TextAlign.center,
             ),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -176,7 +176,7 @@ class _OtpState extends State<Otp> {
             "OTP incomplet ",
             textAlign: TextAlign.center,
           ),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
@@ -222,7 +222,7 @@ class _OtpState extends State<Otp> {
             answerJson.toString(),
             textAlign: TextAlign.center,
           ),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

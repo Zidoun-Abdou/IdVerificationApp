@@ -339,7 +339,7 @@ class _DocumentsState extends State<Documents> {
                                   const SnackBar(
                                     content: Text(
                                         "Vous n'êtes pas connecté à Internet ✋🏻"),
-                                    duration: Duration(seconds: 5),
+                                    duration: Duration(seconds: 3),
                                     backgroundColor: colorRed,
                                   ),
                                 );

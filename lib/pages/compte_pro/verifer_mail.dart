@@ -56,7 +56,7 @@ class _VeriferMailState extends State<VeriferMail> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Email incorrect, Veillez vérifier svp"),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -65,7 +65,7 @@ class _VeriferMailState extends State<VeriferMail> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
@@ -98,7 +98,7 @@ class _VeriferMailState extends State<VeriferMail> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Code incorrect, Veillez vérifier svp"),
-              duration: Duration(seconds: 5),
+              duration: Duration(seconds: 3),
               backgroundColor: colorRed,
             ),
           );
@@ -110,7 +110,7 @@ class _VeriferMailState extends State<VeriferMail> {
               "OTP incomplet",
               textAlign: TextAlign.center,
             ),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -119,7 +119,7 @@ class _VeriferMailState extends State<VeriferMail> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
@@ -154,7 +154,7 @@ class _VeriferMailState extends State<VeriferMail> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Votre mail est ajouté"),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: color3,
           ),
         );
@@ -170,7 +170,7 @@ class _VeriferMailState extends State<VeriferMail> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Votre mail n'est pas ajouté, réessayez"),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -179,7 +179,7 @@ class _VeriferMailState extends State<VeriferMail> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

@@ -77,7 +77,7 @@ class _PhoneState extends State<Phone> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Mot de passes non identiques"),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -321,7 +321,7 @@ class _PhoneState extends State<Phone> {
                                 SnackBar(
                                   content: Text(
                                       "Veillez vérifier votre connection internet"),
-                                  duration: Duration(seconds: 5),
+                                  duration: Duration(seconds: 3),
                                   backgroundColor: colorRed,
                                 ),
                               );

@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Les informations d'identification invalides"),
-              duration: Duration(seconds: 5),
+              duration: Duration(seconds: 3),
               backgroundColor: colorRed,
             ),
           );
@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Informations incorrects, Veillez les vérifier svp"),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

@@ -93,7 +93,7 @@ class _VeriferNifState extends State<VeriferNif> {
                   "Carte fiscale non valide, réessayez",
                   textAlign: TextAlign.center,
                 ),
-                duration: Duration(seconds: 5),
+                duration: Duration(seconds: 3),
                 backgroundColor: colorRed,
               ),
             );
@@ -105,7 +105,7 @@ class _VeriferNifState extends State<VeriferNif> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Une erreur s'est produite, réessayer"),
-              duration: Duration(seconds: 5),
+              duration: Duration(seconds: 3),
               backgroundColor: colorRed,
             ),
           );
@@ -114,7 +114,7 @@ class _VeriferNifState extends State<VeriferNif> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Veillez vérifier votre connection internet"),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -145,7 +145,7 @@ class _VeriferNifState extends State<VeriferNif> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Votre carte fiscale est ajouté"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: color3,
         ),
       );
@@ -161,7 +161,7 @@ class _VeriferNifState extends State<VeriferNif> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Votre carte fiscale n'est pas ajouté, réessayez"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

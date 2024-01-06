@@ -58,7 +58,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Code incorrect, Veillez vérifier svp"),
-              duration: Duration(seconds: 5),
+              duration: Duration(seconds: 3),
               backgroundColor: colorRed,
             ),
           );
@@ -68,7 +68,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
@@ -114,7 +114,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
             answerJson.toString(),
             textAlign: TextAlign.center,
           ),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
@@ -170,7 +170,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
             answerJson["message"].toString(),
             textAlign: TextAlign.center,
           ),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

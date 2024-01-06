@@ -56,7 +56,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
           content: Text(statusCode == "1"
               ? "Votre demande accepter"
               : "Votre demande refuser"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: statusCode == "1" ? color3 : colorRed,
         ),
       );
@@ -64,7 +64,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(answerJson["message"].toString()),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

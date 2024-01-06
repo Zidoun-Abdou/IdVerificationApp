@@ -123,7 +123,7 @@ class _VerifyFaceState extends State<VerifyFace> {
         SnackBar(
           content:
               Text("La vérification faciale a échoué. Veuillez réessayer."),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
@@ -190,7 +190,7 @@ class _VerifyFaceState extends State<VerifyFace> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Échec de l'envoi, réessayez"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

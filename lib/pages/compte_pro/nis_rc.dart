@@ -90,7 +90,7 @@ class _NisRCState extends State<NisRC> {
                   "Carte statistique non valid, réessayez",
                   textAlign: TextAlign.center,
                 ),
-                duration: Duration(seconds: 5),
+                duration: Duration(seconds: 3),
                 backgroundColor: colorRed,
               ),
             );
@@ -102,7 +102,7 @@ class _NisRCState extends State<NisRC> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Une erreur s'est produite, réessayer"),
-              duration: Duration(seconds: 5),
+              duration: Duration(seconds: 3),
               backgroundColor: colorRed,
             ),
           );
@@ -111,7 +111,7 @@ class _NisRCState extends State<NisRC> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Veillez vérifier votre connection internet"),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -143,7 +143,7 @@ class _NisRCState extends State<NisRC> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Votre carte statistique est ajouté"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: color3,
         ),
       );
@@ -160,7 +160,7 @@ class _NisRCState extends State<NisRC> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Votre carte statistique n'est pas ajouté, réessayez"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );

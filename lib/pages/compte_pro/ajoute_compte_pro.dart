@@ -71,7 +71,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(answerJson["message"].toString()),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: color3,
           ),
         );
@@ -85,7 +85,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(answerJson["message"].toString()),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
         );
@@ -94,7 +94,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
       );
