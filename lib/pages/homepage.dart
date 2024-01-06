@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Text(
-                      "Bienvenue sur Whowiaty\nVotre application d’identification en ligne",
+                      "Bienvenue sur Whowiaty\nVotre application d’identification\net de signature électronique en ligne",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,

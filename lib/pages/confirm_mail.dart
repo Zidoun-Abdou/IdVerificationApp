@@ -281,7 +281,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
                                           elevation: 20,
                                           shadowColor: color3),
                                       child: Text(
-                                        "Verify code",
+                                        "Vérifier le code",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 13.sp,

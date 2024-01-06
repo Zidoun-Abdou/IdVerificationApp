@@ -12,7 +12,6 @@ import 'package:whowiyati/pages/idcards.dart';
 import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:whowiyati/pages/dealpad.dart';
 import 'package:whowiyati/pages/demande_validation.dart';
-import 'package:whowiyati/pages/register_commerce/ajouter_compte_pro.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';

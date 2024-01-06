@@ -63,17 +63,19 @@ class _LoginState extends State<Login> {
         print(answerJson["success"]);
 
         if (answerJson["success"] == true) {
-          await prefs.setString("status", answerJson["user"]['status']);
-          await prefs.setString("name_latin", answerJson["user"]['last_name']);
+          await prefs.setString("status", answerJson["user"]['status'] ?? "");
           await prefs.setString(
-              "surname_latin", answerJson["user"]['first_name']);
-          await prefs.setString("birth_date", answerJson["user"]['birthday']);
+              "name_latin", answerJson["user"]['last_name'] ?? "");
+          await prefs.setString(
+              "surname_latin", answerJson["user"]['first_name'] ?? "");
+          await prefs.setString(
+              "birth_date", answerJson["user"]['birthday'] ?? "");
           // await prefs.setString("deliv_date", answerJson["user"]['deliv_date']);
           // await prefs.setString("exp_date", answerJson["user"]['exp_date']);
           // await prefs.setString("document_number", answerJson["user"]['document_number']);
-          await prefs.setString("user_id", answerJson["user"]['user_id']);
-          await prefs.setString("phone", answerJson["user"]['phone']);
-          await prefs.setString("mail", answerJson["user"]['email']);
+          await prefs.setString("user_id", answerJson["user"]['user_id'] ?? "");
+          await prefs.setString("phone", answerJson["user"]['phone'] ?? "");
+          await prefs.setString("mail", answerJson["user"]['email'] ?? "");
           await prefs.setString("nin", answerJson["user"]['nin'] ?? "");
 
           await prefs.setString('login', 'true');
