@@ -149,15 +149,17 @@ class _MesComptesProState extends State<MesComptesPro> {
                                     ],
                                   ),
                                   CircleAvatar(
-                                    backgroundColor:
-                                        companies[index]["status"].toString() ==
-                                                "1"
-                                            ? color3
-                                            : companies[index]["status"]
-                                                        .toString() ==
-                                                    "0"
-                                                ? Colors.blue
-                                                : Colors.grey,
+                                    backgroundColor: companies[index]
+                                                    ["company_user"]["status"]
+                                                .toString() ==
+                                            "1"
+                                        ? color3
+                                        : companies[index]["company_user"]
+                                                        ["status"]
+                                                    .toString() ==
+                                                "0"
+                                            ? Colors.orange
+                                            : Colors.grey,
                                     child: Icon(
                                       Icons.check,
                                       color: Colors.white,

@@ -203,7 +203,8 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                 "Utilisateur non trouvé",
                 textAlign: TextAlign.center,
               ),
-              duration: Duration(seconds: 3),
+              duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
 
@@ -222,7 +223,8 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
               "Cartes non valides, réessayez",
               textAlign: TextAlign.center,
             ),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
 

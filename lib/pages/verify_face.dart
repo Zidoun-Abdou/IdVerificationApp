@@ -124,6 +124,7 @@ class _VerifyFaceState extends State<VerifyFace> {
           content:
               Text("La vérification faciale a échoué. Veuillez réessayer."),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
       print(response.reasonPhrase);
@@ -190,6 +191,7 @@ class _VerifyFaceState extends State<VerifyFace> {
         SnackBar(
           content: Text("Échec de l'envoi, réessayez"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
       print(response.reasonPhrase);

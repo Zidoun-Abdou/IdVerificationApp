@@ -92,7 +92,8 @@ class _VersoRCState extends State<VersoRC> {
                   "Registre de commerce non valide, réessayez",
                   textAlign: TextAlign.center,
                 ),
-                duration: Duration(seconds: 3),
+                duration: Duration(seconds: 5),
+                backgroundColor: colorRed,
               ),
             );
           } else {
@@ -103,7 +104,8 @@ class _VersoRCState extends State<VersoRC> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Une erreur s'est produite, réessayer"),
-              duration: Duration(seconds: 3),
+              duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
         }
@@ -112,6 +114,7 @@ class _VersoRCState extends State<VersoRC> {
           SnackBar(
             content: Text("Veillez vérifier votre connection internet"),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -144,6 +147,7 @@ class _VersoRCState extends State<VersoRC> {
         SnackBar(
           content: Text("Votre regitre commerce est ajouté"),
           duration: Duration(seconds: 5),
+          backgroundColor: color3,
         ),
       );
       Navigator.pop(context);
@@ -161,6 +165,7 @@ class _VersoRCState extends State<VersoRC> {
         SnackBar(
           content: Text("Votre regitre commerce n'est pas ajouté, réessayez"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }

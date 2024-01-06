@@ -58,6 +58,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
           SnackBar(
             content: Text("Votre téléphone est ajouté"),
             duration: Duration(seconds: 5),
+            backgroundColor: color3,
           ),
         );
         Navigator.pop(context);
@@ -73,6 +74,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
           SnackBar(
             content: Text("Votre téléphone n'est pas ajouté, réessayez"),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -81,6 +83,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }
@@ -129,7 +132,8 @@ class _VeriferPhoneState extends State<VeriferPhone> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Sms non envoyé"),
-              duration: Duration(seconds: 2),
+              duration: Duration(seconds: 4),
+              backgroundColor: colorRed,
             ),
           );
           print(response.reasonPhrase);
@@ -141,7 +145,8 @@ class _VeriferPhoneState extends State<VeriferPhone> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }
@@ -174,7 +179,8 @@ class _VeriferPhoneState extends State<VeriferPhone> {
                 "Code incorrect, Veillez vérifier svp",
                 textAlign: TextAlign.center,
               ),
-              duration: Duration(seconds: 3),
+              duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
         }
@@ -185,7 +191,8 @@ class _VeriferPhoneState extends State<VeriferPhone> {
               "OTP incomplet",
               textAlign: TextAlign.center,
             ),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -193,7 +200,8 @@ class _VeriferPhoneState extends State<VeriferPhone> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }

@@ -102,6 +102,7 @@ class _OtpState extends State<Otp> {
           SnackBar(
             content: Text("Utilisateur non trouvé"),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
         _isLoading = false;
@@ -115,6 +116,7 @@ class _OtpState extends State<Otp> {
           content:
               Text("Numéro ou téléphone déjà utilisé, veuillez vous connecter"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
       _isLoading = false;
@@ -126,6 +128,7 @@ class _OtpState extends State<Otp> {
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
       isLoading = false;
@@ -160,7 +163,8 @@ class _OtpState extends State<Otp> {
               "OTP non valide",
               textAlign: TextAlign.center,
             ),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
         return 0;
@@ -172,7 +176,8 @@ class _OtpState extends State<Otp> {
             "OTP incomplet ",
             textAlign: TextAlign.center,
           ),
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
       return 0;
@@ -217,7 +222,8 @@ class _OtpState extends State<Otp> {
             answerJson.toString(),
             textAlign: TextAlign.center,
           ),
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
       _isLoading = false;

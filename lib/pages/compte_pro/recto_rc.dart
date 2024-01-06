@@ -89,7 +89,8 @@ class _RectoRCState extends State<RectoRC> {
                   "Registre commerce non valide, réessayez",
                   textAlign: TextAlign.center,
                 ),
-                duration: Duration(seconds: 3),
+                duration: Duration(seconds: 5),
+                backgroundColor: colorRed,
               ),
             );
           } else {
@@ -99,7 +100,8 @@ class _RectoRCState extends State<RectoRC> {
                   "Devant registre commerce valide",
                   textAlign: TextAlign.center,
                 ),
-                duration: Duration(seconds: 3),
+                duration: Duration(seconds: 5),
+                backgroundColor: color3,
               ),
             );
 
@@ -117,7 +119,8 @@ class _RectoRCState extends State<RectoRC> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Une erreur s'est produite, réessayer"),
-              duration: Duration(seconds: 3),
+              duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
         }
@@ -126,6 +129,7 @@ class _RectoRCState extends State<RectoRC> {
           SnackBar(
             content: Text("Veillez vérifier votre connection internet"),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }

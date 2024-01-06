@@ -53,6 +53,7 @@ class _EmailState extends State<Email> {
             SnackBar(
               content: Text("Email incorrect, Veillez vérifier svp"),
               duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
         }
@@ -62,6 +63,7 @@ class _EmailState extends State<Email> {
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }

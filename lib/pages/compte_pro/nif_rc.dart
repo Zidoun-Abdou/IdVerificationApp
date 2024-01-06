@@ -90,7 +90,8 @@ class _NifRCState extends State<NifRC> {
                   "Carte fiscale non valide, réessayez",
                   textAlign: TextAlign.center,
                 ),
-                duration: Duration(seconds: 3),
+                duration: Duration(seconds: 5),
+                backgroundColor: colorRed,
               ),
             );
           } else {
@@ -101,7 +102,8 @@ class _NifRCState extends State<NifRC> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Une erreur s'est produite, réessayer"),
-              duration: Duration(seconds: 3),
+              duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
         }
@@ -110,6 +112,7 @@ class _NifRCState extends State<NifRC> {
           SnackBar(
             content: Text("Veillez vérifier votre connection internet"),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -140,6 +143,7 @@ class _NifRCState extends State<NifRC> {
         SnackBar(
           content: Text("Votre carte fiscale est ajouté"),
           duration: Duration(seconds: 5),
+          backgroundColor: color3,
         ),
       );
       Navigator.pop(context);
@@ -156,6 +160,7 @@ class _NifRCState extends State<NifRC> {
         SnackBar(
           content: Text("Votre carte fiscale n'est pas ajouté, réessayez"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }

@@ -93,7 +93,8 @@ class _VeriferNisState extends State<VeriferNis> {
                   "Carte statistique non valide, réessayez",
                   textAlign: TextAlign.center,
                 ),
-                duration: Duration(seconds: 3),
+                duration: Duration(seconds: 5),
+                backgroundColor: colorRed,
               ),
             );
           } else {
@@ -104,7 +105,8 @@ class _VeriferNisState extends State<VeriferNis> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Une erreur s'est produite, réessayer"),
-              duration: Duration(seconds: 3),
+              duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
         }
@@ -113,6 +115,7 @@ class _VeriferNisState extends State<VeriferNis> {
           SnackBar(
             content: Text("Veillez vérifier votre connection internet"),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -143,6 +146,7 @@ class _VeriferNisState extends State<VeriferNis> {
         SnackBar(
           content: Text("Votre carte statistique est ajouté"),
           duration: Duration(seconds: 5),
+          backgroundColor: color3,
         ),
       );
       Navigator.pop(context);
@@ -158,6 +162,7 @@ class _VeriferNisState extends State<VeriferNis> {
         SnackBar(
           content: Text("Votre carte statistique n'est pas ajouté, réessayez"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }

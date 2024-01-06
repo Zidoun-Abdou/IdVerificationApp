@@ -68,10 +68,6 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                           await prefs.setString("step", "3");
                         } else if (element["type_document"] == "NIF") {
                           await prefs.setString("step", "4");
-                        } else if (element["type_document"] ==
-                                "NIS" // AJOUTER VALEUR
-                            ) {
-                          await prefs.setString("step", "5");
                         }
                       });
                     }
@@ -419,86 +415,6 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                           )
                                         ],
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Container(
-                                          height: 30.h,
-                                          padding: EdgeInsets.only(left: 30.w),
-                                          child: VerticalDivider(
-                                            color: Colors.grey,
-                                            thickness: 1,
-                                          ),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: CircleAvatar(
-                                              backgroundColor: int.parse(prefs
-                                                          .getString("step")
-                                                          .toString()) >=
-                                                      5
-                                                  ? color3
-                                                  : Colors.grey,
-                                              child: Icon(
-                                                Icons.check_rounded,
-                                                color: Colors.white,
-                                                size: 30.sp,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 30.w,
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        'Vérification de la carte statistique\n',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              5
-                                                          ? Colors.white
-                                                          : Colors.grey,
-                                                      fontSize: 13.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: 'Vérifié',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              5
-                                                          ? color3
-                                                          : Colors.grey,
-                                                      fontSize: 12.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
                                     ],
                                   ),
                                 ],
@@ -510,7 +426,9 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text(
-                                  "Suivez ces étapes pour compléter la validation\n de votre compte pro",
+                                  prefs.getString("step") == "4"
+                                      ? 'Félicitations, vous avez terminé toutes les\nétapes. Vos documents sont maintenant\nen cours de vérification'
+                                      : "Suivez ces étapes pour compléter la validation\n de votre compte pro",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -563,12 +481,10 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                         ));
                                       } else if (prefs.getString("step") ==
                                           "4") {
+                                        Navigator.of(context).pop();
                                         Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) => VeriferNis(
-                                            companyUserId: widget.companyUserId,
-                                            companyId: widget.companyId,
-                                          ),
+                                            .pushReplacement(MaterialPageRoute(
+                                          builder: (context) => MesComptesPro(),
                                         ));
                                       }
                                     },
@@ -585,7 +501,9 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                         elevation: 20,
                                         shadowColor: color3),
                                     child: Text(
-                                      'Continuer',
+                                      prefs.getString("step") == "4"
+                                          ? 'Retourner'
+                                          : 'Continuer',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 15.sp,
@@ -948,81 +866,6 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                       )
                                     ],
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      height: 30.h,
-                                      padding: EdgeInsets.only(left: 30.w),
-                                      child: VerticalDivider(
-                                        color: Colors.grey,
-                                        thickness: 1,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: CircleAvatar(
-                                          backgroundColor: int.parse(prefs
-                                                      .getString("step")
-                                                      .toString()) >=
-                                                  5
-                                              ? color3
-                                              : Colors.grey,
-                                          child: Icon(
-                                            Icons.check_rounded,
-                                            color: Colors.white,
-                                            size: 30.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text:
-                                                    'Vérification de la carte statistique\n',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          5
-                                                      ? Colors.white
-                                                      : Colors.grey,
-                                                  fontSize: 13.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: 'Vérifié',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          5
-                                                      ? color3
-                                                      : Colors.grey,
-                                                  fontSize: 12.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
                                 ],
                               ),
                             ],
@@ -1034,7 +877,9 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                              "Suivez ces étapes pour compléter la validation\n de votre compte pro",
+                              prefs.getString("step") == "4"
+                                  ? 'Félicitations, vous avez terminé toutes les étapes.\nVos documents sont maintenant en cours de vérification'
+                                  : "Suivez ces étapes pour compléter la validation\n de votre compte pro",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
@@ -1083,12 +928,10 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                       ),
                                     ));
                                   } else if (prefs.getString("step") == "4") {
+                                    Navigator.of(context).pop();
                                     Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => VeriferNis(
-                                        companyUserId: widget.companyUserId,
-                                        companyId: widget.companyId,
-                                      ),
+                                        .pushReplacement(MaterialPageRoute(
+                                      builder: (context) => MesComptesPro(),
                                     ));
                                   }
                                 },
@@ -1104,7 +947,9 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                     elevation: 20,
                                     shadowColor: color3),
                                 child: Text(
-                                  'Continuer',
+                                  prefs.getString("step") == "4"
+                                      ? 'Retourner'
+                                      : 'Continuer',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15.sp,

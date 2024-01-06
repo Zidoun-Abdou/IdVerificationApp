@@ -59,8 +59,9 @@ class _DocumentsState extends State<Documents> {
 
     request.fields.addAll({
       'ip_address': ip,
-      'uploaded_by_email':
-          prefs.getString("mail").toString(), // Assuming the first email is used here
+      'uploaded_by_email': prefs
+          .getString("mail")
+          .toString(), // Assuming the first email is used here
       'users_signatures': usersJson,
     });
     request.files.add(await http.MultipartFile.fromPath('file', _document));
@@ -337,8 +338,9 @@ class _DocumentsState extends State<Documents> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
-                                        "You are not connected to internet ✋🏻"),
-                                    duration: Duration(seconds: 2),
+                                        "Vous n'êtes pas connecté à Internet ✋🏻"),
+                                    duration: Duration(seconds: 5),
+                                    backgroundColor: colorRed,
                                   ),
                                 );
                               }

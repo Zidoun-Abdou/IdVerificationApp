@@ -57,6 +57,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
               ? "Votre demande accepter"
               : "Votre demande refuser"),
           duration: Duration(seconds: 5),
+          backgroundColor: statusCode == "1" ? color3 : colorRed,
         ),
       );
     } else {
@@ -64,6 +65,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
         SnackBar(
           content: Text(answerJson["message"].toString()),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }

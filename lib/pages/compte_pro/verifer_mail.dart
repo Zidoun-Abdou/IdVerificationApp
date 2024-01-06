@@ -57,6 +57,7 @@ class _VeriferMailState extends State<VeriferMail> {
           SnackBar(
             content: Text("Email incorrect, Veillez vérifier svp"),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -65,6 +66,7 @@ class _VeriferMailState extends State<VeriferMail> {
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }
@@ -97,6 +99,7 @@ class _VeriferMailState extends State<VeriferMail> {
             SnackBar(
               content: Text("Code incorrect, Veillez vérifier svp"),
               duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
         }
@@ -107,7 +110,8 @@ class _VeriferMailState extends State<VeriferMail> {
               "OTP incomplet",
               textAlign: TextAlign.center,
             ),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -116,6 +120,7 @@ class _VeriferMailState extends State<VeriferMail> {
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }
@@ -150,6 +155,7 @@ class _VeriferMailState extends State<VeriferMail> {
           SnackBar(
             content: Text("Votre mail est ajouté"),
             duration: Duration(seconds: 5),
+            backgroundColor: color3,
           ),
         );
         Navigator.pop(context);
@@ -165,6 +171,7 @@ class _VeriferMailState extends State<VeriferMail> {
           SnackBar(
             content: Text("Votre mail n'est pas ajouté, réessayez"),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -173,6 +180,7 @@ class _VeriferMailState extends State<VeriferMail> {
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }

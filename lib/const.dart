@@ -9,6 +9,7 @@ const color6 = const Color(0xFF666680);
 const color7 = const Color(0xFF2A2B34);
 const color8 = const Color(0xFF3B3C44);
 const color9 = const Color(0xFF959595);
+const colorRed = const Color(0xFFD32424);
 
 validInput(String val, int min, int max) {
   if (val.length > max) {

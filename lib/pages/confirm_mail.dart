@@ -59,6 +59,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
             SnackBar(
               content: Text("Code incorrect, Veillez vérifier svp"),
               duration: Duration(seconds: 5),
+              backgroundColor: colorRed,
             ),
           );
         }
@@ -68,6 +69,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }
@@ -112,7 +114,8 @@ class _ConfirmMailState extends State<ConfirmMail> {
             answerJson.toString(),
             textAlign: TextAlign.center,
           ),
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
       print(response.reasonPhrase);
@@ -167,7 +170,8 @@ class _ConfirmMailState extends State<ConfirmMail> {
             answerJson["message"].toString(),
             textAlign: TextAlign.center,
           ),
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
       print(response2.reasonPhrase);

@@ -72,6 +72,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
           SnackBar(
             content: Text(answerJson["message"].toString()),
             duration: Duration(seconds: 5),
+            backgroundColor: color3,
           ),
         );
         Navigator.of(context).pop();
@@ -85,6 +86,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
           SnackBar(
             content: Text(answerJson["message"].toString()),
             duration: Duration(seconds: 5),
+            backgroundColor: colorRed,
           ),
         );
       }
@@ -93,6 +95,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
         SnackBar(
           content: Text("Veillez vérifier votre connection internet"),
           duration: Duration(seconds: 5),
+          backgroundColor: colorRed,
         ),
       );
     }
