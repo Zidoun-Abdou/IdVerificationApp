@@ -10,8 +10,8 @@ import 'dealpad.dart';
 import '../const.dart';
 
 class DemandeValidation extends StatefulWidget {
-  final VoidCallback onPop;
-  const DemandeValidation({super.key, required this.onPop});
+  final ValueNotifier<bool> isDemandeValidationOpen;
+  const DemandeValidation({super.key, required this.isDemandeValidationOpen});
 
   @override
   State<DemandeValidation> createState() => _DemandeValidationState();
@@ -82,7 +82,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        widget.onPop();
+        widget.isDemandeValidationOpen.value = false;
         Navigator.of(context).pop();
         return false;
       },
@@ -407,7 +407,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius:
-                                          BorderRadius.circular(10.r)),
+                                          BorderRadius.circular(20.r)),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,

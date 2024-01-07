@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../const.dart';
 
 import 'phone.dart';
@@ -97,33 +98,39 @@ class _ConditionsState extends State<Conditions> {
                                       },
                                     ),
                                   ),
-                                  Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'Condition générales',
-                                          style: TextStyle(
-                                            color: Color(0xFF23D27E),
-                                            fontSize: 13.sp,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.20,
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await launchUrl(Uri.parse(
+                                          "https://icosnet.com.dz/conditions-dutilisation-application-whowiyati/"));
+                                    },
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: 'Condition générales',
+                                            style: TextStyle(
+                                              color: Color(0xFF23D27E),
+                                              fontSize: 13.sp,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 0.20,
+                                            ),
                                           ),
-                                        ),
-                                        TextSpan(
-                                          text:
-                                              ' et politique \nde respect de la vie privée.',
-                                          style: TextStyle(
-                                            color: Color(0xFF666680),
-                                            fontSize: 13.sp,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.20,
+                                          TextSpan(
+                                            text:
+                                                ' et politique \nde respect de la vie privée.',
+                                            style: TextStyle(
+                                              color: Color(0xFF666680),
+                                              fontSize: 13.sp,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 0.20,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    textAlign: TextAlign.center,
                                   )
                                 ],
                               )),

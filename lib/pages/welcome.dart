@@ -28,7 +28,7 @@ class _WelcomeState extends State<Welcome> {
   bool isProfile = false;
   final GlobalKey<State<BottomSheet>> _bottomSheetKey = GlobalKey();
   double initialSize = 0.7;
-  bool isDemandeValidationOpen = false;
+  ValueNotifier<bool> isDemandeValidationOpen = ValueNotifier(false);
 
   // Handling Interaction with Notification when application is opened from a terminated state
   getInit() async {
@@ -36,18 +36,18 @@ class _WelcomeState extends State<Welcome> {
         await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => DemandeValidation(
-            onPop: () {
-              setState(() {
-                isDemandeValidationOpen = false;
-              });
-            },
+      if (isDemandeValidationOpen.value == true) {
+        setState(() {});
+      } else {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DemandeValidation(
+              isDemandeValidationOpen: isDemandeValidationOpen,
+            ),
           ),
-        ),
-      );
-      isDemandeValidationOpen = true;
+        );
+        isDemandeValidationOpen.value = true;
+      }
     }
   }
 
@@ -55,27 +55,23 @@ class _WelcomeState extends State<Welcome> {
   firebaseMessagingConfig() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
-        if (isDemandeValidationOpen) {
+        if (isDemandeValidationOpen.value == true) {
           setState(() {});
         }
         Flushbar(
           onTap: (flushbar) {
             // ******* Check If is Not Current Route setState Else Push to DemandeValidation *******
-            if (isDemandeValidationOpen) {
+            if (isDemandeValidationOpen.value == true) {
               setState(() {});
             } else {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => DemandeValidation(
-                    onPop: () {
-                      setState(() {
-                        isDemandeValidationOpen = false;
-                      });
-                    },
+                    isDemandeValidationOpen: isDemandeValidationOpen,
                   ),
                 ),
               );
-              isDemandeValidationOpen = true;
+              isDemandeValidationOpen.value = true;
             }
           },
           flushbarPosition: FlushbarPosition.TOP,
@@ -92,24 +88,23 @@ class _WelcomeState extends State<Welcome> {
 
   @override
   void initState() {
+    isDemandeValidationOpen.addListener(() {
+      setState(() {});
+    });
     getInit();
     // Handling Interaction with Notification when application is opened from a background state
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      if (isDemandeValidationOpen) {
+      if (isDemandeValidationOpen.value == true) {
         setState(() {});
       } else {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => DemandeValidation(
-              onPop: () {
-                setState(() {
-                  isDemandeValidationOpen = false;
-                });
-              },
+              isDemandeValidationOpen: isDemandeValidationOpen,
             ),
           ),
         );
-        isDemandeValidationOpen = true;
+        isDemandeValidationOpen.value = true;
       }
     });
     firebaseMessagingConfig();
@@ -215,19 +210,20 @@ class _WelcomeState extends State<Welcome> {
                                                       children: [
                                                         ElevatedButton(
                                                           onPressed: () {
-                                                            Navigator.of(context).push(
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            DemandeValidation(
-                                                                              onPop: () {
-                                                                                setState(() {
-                                                                                  isDemandeValidationOpen = false;
-                                                                                });
-                                                                              },
-                                                                            )));
-                                                            isDemandeValidationOpen =
-                                                                true;
+                                                            Navigator.of(
+                                                                    context)
+                                                                .push(
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        DemandeValidation(
+                                                                  isDemandeValidationOpen:
+                                                                      isDemandeValidationOpen,
+                                                                ),
+                                                              ),
+                                                            );
+                                                            isDemandeValidationOpen
+                                                                .value = true;
                                                           },
                                                           style: ElevatedButton
                                                               .styleFrom(

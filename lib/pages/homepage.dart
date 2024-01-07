@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/conditions.dart';
 import 'package:whowiyati/pages/login.dart';
 import 'package:whowiyati/pages/register.dart';
 import 'package:whowiyati/pages/steps.dart';
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Register()));
+                              builder: (context) => Conditions()));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: color3,
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                           shadowColor: color3, // Set the shadow color
                         ),
                         child: Text(
-                          'Commencer',
+                          'S\'inscrire',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 13.sp,
