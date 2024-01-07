@@ -86,7 +86,7 @@ class _StepsState extends State<Steps> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 30.w,
+                                  width: 20.w,
                                 ),
                                 Expanded(
                                   flex: 3,
@@ -157,7 +157,7 @@ class _StepsState extends State<Steps> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 30.w,
+                                  width: 20.w,
                                 ),
                                 Expanded(
                                   flex: 3,
@@ -228,7 +228,7 @@ class _StepsState extends State<Steps> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 30.w,
+                                  width: 20.w,
                                 ),
                                 Expanded(
                                   flex: 3,
@@ -237,7 +237,7 @@ class _StepsState extends State<Steps> {
                                       children: [
                                         TextSpan(
                                           text:
-                                              'Confirmation de votre carte d’identité\n',
+                                              'Confirmation par carte d’identité\n',
                                           style: TextStyle(
                                             color: int.parse(prefs.getString(
                                                         "status")!) ==
