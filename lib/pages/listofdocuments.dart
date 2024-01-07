@@ -25,7 +25,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     _isloading = true;
     setState(() {});
 
-    var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/view-document/'));
 
@@ -71,7 +71,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     _isloading = true;
     setState(() {});
 
-    var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
     var request = http.MultipartRequest(
         'GET', Uri.parse('https://api.icosnet.com/sign/log-document/'));
     request.fields.addAll({'document_id': id_file});
@@ -100,7 +100,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     _isloading = true;
     setState(() {});
 
-    var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
     var request = http.MultipartRequest('POST',
         Uri.parse('https://api.icosnet.com/sign/view-signed-document/'));
 
@@ -163,11 +163,13 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     _isloading = true;
     setState(() {});
 
-    var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/sign-document/'));
-    request.fields.addAll(
-        {'signer_email': prefs.getString("mail").toString(), 'document_id': id_file});
+    request.fields.addAll({
+      'signer_email': prefs.getString("mail").toString(),
+      'document_id': id_file
+    });
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
@@ -188,7 +190,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     _isloading = true;
     setState(() {});
     try {
-      var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
+      var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
       var request = http.Request('GET', Uri.parse(link));
 
       request.headers.addAll(headers);
@@ -238,7 +240,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     dynamic data = await ipAddress.getIpAddress();
     String ip = data.toString();
 
-    var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/cancel-document/'));
     request.fields.addAll({
@@ -264,7 +266,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
   }
 
   getDocuments() async {
-    var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/documents/'));
     request.fields.addAll({'user_email': prefs.getString("mail").toString()});
