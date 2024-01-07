@@ -784,7 +784,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
                                             ],
                                           ),
                                           subtitle: Text(
-                                            "Crée par: ${snapshot.data["documents_pending"][i]["uploaded_by_email"]}",
+                                            "Crée par: ${snapshot.data["documents_canceled"][i]["uploaded_by_email"]}",
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                             ),
