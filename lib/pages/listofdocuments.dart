@@ -633,6 +633,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
                             if (snapshot.hasData) {
                               if (snapshot
                                   .data["documents_signed_all"].isNotEmpty) {
+                                print(snapshot.data["documents_signed_all"]);
                                 return ListView.builder(
                                     itemCount: snapshot
                                         .data["documents_signed_all"].length,
@@ -674,7 +675,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
                                               ],
                                             ),
                                             subtitle: Text(
-                                              "Crée par: ${snapshot.data["documents_pending"][i]["uploaded_by_email"]}",
+                                              "Crée par: ${snapshot.data["documents_signed_all"][i]["uploaded_by_email"]}",
                                               style: TextStyle(
                                                 fontSize: 12.sp,
                                               ),
