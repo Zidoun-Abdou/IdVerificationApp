@@ -28,7 +28,7 @@ class _DocumentsState extends State<Documents> {
     _isloading = true;
     setState(() {});
 
-    var headers = {'Authorization': 'Basic aWNvLXNpZ246aWNvLXNpZ24='};
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.icosnet.com/sign/create/'));
 
