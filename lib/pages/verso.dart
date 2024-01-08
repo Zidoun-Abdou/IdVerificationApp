@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:dmrtd/dmrtd.dart';
 import 'package:http/http.dart' as http;
-
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,9 +16,9 @@ import 'verify_face.dart';
 import 'welcomenfc.dart';
 
 class Verso extends StatefulWidget {
-  final String rectoPath;
+  final XFile rectoPhoto;
 
-  const Verso({super.key, required this.rectoPath});
+  const Verso({super.key, required this.rectoPhoto});
 
   @override
   State<Verso> createState() => _VersoState();
@@ -31,6 +32,47 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
   static const Duration durationToForward = Duration(seconds: 1);
   static const Duration durationToChangeWidget = Duration(milliseconds: 50);
   bool? _is_loading = false;
+
+  Future<File> cropImage(
+      String imagePath, List response, String imageNamePath) async {
+    int x = response[0];
+    int y = response[1];
+    int width = response[2] - x;
+    int height = response[3] - y;
+
+    File imageFile = File(imagePath);
+
+    ui.Image decodedImage =
+        await decodeImageFromList(imageFile.readAsBytesSync());
+
+    ui.PictureRecorder recorder = ui.PictureRecorder();
+    Canvas canvas = Canvas(recorder);
+
+    Rect src = Rect.fromPoints(Offset(x.toDouble(), y.toDouble()),
+        Offset((x + width).toDouble(), (y + height).toDouble()));
+    Rect dst = Rect.fromPoints(
+        Offset(0, 0), Offset(width.toDouble(), height.toDouble()));
+
+    canvas.drawImageRect(decodedImage, src, dst, Paint());
+
+    ui.Picture picture = recorder.endRecording();
+    ui.Image croppedImage = await picture.toImage(width, height);
+
+    return await saveCroppedImage(croppedImage, imageNamePath);
+  }
+
+  Future<File> saveCroppedImage(ui.Image croppedImage, String imageName) async {
+    ByteData? byteData =
+        await croppedImage.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List buffer = byteData!.buffer.asUint8List();
+
+    Directory tempDir = await getTemporaryDirectory();
+    File tempFile = File('${tempDir.path}/$imageName.png');
+    print("file path = ${tempFile.path}");
+    await tempFile.writeAsBytes(buffer);
+
+    return tempFile;
+  }
 
   Future<bool> verifyNin(String nin) async {
     var headers2 = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
@@ -64,10 +106,13 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
     _is_loading = true;
     setState(() {});
     final picker = ImagePicker();
-    final versoPath =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
+    final versoPhoto = await picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 1080,
+        maxWidth: 1920,
+        imageQuality: 50);
 
-    if (widget.rectoPath != null && versoPath != null) {
+    if (widget.rectoPhoto != null && versoPhoto != null) {
       String _token = prefs.getString('mail').toString();
 
       var headers = {
@@ -78,12 +123,10 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
       var request = http.MultipartRequest('POST',
           Uri.parse('https://api.icosnet.com/whowiyati/Whowiyati_KYC/'));
       request.files.add(await http.MultipartFile.fromPath(
-        'front_image',
-        widget.rectoPath,
-      ));
+          'front_image', widget.rectoPhoto.path));
 
-      request.files
-          .add(await http.MultipartFile.fromPath('back_image', versoPath.path));
+      request.files.add(
+          await http.MultipartFile.fromPath('back_image', versoPhoto.path));
 
       request.headers.addAll(headers);
 
@@ -109,34 +152,56 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         print("------------------------------------------------------------");
         print(answerJson);
         print("------------------------------------------------------------");
-        List<int> imageBytes_face = base64Decode(answerJson[_face]);
-        List<int> imageBytes_front = base64Decode(answerJson[_front]);
-        List<int> imageBytes_back = base64Decode(answerJson[_back]);
+
+        // ==========================
+        final _myFile_front = await cropImage(widget.rectoPhoto.path,
+            answerJson[_front], "temp_image_front_card");
+        print(_myFile_front.path);
+
+        final _myFile_face = await cropImage(
+            _myFile_front.path, answerJson[_face], "temp_image_face");
+        print(_myFile_face.path);
+
+        final _myFile_back = await cropImage(
+            versoPhoto.path, answerJson[_back], "temp_image_back_card");
+        print(_myFile_back.path);
+
+        // final _myFile_signature = await cropImage(
+        //     _myFile_back.path, answerJson[_signature], "temp_image__signature");
+        // print(_myFile_signature.path);
+        // ==========================
+
+        // **************************
+        // List<int> imageBytes_face = base64Decode(answerJson[_face]);
+        // List<int> imageBytes_front = base64Decode(answerJson[_front]);
+        // List<int> imageBytes_back = base64Decode(answerJson[_back]);
         List<int> imageBytes_signature = base64Decode(answerJson[_signature]);
 
-        await prefs.setString("face", answerJson[_face]);
+        // await prefs.setString("face", answerJson[_face]);
 
-        final _tempDir_face = await getApplicationDocumentsDirectory();
-        final _tempDir_front = await getApplicationDocumentsDirectory();
-        final _tempDir_back = await getApplicationDocumentsDirectory();
-        final _tempDir_signature = await getApplicationDocumentsDirectory();
+        // final _tempDir_face = await getTemporaryDirectory();
+        // final _tempDir_front = await getTemporaryDirectory();
+        // final _tempDir_back = await getTemporaryDirectory();
+        final _tempDir_signature = await getTemporaryDirectory();
 
-        final _myFile_face =
-            await File('${_tempDir_face.path}/temp_image_face.png')
-                .writeAsBytes(imageBytes_face);
-        print(_myFile_face.path);
-        final _myFile_front =
-            await File('${_tempDir_front.path}/temp_image_front_card.png')
-                .writeAsBytes(imageBytes_front);
-        print(_myFile_front.path);
-        final _myFile_back =
-            await File('${_tempDir_back.path}/temp_image_back_card.png')
-                .writeAsBytes(imageBytes_back);
-        print(_myFile_back.path);
+        // final _myFile_face =
+        //     await File('${_tempDir_face.path}/temp_image_face.png')
+        //         .writeAsBytes(imageBytes_face);
+        // print(_myFile_face.path);
+        // final _myFile_front =
+        //     await File('${_tempDir_front.path}/temp_image_front_card.png')
+        //         .writeAsBytes(imageBytes_front);
+        // print(_myFile_front.path);
+        // final _myFile_back =
+        //     await File('${_tempDir_back.path}/temp_image_back_card.png')
+        //         .writeAsBytes(imageBytes_back);
+        // print(_myFile_back.path);
         final _myFile_signature =
             await File('${_tempDir_signature.path}/temp_image__signature.png')
                 .writeAsBytes(imageBytes_signature);
         print(_myFile_signature.path);
+        // **************************
+
         //await prefs.setStrin.pathg('idinfos', answerJson["french_name"].toString());
         String name = answerJson["french_name"].toString();
         String surname = answerJson["french_surname"].toString();
