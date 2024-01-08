@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get_ip_address/get_ip_address.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
@@ -132,6 +133,17 @@ class _VerifyFaceState extends State<VerifyFace> {
     }
   }
 
+  String convertDate(String inputDate) {
+    DateFormat inputFormat = DateFormat("MM/dd/yyyy");
+    DateFormat outputFormat = DateFormat("yyyy-MM-dd");
+
+    // Parse the input date and format it in the desired output format
+    DateTime parsedDate = inputFormat.parse(inputDate);
+    String outputDate = outputFormat.format(parsedDate);
+
+    return outputDate;
+  }
+
   Future<bool> sendToAlfresco() async {
     var headers = {
       'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
@@ -140,11 +152,11 @@ class _VerifyFaceState extends State<VerifyFace> {
         'POST', Uri.parse('https://api.icosnet.com/sign/wh/alfresco/'));
 
     String creation_date = prefs.getString('deliv_date').toString();
-    creation_date = creation_date.replaceAll("/", "-");
+    creation_date = convertDate(creation_date);
     String birth_date = prefs.getString('birth_date').toString();
-    birth_date = birth_date.replaceAll("/", "-");
+    birth_date = convertDate(birth_date);
     String expiry_date = prefs.getString('exp_date').toString();
-    expiry_date = expiry_date.replaceAll("/", "-");
+    expiry_date = convertDate(expiry_date);
 
     request.fields.addAll({
       'token': _myToken,
@@ -158,6 +170,20 @@ class _VerifyFaceState extends State<VerifyFace> {
       'email': prefs.getString('mail').toString(),
       'user_id': prefs.getString('user_id').toString()
     });
+
+    print("===========");
+    print(prefs.getString('deliv_date').toString());
+    print(creation_date);
+    print("===========");
+    print("===========");
+    print(prefs.getString('birth_date').toString());
+    print(birth_date);
+    print("===========");
+    print("===========");
+    print(prefs.getString('exp_date').toString());
+    print(expiry_date);
+    print("===========");
+
     request.files
         .add(await http.MultipartFile.fromPath('image_recto', widget.front));
     request.files
