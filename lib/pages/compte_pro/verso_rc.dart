@@ -47,8 +47,11 @@ class _VersoRCState extends State<VersoRC> {
 
   void takeVerso() async {
     final picker = ImagePicker();
-    final versoPhoto =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
+    final versoPhoto = await picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 1080,
+        maxWidth: 1920,
+        imageQuality: 50);
     _is_loading = true;
     setState(() {});
     if (versoPhoto != null) {

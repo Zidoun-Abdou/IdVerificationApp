@@ -45,8 +45,11 @@ class _NisRCState extends State<NisRC> {
 
   void takeNis() async {
     final picker = ImagePicker();
-    final nisPhoto =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
+    final nisPhoto = await picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 1080,
+        maxWidth: 1920,
+        imageQuality: 50);
     _is_loading = true;
     setState(() {});
     if (nisPhoto != null) {
