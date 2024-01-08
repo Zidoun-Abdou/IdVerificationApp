@@ -44,8 +44,11 @@ class _RectoRCState extends State<RectoRC> {
 
   void takeRecto() async {
     final picker = ImagePicker();
-    final rectoPhoto =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
+    final rectoPhoto = await picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 1080,
+        maxWidth: 1920,
+        imageQuality: 50);
     _is_loading = true;
     setState(() {});
     if (rectoPhoto != null) {

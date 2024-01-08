@@ -384,7 +384,8 @@ class _DemandeValidationState extends State<DemandeValidation> {
                           if (snapshot.data["status"] == true) {
                             List<DemandeValidationModel> accepteList = [];
                             for (var element in snapshot.data["data"]) {
-                              if (element["Status"] == "1") {
+                              if (element["Status"] == "1" ||
+                                  element["Status"] == "-2") {
                                 accepteList.add(
                                     DemandeValidationModel.fromJson(element));
                               }
@@ -419,14 +420,22 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                           TextSpan(
                                               text: 'ID : ',
                                               style: TextStyle(
-                                                  color: color3,
+                                                  color: accepteList[index]
+                                                              .status ==
+                                                          "1"
+                                                      ? color3
+                                                      : Colors.grey,
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.w600)),
                                           TextSpan(
                                               text: accepteList[index]
                                                   .requestIdentify,
                                               style: TextStyle(
-                                                  color: color3,
+                                                  color: accepteList[index]
+                                                              .status ==
+                                                          "1"
+                                                      ? color3
+                                                      : Colors.grey,
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.w600))
                                         ]),

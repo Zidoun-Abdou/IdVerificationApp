@@ -45,8 +45,11 @@ class _NifRCState extends State<NifRC> {
 
   void takeNif() async {
     final picker = ImagePicker();
-    final nifPhoto =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
+    final nifPhoto = await picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 1080,
+        maxWidth: 1920,
+        imageQuality: 50);
     _is_loading = true;
     setState(() {});
     if (nifPhoto != null) {
