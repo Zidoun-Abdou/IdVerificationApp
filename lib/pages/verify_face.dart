@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dmrtd/dmrtd.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -133,8 +134,20 @@ class _VerifyFaceState extends State<VerifyFace> {
     }
   }
 
-  String convertDate(String inputDate) {
+  String convertDateCart(String inputDate) {
     DateFormat inputFormat = DateFormat("MM/dd/yyyy");
+    DateFormat outputFormat = DateFormat("yyyy-MM-dd");
+
+    // Parse the input date and format it in the desired output format
+    DateTime parsedDate = inputFormat.parse(inputDate);
+    String outputDate = outputFormat.format(parsedDate);
+
+    return outputDate;
+  }
+
+  String convertDateNfc(String inputDate) {
+    // Define the input and output date formats
+    DateFormat inputFormat = DateFormat("yyyy/MM/dd");
     DateFormat outputFormat = DateFormat("yyyy-MM-dd");
 
     // Parse the input date and format it in the desired output format
@@ -152,11 +165,20 @@ class _VerifyFaceState extends State<VerifyFace> {
         'POST', Uri.parse('https://api.icosnet.com/sign/wh/alfresco/'));
 
     String creation_date = prefs.getString('deliv_date').toString();
-    creation_date = convertDate(creation_date);
     String birth_date = prefs.getString('birth_date').toString();
-    birth_date = convertDate(birth_date);
     String expiry_date = prefs.getString('exp_date').toString();
-    expiry_date = convertDate(expiry_date);
+
+    NfcStatus statusNfc = await NfcProvider.nfcStatus;
+
+    if (statusNfc.toString() == "NfcStatus.notSupported") {
+      creation_date = convertDateCart(creation_date);
+      birth_date = convertDateCart(birth_date);
+      expiry_date = convertDateCart(expiry_date);
+    } else {
+      creation_date = convertDateNfc(creation_date);
+      birth_date = convertDateNfc(birth_date);
+      expiry_date = convertDateNfc(expiry_date);
+    }
 
     request.fields.addAll({
       'token': _myToken,
@@ -171,18 +193,9 @@ class _VerifyFaceState extends State<VerifyFace> {
       'user_id': prefs.getString('user_id').toString()
     });
 
-    print("===========");
-    print(prefs.getString('deliv_date').toString());
     print(creation_date);
-    print("===========");
-    print("===========");
-    print(prefs.getString('birth_date').toString());
     print(birth_date);
-    print("===========");
-    print("===========");
-    print(prefs.getString('exp_date').toString());
     print(expiry_date);
-    print("===========");
 
     request.files
         .add(await http.MultipartFile.fromPath('image_recto', widget.front));
@@ -198,6 +211,9 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       await prefs.setString("status", "5");
+      await prefs.setString("deliv_date", creation_date);
+      await prefs.setString("birth_date", birth_date);
+      await prefs.setString("exp_date", expiry_date);
       print("Alfresco ok");
       print(await response.stream.bytesToString());
       controller.dispose();
