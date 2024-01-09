@@ -323,6 +323,28 @@ class _WelcomeState extends State<Welcome> {
                                                                         onPressed:
                                                                             () async {
                                                                           // await prefs.clear();
+                                                                          await prefs
+                                                                              .remove("status");
+                                                                          await prefs
+                                                                              .remove("name_latin");
+                                                                          await prefs
+                                                                              .remove("surname_latin");
+                                                                          await prefs
+                                                                              .remove("birth_date");
+                                                                          await prefs
+                                                                              .remove("deliv_date");
+                                                                          await prefs
+                                                                              .remove("exp_date");
+                                                                          await prefs
+                                                                              .remove("document_number");
+                                                                          await prefs
+                                                                              .remove("user_id");
+                                                                          await prefs
+                                                                              .remove("phone");
+                                                                          await prefs
+                                                                              .remove("mail");
+                                                                          await prefs
+                                                                              .remove("nin");
                                                                           await prefs.setString(
                                                                               'login',
                                                                               'false');
