@@ -7,6 +7,7 @@ import 'package:whowiyati/pages/demande_validation.dart';
 import 'package:whowiyati/pages/register.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:whowiyati/pages/welcome.dart';
+import 'package:http/http.dart' as http;
 
 class DialpadScreen extends StatefulWidget {
   final int status;
@@ -55,6 +56,23 @@ class _DialpadScreenState extends State<DialpadScreen> {
     super.initState();
     // Shuffle the dialpad numbers randomly at the beginning
     dialpadNumbers.shuffle();
+  }
+
+  void addCode() async {
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://api.icosnet.com/sign/wh/user/passcode/'));
+    request.fields.addAll({
+      'user_id': prefs.getString('user_id').toString(),
+      'pass_code': '111112'
+    });
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   @override

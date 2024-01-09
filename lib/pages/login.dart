@@ -80,6 +80,8 @@ class _LoginState extends State<Login> {
           await prefs.setString("phone", answerJson["user"]['phone'] ?? "");
           await prefs.setString("mail", answerJson["user"]['email'] ?? "");
           await prefs.setString("nin", answerJson["user"]['nin'] ?? "");
+          await prefs.setString(
+              "pasword", answerJson["user"]['pass_code'] ?? "");
 
           await prefs.setString('login', 'true');
 
