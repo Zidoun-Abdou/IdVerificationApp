@@ -76,6 +76,7 @@ dependencies:
   flutter_svg: ^2.0.5
   another_flushbar: ^1.12.30
   rename: ^2.1.1
+  android_intent_plus: ^4.0.3
 
 
   
