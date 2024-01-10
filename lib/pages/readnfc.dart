@@ -18,6 +18,7 @@ import 'package:whowiyati/const.dart';
 import 'package:dmrtd/dmrtd.dart';
 import 'package:dmrtd/extensions.dart';
 import 'package:whowiyati/pages/cardnfcinfo.dart';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:whowiyati/pages/verify_face.dart';
 
 import '../main.dart';
@@ -429,6 +430,13 @@ class _ReadNfcState extends State<ReadNfc> {
     }
   }
 
+  void _openNFCSettings() {
+    final intent = AndroidIntent(
+      action: 'android.settings.NFC_SETTINGS',
+    );
+    intent.launch();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -476,23 +484,28 @@ class _ReadNfcState extends State<ReadNfc> {
                         ),
                         Visibility(
                           visible: !_isNfcAvailable,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 5.h),
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(10.r)),
-                            child: Text(
-                              _isNfcAvailable
-                                  ? " "
-                                  : "Veuillez activer votre NFC",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0.20.w,
+                          child: GestureDetector(
+                            onTap: () {
+                              _openNFCSettings();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w, vertical: 5.h),
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(10.r)),
+                              child: Text(
+                                _isNfcAvailable
+                                    ? " "
+                                    : "Veuillez activer votre NFC ici",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.sp,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.20.w,
+                                ),
                               ),
                             ),
                           ),
