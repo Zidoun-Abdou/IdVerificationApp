@@ -94,11 +94,18 @@ class _DialpadScreenState extends State<DialpadScreen> {
               height: 20.h,
             ),
             Text(
+              "Bonjour ${prefs.getString("name_latin") ?? ""}",
+              style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
               widget.status == 1
-                  ? 'Veuillez saisir votre nouveau mot de passe'
+                  ? 'Veuillez saisir votre nouveau code PIN'
                   : widget.status == 2
-                      ? 'Veuillez confirmer votre nouveau mot de passe'
-                      : 'Veuillez saisir votre mot de passe',
+                      ? 'Veuillez confirmer votre nouveau code PIN'
+                      : 'Veuillez saisir votre code PIN',
               style: TextStyle(fontSize: 15.0, color: Colors.grey),
             ),
             SizedBox(
@@ -111,7 +118,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
             SizedBox(height: 20.0),
             _buildDialpad(),
             SizedBox(height: 20.0),
-            _buildClearButton(),
+            // _buildClearButton(),
           ],
         ),
       ),
@@ -195,7 +202,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
   Widget _buildDialpadButton(int index) {
     if (index < dialpadNumbers.length) {
       return ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           setState(() {
             if (displayedNumber.contains('*')) {
               // Replace the first '*' with the pressed number
@@ -203,6 +210,150 @@ class _DialpadScreenState extends State<DialpadScreen> {
                   displayedNumber.replaceFirst('*', dialpadNumbers[index]);
             }
           });
+
+          if (displayedNumber.substring(displayedNumber.length - 1) != "*") {
+            /////////////////////////////////////////////////////////////////////////
+            if (widget.status == 1 &&
+                displayedNumber.substring(displayedNumber.length - 1) != "*") {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => DialpadScreen(
+                    status: 2,
+                    password: displayedNumber,
+                  ),
+                ),
+              );
+            } else if (widget.status == 1 &&
+                displayedNumber.substring(displayedNumber.length - 1) == "*") {
+              Fluttertoast.showToast(
+                  msg: "Code PIN incomplet",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+
+            /////////////////////////////////////////////////////////////////////////
+            if (widget.status == 2 &&
+                widget.password == displayedNumber &&
+                displayedNumber.substring(displayedNumber.length - 1) != "*") {
+              if (await addCode(displayedNumber) == true) {
+                await prefs.setString('pasword', displayedNumber);
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => Welcome(
+                      token: _myToken,
+                    ),
+                  ),
+                );
+              } else {
+                Fluttertoast.showToast(
+                    msg: "utilisateur n'existe pas",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              }
+            } else if (widget.status == 2 &&
+                widget.password != displayedNumber &&
+                displayedNumber.substring(displayedNumber.length - 1) != "*") {
+              Fluttertoast.showToast(
+                  msg: "Mot de non identique",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            } else if (widget.status == 2 &&
+                displayedNumber.substring(displayedNumber.length - 1) == "*") {
+              Fluttertoast.showToast(
+                  msg: "Mot de incomplet",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+
+            /////////////////////////////////////////////////////////////////////
+
+            if (widget.status == 3 &&
+                displayedNumber == prefs.getString('pasword').toString()) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => Welcome(
+                    token: _myToken,
+                  ),
+                ),
+              );
+            } else if (widget.status == 3 &&
+                displayedNumber.substring(displayedNumber.length - 1) == "*") {
+              Fluttertoast.showToast(
+                  msg: "Code PIN incomplet",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            } else if (widget.status == 3 &&
+                displayedNumber != prefs.getString('pasword').toString()) {
+              Fluttertoast.showToast(
+                  msg: "Code PIN incorrect",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+
+              setState(() {
+                displayedNumber = '******'; // Reset to the initial value
+                // Shuffle the dialpad numbers randomly when the clear button is pressed
+                dialpadNumbers.shuffle();
+              });
+            }
+
+            /////////////////////////////////////////////////////////////////////
+
+            if (widget.status == 4 &&
+                displayedNumber == prefs.getString('pasword').toString()) {
+              await widget.onPressedDemandeValidationAction!();
+              Navigator.of(context).pop();
+            } else if (widget.status == 4 &&
+                displayedNumber.substring(displayedNumber.length - 1) == "*") {
+              Fluttertoast.showToast(
+                  msg: "Code PIN incomplet",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            } else if (widget.status == 4 &&
+                displayedNumber != prefs.getString('pasword').toString()) {
+              Fluttertoast.showToast(
+                  msg: "Code PIN incorrect",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+
+              setState(() {
+                displayedNumber = '******'; // Reset to the initial value
+                // Shuffle the dialpad numbers randomly when the clear button is pressed
+                dialpadNumbers.shuffle();
+              });
+            }
+          }
 
           // if (displayedNumber.length == 6 &&
           //     displayedNumber == "666666" &&
@@ -219,7 +370,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
           //     dialpadNumbers.shuffle();
           //   });
           //   Fluttertoast.showToast(
-          //       msg: "Mot de passe incorrect, réessayez!",
+          //       msg: "Code PIN incorrect, réessayez!",
           //       toastLength: Toast.LENGTH_SHORT,
           //       gravity: ToastGravity.CENTER,
           //       timeInSecForIosWeb: 1,
@@ -261,7 +412,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
           } else if (widget.status == 1 &&
               displayedNumber.substring(displayedNumber.length - 1) == "*") {
             Fluttertoast.showToast(
-                msg: "Mot de passe incomplet",
+                msg: "Code PIN incomplet",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
@@ -330,7 +481,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
           } else if (widget.status == 3 &&
               displayedNumber.substring(displayedNumber.length - 1) == "*") {
             Fluttertoast.showToast(
-                msg: "Mot de passe incomplet",
+                msg: "Code PIN incomplet",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
@@ -340,7 +491,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
           } else if (widget.status == 3 &&
               displayedNumber != prefs.getString('pasword').toString()) {
             Fluttertoast.showToast(
-                msg: "Mot de passe incorrect",
+                msg: "Code PIN incorrect",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
@@ -364,7 +515,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
           } else if (widget.status == 4 &&
               displayedNumber.substring(displayedNumber.length - 1) == "*") {
             Fluttertoast.showToast(
-                msg: "Mot de passe incomplet",
+                msg: "Code PIN incomplet",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
@@ -374,7 +525,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
           } else if (widget.status == 4 &&
               displayedNumber != prefs.getString('pasword').toString()) {
             Fluttertoast.showToast(
-                msg: "Mot de passe incorrect",
+                msg: "Code PIN incorrect",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
@@ -402,10 +553,10 @@ class _DialpadScreenState extends State<DialpadScreen> {
         ),
         child: Text(
           widget.status == 1
-              ? 'Ajouter mot de passe'
+              ? 'Ajouter code PIN'
               : widget.status == 2
-                  ? 'Confirmer mot de passe'
-                  : 'Insérer mot de passe',
+                  ? 'Confirmer code PIN'
+                  : 'Insérer code PIN',
           style: TextStyle(
             color: Colors.white,
             fontSize: 13.sp,
