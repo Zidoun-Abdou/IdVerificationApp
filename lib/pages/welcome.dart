@@ -145,9 +145,9 @@ class _WelcomeState extends State<Welcome> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFFA2A2B5),
-                                fontSize: 16.sp,
+                                fontSize: 20.sp,
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.bold,
                                 letterSpacing: 0.20,
                               ),
                             ),
@@ -473,7 +473,7 @@ class _WelcomeState extends State<Welcome> {
                                         : 'Bonjour\n${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 40,
+                                      fontSize: 35.sp,
                                       fontFamily: 'Inter',
                                       fontWeight: FontWeight.w700,
                                     ),
