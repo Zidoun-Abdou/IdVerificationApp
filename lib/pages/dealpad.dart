@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +9,7 @@ import 'package:whowiyati/pages/demande_validation.dart';
 import 'package:whowiyati/pages/register.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:whowiyati/pages/welcome.dart';
+import 'package:http/http.dart' as http;
 
 class DialpadScreen extends StatefulWidget {
   final int status;
@@ -55,6 +58,21 @@ class _DialpadScreenState extends State<DialpadScreen> {
     super.initState();
     // Shuffle the dialpad numbers randomly at the beginning
     dialpadNumbers.shuffle();
+  }
+
+  Future<bool> addCode(String code) async {
+    var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://api.icosnet.com/sign/wh/user/passcode/'));
+    request.fields.addAll(
+        {'user_id': prefs.getString('user_id').toString(), 'pass_code': code});
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    String answer = await response.stream.bytesToString();
+    var answerJson = jsonDecode(answer);
+
+    return answerJson["success"];
   }
 
   @override
@@ -256,14 +274,25 @@ class _DialpadScreenState extends State<DialpadScreen> {
           if (widget.status == 2 &&
               widget.password == displayedNumber &&
               displayedNumber.substring(displayedNumber.length - 1) != "*") {
-            await prefs.setString('pasword', displayedNumber);
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => Welcome(
-                  token: _myToken,
+            if (await addCode(displayedNumber) == true) {
+              await prefs.setString('pasword', displayedNumber);
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => Welcome(
+                    token: _myToken,
+                  ),
                 ),
-              ),
-            );
+              );
+            } else {
+              Fluttertoast.showToast(
+                  msg: "utilisateur n'existe pas",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
           } else if (widget.status == 2 &&
               widget.password != displayedNumber &&
               displayedNumber.substring(displayedNumber.length - 1) != "*") {
