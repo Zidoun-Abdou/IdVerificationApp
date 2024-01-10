@@ -345,6 +345,8 @@ class _WelcomeState extends State<Welcome> {
                                                                               .remove("mail");
                                                                           await prefs
                                                                               .remove("nin");
+                                                                          await prefs
+                                                                              .remove("pasword");
                                                                           await prefs.setString(
                                                                               'login',
                                                                               'false');
