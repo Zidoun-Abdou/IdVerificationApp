@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/dealpad.dart';
+import 'package:http/http.dart' as http;
+
+import '../main.dart';
 
 class SeeDocument extends StatefulWidget {
   final String myurl;
@@ -46,6 +51,7 @@ class _SeeDocumentState extends State<SeeDocument> {
         visible: widget.is_signed,
         child: FloatingActionButton.extended(
           onPressed: () {
+            /*
             showModalBottomSheet(
                 backgroundColor: color2,
                 context: context,
@@ -66,8 +72,19 @@ class _SeeDocumentState extends State<SeeDocument> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => DialpadScreen(status: 1,)));
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => DialpadScreen(
+                              //       status: 4,
+                              //       onPressedAction: () async {
+                              //         // signFile(
+                              //         //   "${snapshot.data["documents_pending"][i]["id"]}",
+                              //         // );
+                              //         Navigator.of(context).pop();
+                              //       },
+                              //     ),
+                              //   ),
+                              // );
                             },
                             child: Text("Oui"),
                             style: ElevatedButton.styleFrom(
@@ -104,7 +121,8 @@ class _SeeDocumentState extends State<SeeDocument> {
                       )
                     ],
                   );
-                });
+                });*/
+            Navigator.of(context).pop();
           },
           label: const Text('Signer ce documents'),
           icon: const Icon(Icons.check_circle_outline_sharp),

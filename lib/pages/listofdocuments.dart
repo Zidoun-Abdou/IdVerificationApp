@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/signature_logs.dart';
 import '../const.dart';
 import '../main.dart';
+import 'dealpad.dart';
 import 'documents.dart';
 
 class ListOfDocuments extends StatefulWidget {
@@ -414,12 +415,24 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
                                                                   ElevatedButton(
                                                                     onPressed:
                                                                         () {
-                                                                      signFile(
-                                                                        "${snapshot.data["documents_pending"][i]["id"]}",
-                                                                      );
                                                                       Navigator.of(
                                                                               context)
-                                                                          .pop();
+                                                                          .push(
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              DialpadScreen(
+                                                                            status:
+                                                                                4,
+                                                                            onPressedAction:
+                                                                                () async {
+                                                                              signFile(
+                                                                                "${snapshot.data["documents_pending"][i]["id"]}",
+                                                                              );
+                                                                              Navigator.of(context).pop();
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      );
                                                                     },
                                                                     child: Text(
                                                                         "Oui"),
@@ -502,12 +515,24 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
                                                                   ElevatedButton(
                                                                     onPressed:
                                                                         () {
-                                                                      cancelFile(
-                                                                        "${snapshot.data["documents_pending"][i]["id"]}",
-                                                                      );
                                                                       Navigator.of(
                                                                               context)
-                                                                          .pop();
+                                                                          .push(
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              DialpadScreen(
+                                                                            status:
+                                                                                4,
+                                                                            onPressedAction:
+                                                                                () async {
+                                                                              cancelFile(
+                                                                                "${snapshot.data["documents_pending"][i]["id"]}",
+                                                                              );
+                                                                              Navigator.of(context).pop();
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      );
                                                                     },
                                                                     child: Text(
                                                                         "Oui"),

@@ -18,6 +18,8 @@ class Phone extends StatefulWidget {
 }
 
 class _PhoneState extends State<Phone> {
+  bool obscureText = true;
+
   GlobalKey<FormState> _formstate = GlobalKey();
   bool isLoading = false;
   TextEditingController _phoneContr = TextEditingController();
@@ -210,7 +212,7 @@ class _PhoneState extends State<Phone> {
                       },
                       cursorColor: color3,
                       controller: _passwordContr,
-                      obscureText: true,
+                      obscureText: obscureText,
                       style: TextStyle(color: Colors.white),
                       // Set text color to white
                       decoration: InputDecoration(
@@ -229,6 +231,32 @@ class _PhoneState extends State<Phone> {
                           Icons.lock,
                           color: color3,
                         ),
+                        suffixIcon: obscureText
+                            ? IconButton(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onPressed: () {
+                                  setState(() {
+                                    obscureText = false;
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.white,
+                                ))
+                            : IconButton(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onPressed: () {
+                                  setState(() {
+                                    obscureText = true;
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.visibility,
+                                  color: Colors.white,
+                                ),
+                              ),
                         border: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.circular(50.r), // Set border radius
@@ -251,7 +279,7 @@ class _PhoneState extends State<Phone> {
                       },
                       controller: _confpasswordContr,
                       style: TextStyle(color: Colors.white),
-                      obscureText: true,
+                      obscureText: obscureText,
                       // Set text color to white
                       decoration: InputDecoration(
                         hintText: "Confirmer le mot de passe",
@@ -269,6 +297,32 @@ class _PhoneState extends State<Phone> {
                           Icons.lock_outline,
                           color: color3,
                         ),
+                        suffixIcon: obscureText
+                            ? IconButton(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onPressed: () {
+                                  setState(() {
+                                    obscureText = false;
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.white,
+                                ))
+                            : IconButton(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onPressed: () {
+                                  setState(() {
+                                    obscureText = true;
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.visibility,
+                                  color: Colors.white,
+                                ),
+                              ),
                         border: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.circular(50.r), // Set border radius

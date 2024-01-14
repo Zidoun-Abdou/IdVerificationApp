@@ -252,8 +252,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                        text:
-                                            'Bonjour\n${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
+                                        text: 'Bonjour',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 40,
@@ -304,6 +303,19 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                   ),
                                 ),
                               ],
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: Text(
+                                '${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 35.sp,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                             ),
                             SizedBox(
                               height: 40.h,

@@ -17,9 +17,16 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool obscureText = true;
+
   @override
   void initState() {
     super.initState();
+    prefs.getBool("isRememberMe") == true
+        ? prefs.getString('rememberUserID') == null
+            ? prefs.setBool("isRememberMe", false)
+            : _useridContr.text = prefs.getString('rememberUserID').toString()
+        : _useridContr.text = "";
     getToken();
   }
 
@@ -83,6 +90,9 @@ class _LoginState extends State<Login> {
           await prefs.setString(
               "pasword", answerJson["user"]['pass_code'] ?? "");
 
+          if (prefs.getBool("isRememberMe") == true) {
+            await prefs.setString("rememberUserID", _useridContr.text);
+          }
           await prefs.setString('login', 'true');
 
           Navigator.pushAndRemoveUntil(
@@ -93,20 +103,13 @@ class _LoginState extends State<Login> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Les informations d'identification invalides"),
+              content:
+                  Text("Informations incorrects, Veillez les vérifier svp"),
               duration: Duration(seconds: 3),
               backgroundColor: colorRed,
             ),
           );
         }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Informations incorrects, Veillez les vérifier svp"),
-            duration: Duration(seconds: 3),
-            backgroundColor: colorRed,
-          ),
-        );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -217,7 +220,7 @@ class _LoginState extends State<Login> {
                                         return validInput(val!, 8, 50);
                                       },
                                       cursorColor: color3,
-                                      obscureText: true,
+                                      obscureText: obscureText,
                                       style: TextStyle(color: Colors.white),
                                       // Set text color to white
                                       decoration: InputDecoration(
@@ -238,6 +241,34 @@ class _LoginState extends State<Login> {
                                           Icons.lock_outline,
                                           color: Colors.white,
                                         ),
+                                        suffixIcon: obscureText
+                                            ? IconButton(
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                splashColor: Colors.transparent,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    obscureText = false;
+                                                  });
+                                                },
+                                                icon: const Icon(
+                                                  Icons.visibility_off,
+                                                  color: Colors.white,
+                                                ))
+                                            : IconButton(
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                splashColor: Colors.transparent,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    obscureText = true;
+                                                  });
+                                                },
+                                                icon: const Icon(
+                                                  Icons.visibility,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(
                                               50.r), // Set border radius
@@ -245,56 +276,76 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                   ),
-                                  // Container(
-                                  //     margin: EdgeInsets.symmetric(
-                                  //         horizontal: 20.w, vertical: 8.h),
-                                  //     child: Row(
-                                  //       mainAxisAlignment:
-                                  //           MainAxisAlignment.spaceBetween,
-                                  //       children: [
-                                  //         Row(
-                                  //           children: [
-                                  //             Theme(
-                                  //               data: Theme.of(context).copyWith(
-                                  //                 unselectedWidgetColor:
-                                  //                     Colors.grey,
-                                  //               ),
-                                  //               child: Checkbox(
-                                  //                 checkColor: color3,
-                                  //                 activeColor: Colors.black,
-                                  //                 value: _isChecked,
-                                  //                 onChanged: (value) {
-                                  //                   setState(() {
-                                  //                     _isChecked = !_isChecked;
-                                  //                   });
-                                  //                 },
-                                  //               ),
-                                  //             ),
-                                  //             Text(
-                                  //               'Remember me',
-                                  //               textAlign: TextAlign.center,
-                                  //               style: TextStyle(
-                                  //                 color: Colors.white,
-                                  //                 fontSize: 12.sp,
-                                  //                 fontFamily: 'Poppins',
-                                  //                 fontWeight: FontWeight.w400,
-                                  //               ),
-                                  //             ),
-                                  //           ],
-                                  //         ),
-                                  //         Text(
-                                  //           'Forget password ?',
-                                  //           textAlign: TextAlign.center,
-                                  //           style: TextStyle(
-                                  //             color: Colors.white,
-                                  //             fontSize: 12.sp,
-                                  //             fontStyle: FontStyle.italic,
-                                  //             fontFamily: 'Poppins',
-                                  //             fontWeight: FontWeight.w300,
-                                  //           ),
-                                  //         )
-                                  //       ],
-                                  //     )),
+                                  Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 20.w, vertical: 8.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Theme(
+                                                data:
+                                                    Theme.of(context).copyWith(
+                                                  unselectedWidgetColor:
+                                                      Colors.grey,
+                                                ),
+                                                child: Checkbox(
+                                                  checkColor: color3,
+                                                  activeColor: Colors.black,
+                                                  value: prefs.getBool(
+                                                          "isRememberMe") ??
+                                                      false,
+                                                  onChanged: (value) {
+                                                    if (prefs.getBool(
+                                                                "isRememberMe") ==
+                                                            false ||
+                                                        prefs.getBool(
+                                                                "isRememberMe") ==
+                                                            null) {
+                                                      setState(() {
+                                                        prefs.setBool(
+                                                            "isRememberMe",
+                                                            true);
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        prefs.setBool(
+                                                            "isRememberMe",
+                                                            false);
+                                                        prefs.remove(
+                                                            "rememberUserID");
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                              Text(
+                                                'Se souvenir de moi',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12.sp,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Text(
+                                          //   'Mot de passe oublié ?',
+                                          //   textAlign: TextAlign.center,
+                                          //   style: TextStyle(
+                                          //     color: Colors.white,
+                                          //     fontSize: 12.sp,
+                                          //     fontStyle: FontStyle.italic,
+                                          //     fontFamily: 'Poppins',
+                                          //     fontWeight: FontWeight.w300,
+                                          //   ),
+                                          // )
+                                        ],
+                                      )),
                                   SizedBox(
                                     height: 20.h,
                                   ),

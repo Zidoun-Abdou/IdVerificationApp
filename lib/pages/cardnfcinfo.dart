@@ -152,8 +152,7 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                         Visibility(
                           visible: !_isAr,
                           child: Text(
-                            'Nom: ' +
-                                prefs.getString('surname_latin').toString(),
+                            'Nom: ' + prefs.getString('name_latin').toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
@@ -168,7 +167,7 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                           visible: _isAr,
                           child: Text(
                             'اللقب : ' +
-                                prefs.getString('surname_arabic').toString(),
+                                prefs.getString('name_arabic').toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
@@ -191,7 +190,7 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                           visible: !_isAr,
                           child: Text(
                             'Prénom: ' +
-                                prefs.getString('name_latin').toString(),
+                                prefs.getString('surname_latin').toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
@@ -206,7 +205,7 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
                           visible: _isAr,
                           child: Text(
                             'االاسم :' +
-                                prefs.getString('name_arabic').toString(),
+                                prefs.getString('surname_arabic').toString(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,

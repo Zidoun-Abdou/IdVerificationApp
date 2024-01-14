@@ -126,7 +126,7 @@ class _IdInfosState extends State<IdInfos> {
                                   height: 170.h,
                                   width: 320.w,
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 5.w, vertical: 10.h),
+                                      horizontal: 5.w, vertical: 5.h),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.r),
                                     image: DecorationImage(

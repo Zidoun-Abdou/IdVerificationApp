@@ -14,13 +14,13 @@ import 'package:http/http.dart' as http;
 class DialpadScreen extends StatefulWidget {
   final int status;
   final String password;
-  final Future<void> Function()? onPressedDemandeValidationAction;
+  final Future<void> Function()? onPressedAction;
 
   const DialpadScreen(
       {Key? key,
       required this.status,
       this.password = "******",
-      this.onPressedDemandeValidationAction})
+      this.onPressedAction})
       : super(key: key);
 
   @override
@@ -111,9 +111,55 @@ class _DialpadScreenState extends State<DialpadScreen> {
             SizedBox(
               height: 20.h,
             ),
-            Text(
-              displayedNumber,
-              style: TextStyle(fontSize: 24.0, color: Colors.white),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.4,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    displayedNumber[0] == "*"
+                        ? Icons.circle_outlined
+                        : Icons.circle_rounded,
+                    size: 15.h,
+                    color: Colors.white,
+                  ),
+                  Icon(
+                    displayedNumber[1] == "*"
+                        ? Icons.circle_outlined
+                        : Icons.circle_rounded,
+                    size: 15.h,
+                    color: Colors.white,
+                  ),
+                  Icon(
+                    displayedNumber[2] == "*"
+                        ? Icons.circle_outlined
+                        : Icons.circle_rounded,
+                    size: 15.h,
+                    color: Colors.white,
+                  ),
+                  Icon(
+                    displayedNumber[3] == "*"
+                        ? Icons.circle_outlined
+                        : Icons.circle_rounded,
+                    size: 15.h,
+                    color: Colors.white,
+                  ),
+                  Icon(
+                    displayedNumber[4] == "*"
+                        ? Icons.circle_outlined
+                        : Icons.circle_rounded,
+                    size: 15.h,
+                    color: Colors.white,
+                  ),
+                  Icon(
+                    displayedNumber[5] == "*"
+                        ? Icons.circle_outlined
+                        : Icons.circle_rounded,
+                    size: 15.h,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20.0),
             _buildDialpad(),
@@ -324,7 +370,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
 
             if (widget.status == 4 &&
                 displayedNumber == prefs.getString('pasword').toString()) {
-              await widget.onPressedDemandeValidationAction!();
+              await widget.onPressedAction!();
               Navigator.of(context).pop();
             } else if (widget.status == 4 &&
                 displayedNumber.substring(displayedNumber.length - 1) == "*") {
@@ -510,7 +556,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
 
           if (widget.status == 4 &&
               displayedNumber == prefs.getString('pasword').toString()) {
-            await widget.onPressedDemandeValidationAction!();
+            await widget.onPressedAction!();
             Navigator.of(context).pop();
           } else if (widget.status == 4 &&
               displayedNumber.substring(displayedNumber.length - 1) == "*") {

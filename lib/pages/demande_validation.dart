@@ -236,8 +236,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                                   builder: (context) =>
                                                       DialpadScreen(
                                                     status: 4,
-                                                    onPressedDemandeValidationAction:
-                                                        () async {
+                                                    onPressedAction: () async {
                                                       await updateDemandeStatus(
                                                           enAttenteList[index]
                                                               .requestIdentify!,
@@ -282,8 +281,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                                   builder: (context) =>
                                                       DialpadScreen(
                                                     status: 4,
-                                                    onPressedDemandeValidationAction:
-                                                        () async {
+                                                    onPressedAction: () async {
                                                       await updateDemandeStatus(
                                                           enAttenteList[index]
                                                               .requestIdentify!,
