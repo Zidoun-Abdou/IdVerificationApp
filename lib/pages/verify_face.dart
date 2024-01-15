@@ -217,6 +217,13 @@ class _VerifyFaceState extends State<VerifyFace> {
       print("Alfresco ok");
       print(await response.stream.bytesToString());
       controller.dispose();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Identification réussie avec succès !"),
+          duration: Duration(seconds: 3),
+          backgroundColor: color3,
+        ),
+      );
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
