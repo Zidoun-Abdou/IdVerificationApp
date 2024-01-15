@@ -92,6 +92,8 @@ class _LoginState extends State<Login> {
 
           if (prefs.getBool("isRememberMe") == true) {
             await prefs.setString("rememberUserID", _useridContr.text);
+          } else if (prefs.getBool("isRememberMe") == false) {
+            await prefs.remove("rememberUserID");
           }
           await prefs.setString('login', 'true');
 
@@ -308,14 +310,23 @@ class _LoginState extends State<Login> {
                                                         prefs.setBool(
                                                             "isRememberMe",
                                                             true);
+                                                        if (prefs.getString(
+                                                                    'rememberUserID') !=
+                                                                null &&
+                                                            prefs.getString(
+                                                                    'rememberUserID') !=
+                                                                "") {
+                                                          _useridContr.text = prefs
+                                                              .getString(
+                                                                  'rememberUserID')
+                                                              .toString();
+                                                        }
                                                       });
                                                     } else {
                                                       setState(() {
                                                         prefs.setBool(
                                                             "isRememberMe",
                                                             false);
-                                                        prefs.remove(
-                                                            "rememberUserID");
                                                       });
                                                     }
                                                   },

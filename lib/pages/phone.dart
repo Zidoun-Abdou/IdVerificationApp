@@ -334,7 +334,7 @@ class _PhoneState extends State<Phone> {
                     height: 10.h,
                   ),
                   Text(
-                    "* Première étape de vérification de l’identité",
+                    "* Première étape de vérification de votre identité",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.grey,
