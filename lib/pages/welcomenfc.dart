@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 import 'readnfc.dart';
 
 class WelcomeNfc extends StatefulWidget {
@@ -42,7 +43,7 @@ class _WelcomeNfcState extends State<WelcomeNfc> {
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator()
+              ? AdaptiveCircularProgressIndicator(color: color3)
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 import 'steps.dart';
 import 'dart:convert';
 
@@ -203,9 +204,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
             body: SafeArea(
               child: isLoading
                   ? Center(
-                      child: CircularProgressIndicator(
-                        color: color3,
-                      ),
+                      child: AdaptiveCircularProgressIndicator(color: color3),
                     )
                   : Form(
                       key: _formKey,

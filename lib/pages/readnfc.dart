@@ -22,6 +22,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:whowiyati/pages/verify_face.dart';
 
 import '../main.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 
 class MrtdData {
   EfCardAccess? cardAccess;
@@ -444,7 +445,7 @@ class _ReadNfcState extends State<ReadNfc> {
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator()
+              ? AdaptiveCircularProgressIndicator(color: color3)
               : Stack(
                   alignment: Alignment.center,
                   children: [

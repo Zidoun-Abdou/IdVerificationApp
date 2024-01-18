@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import '../const.dart';
 import '../main.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 import 'verify_face.dart';
 import 'welcomenfc.dart';
 
@@ -357,9 +358,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator(
-                  color: color3,
-                )
+              ? AdaptiveCircularProgressIndicator(color: color3)
               : Form(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

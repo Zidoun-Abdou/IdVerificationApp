@@ -11,6 +11,8 @@ import 'package:whowiyati/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
 
+import '../../widgets/adaptive_circular_progress_indicator.dart';
+
 class VeriferPhone extends StatefulWidget {
   final String companyId;
   final String companyUserId;
@@ -289,9 +291,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
           child: SafeArea(
             child: isLoading
                 ? Center(
-                    child: CircularProgressIndicator(
-                      color: color3,
-                    ),
+                    child: AdaptiveCircularProgressIndicator(color: color3),
                   )
                 : Form(
                     key: formKey,

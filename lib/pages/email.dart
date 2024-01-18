@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
 import 'package:http/http.dart' as http;
+import '../widgets/adaptive_circular_progress_indicator.dart';
 import 'confirm_mail.dart';
 import 'dart:convert';
 
@@ -93,9 +94,7 @@ class _EmailState extends State<Email> {
             body: SafeArea(
               child: isLoading
                   ? Center(
-                      child: CircularProgressIndicator(
-                        color: color3,
-                      ),
+                      child: AdaptiveCircularProgressIndicator(color: color3),
                     )
                   : Form(
                       key: _formKey,

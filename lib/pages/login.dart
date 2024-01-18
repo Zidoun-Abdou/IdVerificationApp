@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +11,8 @@ import 'package:whowiyati/main.dart';
 import 'dart:convert';
 
 import 'package:whowiyati/pages/welcome.dart';
+
+import '../widgets/adaptive_circular_progress_indicator.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -146,9 +151,7 @@ class _LoginState extends State<Login> {
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
             body: isLoading
-                ? Center(
-                    child: CircularProgressIndicator(color: color3),
-                  )
+                ? AdaptiveCircularProgressIndicator(color: color3)
                 : SafeArea(
                     child: Form(
                       key: _formKey,

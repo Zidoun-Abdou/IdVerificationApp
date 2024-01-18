@@ -9,6 +9,7 @@ import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_ip_address/get_ip_address.dart';
 import '../const.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 
 class Documents extends StatefulWidget {
   const Documents({super.key});
@@ -100,9 +101,7 @@ class _DocumentsState extends State<Documents> {
   Widget build(BuildContext context) {
     return _isloading
         ? Center(
-            child: CircularProgressIndicator(
-              color: color3,
-            ),
+            child: AdaptiveCircularProgressIndicator(color: color3),
           )
         : Scaffold(
             appBar: AppBar(

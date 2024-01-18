@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/verso.dart';
 
+import '../widgets/adaptive_circular_progress_indicator.dart';
+
 class Recto extends StatefulWidget {
   const Recto({super.key});
 
@@ -94,7 +96,7 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator()
+              ? AdaptiveCircularProgressIndicator(color: color3)
               : Form(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

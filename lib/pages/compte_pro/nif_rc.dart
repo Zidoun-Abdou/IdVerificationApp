@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
 import '../../const.dart';
+import '../../widgets/adaptive_circular_progress_indicator.dart';
 
 class NifRC extends StatefulWidget {
   final String companyId;
@@ -177,9 +178,7 @@ class _NifRCState extends State<NifRC> {
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator(
-                  color: color3,
-                )
+              ? AdaptiveCircularProgressIndicator(color: color3)
               : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

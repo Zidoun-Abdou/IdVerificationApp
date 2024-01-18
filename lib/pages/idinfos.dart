@@ -6,6 +6,8 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/welcome.dart';
 
+import '../widgets/adaptive_circular_progress_indicator.dart';
+
 class IdInfos extends StatefulWidget {
   const IdInfos({
     Key? key,
@@ -40,7 +42,7 @@ class _IdInfosState extends State<IdInfos> {
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator()
+              ? AdaptiveCircularProgressIndicator(color: color3)
               : Form(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -137,7 +139,7 @@ class _IdInfosState extends State<IdInfos> {
                                   child: Column(
                                     children: [
                                       Expanded(
-                                        flex: 3,
+                                        flex: 2,
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 20.w, vertical: 5.h),
@@ -444,8 +446,6 @@ class _IdInfosState extends State<IdInfos> {
                                       Expanded(
                                         flex: 1,
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w, vertical: 0.h),
                                           alignment: Alignment.centerRight,
                                           child: Column(
                                             mainAxisAlignment:
@@ -502,9 +502,9 @@ class _IdInfosState extends State<IdInfos> {
                         flex: 1,
                         child: Column(
                           children: [
-                            Padding(
+                            Container(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w, vertical: 30.h),
+                                  horizontal: 20.w, vertical: 20.h),
                               child: Text(
                                 "Bienvenue sur Whowiaty\nVotre application d’identification\net de signature électronique en ligne",
                                 textAlign: TextAlign.center,
@@ -550,7 +550,7 @@ class _IdInfosState extends State<IdInfos> {
                         ),
                       ),
                       SizedBox(
-                        height: 30.h,
+                        height: 10.h,
                       ),
                     ],
                   ),

@@ -13,6 +13,8 @@ import 'package:whowiyati/pages/compte_pro/verifer_phone.dart';
 import 'package:whowiyati/pages/compte_pro/verifer_registre.dart';
 import 'package:http/http.dart' as http;
 
+import '../../widgets/adaptive_circular_progress_indicator.dart';
+
 class StepsVerifyComptePro extends StatefulWidget {
   final String companyId;
   final String companyUserId;
@@ -538,9 +540,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: CircularProgressIndicator(
-                      color: color3,
-                    ),
+                    child: AdaptiveCircularProgressIndicator(color: color3),
                   );
                 }
 

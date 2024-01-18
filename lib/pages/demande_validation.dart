@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
 import '../models/demande_validation_model.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 import 'dealpad.dart';
 
 import '../const.dart';
@@ -325,9 +326,8 @@ class _DemandeValidationState extends State<DemandeValidation> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Center(
-                            child: CircularProgressIndicator(
-                              color: color3,
-                            ),
+                            child: AdaptiveCircularProgressIndicator(
+                                color: color3),
                           );
                         }
 
@@ -500,9 +500,8 @@ class _DemandeValidationState extends State<DemandeValidation> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Center(
-                            child: CircularProgressIndicator(
-                              color: color3,
-                            ),
+                            child: AdaptiveCircularProgressIndicator(
+                                color: color3),
                           );
                         }
 
@@ -665,9 +664,8 @@ class _DemandeValidationState extends State<DemandeValidation> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Center(
-                            child: CircularProgressIndicator(
-                              color: color3,
-                            ),
+                            child: AdaptiveCircularProgressIndicator(
+                                color: color3),
                           );
                         }
 

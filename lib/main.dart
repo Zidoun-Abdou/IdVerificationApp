@@ -89,11 +89,12 @@ class _MyAppState extends State<MyApp> {
                         status: 3,
                       ),
             theme: ThemeData(
-                bottomSheetTheme: BottomSheetThemeData(
-                    backgroundColor: Colors.black.withOpacity(0.5)),
-                fontFamily: "Rubik",
-                canvasColor: Colors.white,
-                accentColor: color3),
+              bottomSheetTheme: BottomSheetThemeData(
+                  backgroundColor: Colors.black.withOpacity(0.5)),
+              fontFamily: "Rubik",
+              canvasColor: Colors.white,
+              accentColor: color3,
+            ),
           );
         });
   }

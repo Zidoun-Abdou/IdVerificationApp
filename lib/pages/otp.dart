@@ -12,6 +12,8 @@ import 'package:whowiyati/pages/dealpad.dart';
 import 'package:whowiyati/pages/steps.dart';
 import 'package:whowiyati/pages/welcome.dart';
 
+import '../widgets/adaptive_circular_progress_indicator.dart';
+
 class Otp extends StatefulWidget {
   final String phone;
   final String id;
@@ -240,9 +242,7 @@ class _OtpState extends State<Otp> {
         backgroundColor: color1,
         body: _isLoading
             ? Center(
-                child: CircularProgressIndicator(
-                  color: color3,
-                ),
+                child: AdaptiveCircularProgressIndicator(color: color3),
               )
             : SafeArea(
                 child: Column(

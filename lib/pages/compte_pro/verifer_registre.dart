@@ -11,6 +11,7 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/compte_pro/recto_rc.dart';
 import 'package:http/http.dart' as http;
 import '../../main.dart';
+import '../../widgets/adaptive_circular_progress_indicator.dart';
 import 'steps_verify_compte_pro.dart';
 
 class VeriferRegitre extends StatefulWidget {
@@ -247,9 +248,7 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
           },
           child: _is_loading == true
               ? Center(
-                  child: CircularProgressIndicator(
-                    color: color3,
-                  ),
+                  child: AdaptiveCircularProgressIndicator(color: color3),
                 )
               : SafeArea(
                   child: Column(

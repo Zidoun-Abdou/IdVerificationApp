@@ -20,6 +20,8 @@ import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/welcome.dart';
 
+import '../widgets/adaptive_circular_progress_indicator.dart';
+
 class VerifyFace extends StatefulWidget {
   final String face;
   final String front;
@@ -346,7 +348,7 @@ class _VerifyFaceState extends State<VerifyFace> {
                                   borderRadius: BorderRadius.circular(15.r)),
                               child: _is_loading == true
                                   ? Center(
-                                      child: CircularProgressIndicator(
+                                      child: AdaptiveCircularProgressIndicator(
                                           color: color3),
                                     )
                                   : Image.asset(
