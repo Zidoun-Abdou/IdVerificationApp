@@ -71,22 +71,21 @@ class _OtpState extends State<Otp> {
 
     if (answerJson["success"] == true) {
       // ******** send Phone and UserId & Set Status 2
-      var headers = {
+      var headers2 = {
         'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
         'Content-Type': 'application/json'
       };
-      var request = http.Request(
+      var request2 = http.Request(
           'PUT', Uri.parse('https://api.icosnet.com/sign/wh/verify/sms/'));
-      request.body = json.encode(
+      request2.body = json.encode(
           {"phone": widget.phone, "user_id": answerJson["user_id"].toString()});
-      request.headers.addAll(headers);
+      request2.headers.addAll(headers2);
 
-      http.StreamedResponse response = await request.send();
+      http.StreamedResponse response2 = await request2.send();
+      String answer2 = await response2.stream.bytesToString();
+      var answerJs2 = jsonDecode(answer2);
 
-      String answer2 = await response.stream.bytesToString();
-      var answerJs = jsonDecode(answer2);
-
-      if (answerJs["status"] == true) {
+      if (answerJs2["status"] == true) {
         await prefs.setString('user_id', answerJson["user_id"].toString());
         await prefs.setString('phone', widget.phone);
         await prefs.setString('login', 'true');

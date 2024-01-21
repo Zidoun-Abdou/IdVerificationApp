@@ -161,7 +161,7 @@ class _LoginState extends State<Login> {
                       child: Column(
                         children: [
                           Expanded(
-                            flex: 2,
+                            flex: 1,
                             child: Center(
                               child: Image.asset(
                                 'assets/images/logo.png',
