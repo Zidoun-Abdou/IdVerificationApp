@@ -211,7 +211,7 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 201) {
       await prefs.setString("status", "5");
       await prefs.setString("deliv_date", creation_date);
       await prefs.setString("birth_date", birth_date);
