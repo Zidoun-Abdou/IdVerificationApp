@@ -57,6 +57,10 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
       },
       child: Scaffold(
         backgroundColor: color1,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
         body: SafeArea(
           child: FutureBuilder(
               future: getCompteDocs(),
@@ -91,7 +95,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                         Expanded(
                             flex: 4,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              padding: EdgeInsets.only(left: 20.w, right: 10.w),
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -434,7 +438,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 15.sp,
+                                    fontSize: 14.sp,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w500,
                                     height: 1.2.h,

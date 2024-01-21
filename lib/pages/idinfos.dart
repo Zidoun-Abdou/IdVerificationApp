@@ -39,6 +39,10 @@ class _IdInfosState extends State<IdInfos> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color1,
+      appBar: AppBar(
+        backgroundColor: color1,
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: Center(
           child: _is_loading == true

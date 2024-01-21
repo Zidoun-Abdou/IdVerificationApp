@@ -99,15 +99,16 @@ class _PhoneState extends State<Phone> {
       child: Scaffold(
         backgroundColor: color1,
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
         body: SafeArea(
           child: Form(
             key: _formstate,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
                   Center(
                     child: Image.asset(
                       'assets/images/logo.png',

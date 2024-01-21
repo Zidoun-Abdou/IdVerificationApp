@@ -240,6 +240,10 @@ class _OtpState extends State<Otp> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         backgroundColor: color1,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
         body: _isLoading
             ? Center(
                 child: AdaptiveCircularProgressIndicator(color: color3),

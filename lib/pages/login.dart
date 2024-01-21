@@ -150,6 +150,9 @@ class _LoginState extends State<Login> {
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+            ),
             body: isLoading
                 ? AdaptiveCircularProgressIndicator(color: color3)
                 : SafeArea(

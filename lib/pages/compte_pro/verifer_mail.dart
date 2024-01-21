@@ -355,7 +355,7 @@ class _VeriferMailState extends State<VeriferMail> {
                                             horizontal: 40.w),
                                         child: PinFieldAutoFill(
                                           codeLength: 4,
-                                          textInputAction: TextInputAction.none,
+                                          textInputAction: TextInputAction.done,
                                           decoration: UnderlineDecoration(
                                             lineHeight: 2,
                                             lineStrokeCap: StrokeCap.square,
