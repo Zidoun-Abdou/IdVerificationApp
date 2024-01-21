@@ -93,6 +93,10 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color1,
+      appBar: AppBar(
+        backgroundColor: color1,
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: Center(
           child: _is_loading == true
@@ -102,7 +106,7 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
-                        flex: 3,
+                        flex: 2,
                         child: ListView(
                           shrinkWrap: true,
                           children: [
@@ -111,7 +115,6 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
                                 'assets/images/logo.png',
                                 // Replace with the actual path to your image file
                                 fit: BoxFit.contain,
-                                height: 150.h,
                                 width: 150.w,
                               ),
                             ),
@@ -171,7 +174,7 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15.sp,
+                                  fontSize: 14.sp,
                                   fontFamily: 'Inter',
                                   height: 1.1.h,
                                   letterSpacing: 0.20.w,
@@ -180,7 +183,7 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(
-                                  horizontal: 20.w, vertical: 5.h),
+                                  horizontal: 20.w, vertical: 10.h),
                               child: ElevatedButton(
                                 onPressed: () async {
                                   takeRecto();
@@ -209,9 +212,6 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
                             )
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 30.h,
                       ),
                     ],
                   ),

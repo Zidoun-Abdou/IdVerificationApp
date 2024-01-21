@@ -201,6 +201,10 @@ class _ConfirmMailState extends State<ConfirmMail> {
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+            ),
             body: SafeArea(
               child: isLoading
                   ? Center(
