@@ -297,7 +297,7 @@ class _OtpState extends State<Otp> {
                             child: PinFieldAutoFill(
                               controller: _phoneContr,
                               codeLength: 4, autoFocus: true,
-                              textInputAction: TextInputAction.none,
+                              textInputAction: TextInputAction.done,
                               // cursor: Cursor(color: color3,enabled: true),
                               decoration: UnderlineDecoration(
                                 lineHeight: 2,
