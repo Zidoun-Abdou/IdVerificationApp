@@ -101,7 +101,8 @@ class _OtpState extends State<Otp> {
         print(response.reasonPhrase);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Utilisateur non trouvé"),
+            content: Text(
+                "Numéro de téléphone déjà utilisé, veuillez vous connecter"),
             duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
@@ -115,7 +116,7 @@ class _OtpState extends State<Otp> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
-              Text("Numéro ou téléphone déjà utilisé, veuillez vous connecter"),
+              Text("Numéro de téléphone déjà utilisé, veuillez vous connecter"),
           duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
