@@ -169,8 +169,9 @@ class _ReadNfcState extends State<ReadNfc> {
         _alertMessage = "Lecture de la Carte d'Identité en cours ...";
       });
 
-      //_nfc.setIosAlertMessage("Trying to read EF.CardAccess ...");
       final mrtdData = MrtdData();
+
+      _nfc.setIosAlertMessage("Trying to read EF.CardAccess ...");
 
       try {
         mrtdData.cardAccess = await passport.readEfCardAccess();
