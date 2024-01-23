@@ -135,7 +135,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                 itemCount: enAttenteList.length,
                                 itemBuilder: (context, index) => Container(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.23,
+                                      MediaQuery.of(context).size.height * 0.26,
                                   width: MediaQuery.of(context).size.width,
                                   padding: EdgeInsets.symmetric(
                                     vertical: 15.w,
