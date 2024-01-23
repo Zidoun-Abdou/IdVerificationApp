@@ -32,6 +32,10 @@ class _StepsState extends State<Steps> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color1,
+      appBar: AppBar(
+        backgroundColor: color1,
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: Form(
           child: Column(
@@ -51,7 +55,7 @@ class _StepsState extends State<Steps> {
               Expanded(
                   flex: 4,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    padding: EdgeInsets.only(left: 20.w, right: 10.w),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -86,7 +90,7 @@ class _StepsState extends State<Steps> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 20.w,
+                                  width: 30.w,
                                 ),
                                 Expanded(
                                   flex: 3,
@@ -101,7 +105,7 @@ class _StepsState extends State<Steps> {
                                                     2
                                                 ? Colors.white
                                                 : Colors.grey,
-                                            fontSize: 15.sp,
+                                            fontSize: 13.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
                                             letterSpacing: 0.20,
@@ -157,7 +161,7 @@ class _StepsState extends State<Steps> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 20.w,
+                                  width: 30.w,
                                 ),
                                 Expanded(
                                   flex: 3,
@@ -172,7 +176,7 @@ class _StepsState extends State<Steps> {
                                                     3
                                                 ? Colors.white
                                                 : Colors.grey,
-                                            fontSize: 15.sp,
+                                            fontSize: 13.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
                                             letterSpacing: 0.20,
@@ -228,7 +232,7 @@ class _StepsState extends State<Steps> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 20.w,
+                                  width: 30.w,
                                 ),
                                 Expanded(
                                   flex: 3,
@@ -244,7 +248,7 @@ class _StepsState extends State<Steps> {
                                                     5
                                                 ? Colors.white
                                                 : Colors.grey,
-                                            fontSize: 15.sp,
+                                            fontSize: 13.sp,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
                                             letterSpacing: 0.20,
@@ -285,7 +289,7 @@ class _StepsState extends State<Steps> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 15.sp,
+                          fontSize: 14.sp,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w500,
                           height: 1.2.h,

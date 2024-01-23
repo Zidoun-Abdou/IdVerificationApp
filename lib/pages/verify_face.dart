@@ -20,6 +20,8 @@ import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/welcome.dart';
 
+import '../widgets/adaptive_circular_progress_indicator.dart';
+
 class VerifyFace extends StatefulWidget {
   final String face;
   final String front;
@@ -209,7 +211,7 @@ class _VerifyFaceState extends State<VerifyFace> {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 201) {
       await prefs.setString("status", "5");
       await prefs.setString("deliv_date", creation_date);
       await prefs.setString("birth_date", birth_date);
@@ -252,6 +254,21 @@ class _VerifyFaceState extends State<VerifyFace> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text(
+          'My account',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Color(0xFFA2A2B5),
+            fontSize: 16.sp,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.20,
+          ),
+        ),
+        backgroundColor: Colors.black,
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -264,36 +281,13 @@ class _VerifyFaceState extends State<VerifyFace> {
                     height: MediaQuery.of(context).size.height / 2.3,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        color: color1,
+                        // color: color1,
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20.r),
                             bottomRight: Radius.circular(20.r))),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: 1,
-                            ),
-                            Text(
-                              'My account',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFFA2A2B5),
-                                fontSize: 16.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0.20,
-                              ),
-                            ),
-                            Icon(
-                              Icons.settings,
-                              color: Colors.grey,
-                            )
-                          ],
-                        ),
                         SizedBox(
                           height: 15.h,
                         ),
@@ -313,7 +307,7 @@ class _VerifyFaceState extends State<VerifyFace> {
                     ),
                   ),
                   Positioned(
-                    top: 130.h,
+                    top: 100.h,
                     right: 0,
                     left: 0,
                     child: _isShownFace
@@ -346,7 +340,7 @@ class _VerifyFaceState extends State<VerifyFace> {
                                   borderRadius: BorderRadius.circular(15.r)),
                               child: _is_loading == true
                                   ? Center(
-                                      child: CircularProgressIndicator(
+                                      child: AdaptiveCircularProgressIndicator(
                                           color: color3),
                                     )
                                   : Image.asset(

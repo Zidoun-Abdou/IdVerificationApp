@@ -38,6 +38,9 @@ class _ConditionsState extends State<Conditions> {
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+          ),
           body: SafeArea(
             child: Form(
               key: _formKey,

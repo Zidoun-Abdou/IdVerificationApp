@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/signature_logs.dart';
 import '../const.dart';
 import '../main.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 import 'dealpad.dart';
 import 'documents.dart';
 
@@ -340,9 +341,8 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
         body: SafeArea(
           child: _isloading
               ? Center(
-                  child: CircularProgressIndicator(
-                  color: color3,
-                ))
+                  child: AdaptiveCircularProgressIndicator(color: color3),
+                )
               : TabBarView(
                   children: [
                     Container(
@@ -599,9 +599,8 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Center(
-                                child: CircularProgressIndicator(
-                                  color: color3,
-                                ),
+                                child: AdaptiveCircularProgressIndicator(
+                                    color: color3),
                               );
                             }
 
@@ -714,9 +713,8 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Center(
-                                child: CircularProgressIndicator(
-                                  color: color3,
-                                ),
+                                child: AdaptiveCircularProgressIndicator(
+                                    color: color3),
                               );
                             }
 
@@ -822,9 +820,8 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Center(
-                                child: CircularProgressIndicator(
-                                  color: color3,
-                                ),
+                                child: AdaptiveCircularProgressIndicator(
+                                    color: color3),
                               );
                             }
 

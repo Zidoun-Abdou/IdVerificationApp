@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 import 'recto.dart';
 
 class IdCards extends StatefulWidget {
@@ -20,10 +21,14 @@ class _IdCardsState extends State<IdCards> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color1,
+      appBar: AppBar(
+        backgroundColor: color1,
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator()
+              ? AdaptiveCircularProgressIndicator(color: color3)
               : Form(
                   child: Column(
                     children: [
@@ -32,9 +37,6 @@ class _IdCardsState extends State<IdCards> {
                         child: ListView(
                           shrinkWrap: true,
                           children: [
-                            SizedBox(
-                              height: 30.h,
-                            ),
                             Center(
                               child: Image.asset(
                                 'assets/images/logo.png',

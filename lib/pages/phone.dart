@@ -10,6 +10,8 @@ import 'package:whowiyati/main.dart';
 import 'dart:convert';
 import 'package:whowiyati/pages/otp.dart';
 
+import '../widgets/adaptive_circular_progress_indicator.dart';
+
 class Phone extends StatefulWidget {
   const Phone({Key? key}) : super(key: key);
 
@@ -97,15 +99,16 @@ class _PhoneState extends State<Phone> {
       child: Scaffold(
         backgroundColor: color1,
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
         body: SafeArea(
           child: Form(
             key: _formstate,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
                   Center(
                     child: Image.asset(
                       'assets/images/logo.png',
@@ -353,9 +356,8 @@ class _PhoneState extends State<Phone> {
                     children: [
                       Visibility(
                         visible: isLoading,
-                        child: const CircularProgressIndicator(
-                          color: color3,
-                        ),
+                        child: const AdaptiveCircularProgressIndicator(
+                            color: color3),
                       ),
                       Container(
                         margin: EdgeInsets.symmetric(

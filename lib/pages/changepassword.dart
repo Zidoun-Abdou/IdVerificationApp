@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
+import '../widgets/adaptive_circular_progress_indicator.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       backgroundColor: color4,
       body: isLoading
           ? Center(
-              child: CircularProgressIndicator(color: color3),
+              child: AdaptiveCircularProgressIndicator(color: color3),
             )
           : SafeArea(
               child: Form(

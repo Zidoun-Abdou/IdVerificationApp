@@ -12,6 +12,9 @@ import 'package:whowiyati/pages/idcards.dart';
 import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:whowiyati/pages/dealpad.dart';
 import 'package:whowiyati/pages/demande_validation.dart';
+import 'package:whowiyati/pages/recto.dart';
+import 'package:whowiyati/pages/verify_face.dart';
+import 'package:whowiyati/pages/verso.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:whowiyati/pages/welcomenfc.dart';
@@ -89,11 +92,12 @@ class _MyAppState extends State<MyApp> {
                         status: 3,
                       ),
             theme: ThemeData(
-                bottomSheetTheme: BottomSheetThemeData(
-                    backgroundColor: Colors.black.withOpacity(0.5)),
-                fontFamily: "Rubik",
-                canvasColor: Colors.white,
-                accentColor: color3),
+              bottomSheetTheme: BottomSheetThemeData(
+                  backgroundColor: Colors.black.withOpacity(0.5)),
+              fontFamily: "Rubik",
+              canvasColor: Colors.white,
+              accentColor: color3,
+            ),
           );
         });
   }

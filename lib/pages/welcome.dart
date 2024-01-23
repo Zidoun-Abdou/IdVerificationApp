@@ -581,7 +581,7 @@ class _WelcomeState extends State<Welcome> {
                                                   height: MediaQuery.of(context)
                                                           .size
                                                           .height *
-                                                      0.62,
+                                                      0.6,
                                                   decoration: BoxDecoration(
                                                       border: Border(
                                                           top: BorderSide(

@@ -12,6 +12,8 @@ import 'package:whowiyati/pages/dealpad.dart';
 import 'package:whowiyati/pages/steps.dart';
 import 'package:whowiyati/pages/welcome.dart';
 
+import '../widgets/adaptive_circular_progress_indicator.dart';
+
 class Otp extends StatefulWidget {
   final String phone;
   final String id;
@@ -69,22 +71,21 @@ class _OtpState extends State<Otp> {
 
     if (answerJson["success"] == true) {
       // ******** send Phone and UserId & Set Status 2
-      var headers = {
+      var headers2 = {
         'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ==',
         'Content-Type': 'application/json'
       };
-      var request = http.Request(
+      var request2 = http.Request(
           'PUT', Uri.parse('https://api.icosnet.com/sign/wh/verify/sms/'));
-      request.body = json.encode(
+      request2.body = json.encode(
           {"phone": widget.phone, "user_id": answerJson["user_id"].toString()});
-      request.headers.addAll(headers);
+      request2.headers.addAll(headers2);
 
-      http.StreamedResponse response = await request.send();
+      http.StreamedResponse response2 = await request2.send();
+      String answer2 = await response2.stream.bytesToString();
+      var answerJs2 = jsonDecode(answer2);
 
-      String answer2 = await response.stream.bytesToString();
-      var answerJs = jsonDecode(answer2);
-
-      if (answerJs["status"] == true) {
+      if (answerJs2["status"] == true) {
         await prefs.setString('user_id', answerJson["user_id"].toString());
         await prefs.setString('phone', widget.phone);
         await prefs.setString('login', 'true');
@@ -100,7 +101,8 @@ class _OtpState extends State<Otp> {
         print(response.reasonPhrase);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Utilisateur non trouvé"),
+            content: Text(
+                "Numéro de téléphone déjà utilisé, veuillez vous connecter"),
             duration: Duration(seconds: 3),
             backgroundColor: colorRed,
           ),
@@ -114,7 +116,7 @@ class _OtpState extends State<Otp> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
-              Text("Numéro ou téléphone déjà utilisé, veuillez vous connecter"),
+              Text("Numéro de téléphone déjà utilisé, veuillez vous connecter"),
           duration: Duration(seconds: 3),
           backgroundColor: colorRed,
         ),
@@ -238,11 +240,13 @@ class _OtpState extends State<Otp> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         backgroundColor: color1,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
         body: _isLoading
             ? Center(
-                child: CircularProgressIndicator(
-                  color: color3,
-                ),
+                child: AdaptiveCircularProgressIndicator(color: color3),
               )
             : SafeArea(
                 child: Column(
@@ -297,7 +301,7 @@ class _OtpState extends State<Otp> {
                             child: PinFieldAutoFill(
                               controller: _phoneContr,
                               codeLength: 4, autoFocus: true,
-                              textInputAction: TextInputAction.none,
+                              textInputAction: TextInputAction.done,
                               // cursor: Cursor(color: color3,enabled: true),
                               decoration: UnderlineDecoration(
                                 lineHeight: 2,

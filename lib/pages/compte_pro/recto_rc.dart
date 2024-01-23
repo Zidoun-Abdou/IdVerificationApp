@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../const.dart';
+import '../../widgets/adaptive_circular_progress_indicator.dart';
 import 'verso_rc.dart';
 import '../verso.dart';
 
@@ -149,9 +150,8 @@ class _RectoRCState extends State<RectoRC> {
       body: SafeArea(
         child: _is_loading == true
             ? Center(
-                child: CircularProgressIndicator(
-                color: color3,
-              ))
+                child: AdaptiveCircularProgressIndicator(color: color3),
+              )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
