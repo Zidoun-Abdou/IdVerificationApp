@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/main.dart';
+import 'package:whowiyati/pages/forget_password.dart';
 import 'dart:convert';
 
 import 'package:whowiyati/pages/welcome.dart';
+
+import '../widgets/adaptive_circular_progress_indicator.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -145,17 +151,18 @@ class _LoginState extends State<Login> {
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+            ),
             body: isLoading
-                ? Center(
-                    child: CircularProgressIndicator(color: color3),
-                  )
+                ? AdaptiveCircularProgressIndicator(color: color3)
                 : SafeArea(
                     child: Form(
                       key: _formKey,
                       child: Column(
                         children: [
                           Expanded(
-                            flex: 2,
+                            flex: 1,
                             child: Center(
                               child: Image.asset(
                                 'assets/images/logo.png',
@@ -344,15 +351,23 @@ class _LoginState extends State<Login> {
                                               ),
                                             ],
                                           ),
-                                          // Text(
-                                          //   'Mot de passe oublié ?',
-                                          //   textAlign: TextAlign.center,
-                                          //   style: TextStyle(
-                                          //     color: Colors.white,
-                                          //     fontSize: 12.sp,
-                                          //     fontStyle: FontStyle.italic,
-                                          //     fontFamily: 'Poppins',
-                                          //     fontWeight: FontWeight.w300,
+                                          // GestureDetector(
+                                          //   onTap: () {
+                                          //     Navigator.of(context).push(
+                                          //         MaterialPageRoute(
+                                          //             builder: (context) =>
+                                          //                 ForgetPassword()));
+                                          //   },
+                                          //   child: Text(
+                                          //     'Mot de passe oublié ?',
+                                          //     textAlign: TextAlign.center,
+                                          //     style: TextStyle(
+                                          //       color: Colors.white,
+                                          //       fontSize: 12.sp,
+                                          //       fontStyle: FontStyle.italic,
+                                          //       fontFamily: 'Poppins',
+                                          //       fontWeight: FontWeight.w300,
+                                          //     ),
                                           //   ),
                                           // )
                                         ],

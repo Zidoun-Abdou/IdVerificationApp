@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
 
+import '../../widgets/adaptive_circular_progress_indicator.dart';
 import 'nif_rc.dart';
 
 class VeriferNif extends StatefulWidget {
@@ -248,9 +249,7 @@ class _VeriferNifState extends State<VeriferNif> {
           },
           child: _is_loading == true
               ? Center(
-                  child: CircularProgressIndicator(
-                    color: color3,
-                  ),
+                  child: AdaptiveCircularProgressIndicator(color: color3),
                 )
               : SafeArea(
                   child: Column(

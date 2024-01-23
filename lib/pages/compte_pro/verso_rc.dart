@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whowiyati/main.dart';
 import '../../const.dart';
+import '../../widgets/adaptive_circular_progress_indicator.dart';
 import 'steps_verify_compte_pro.dart';
 import 'nif_rc.dart';
 
@@ -182,9 +183,7 @@ class _VersoRCState extends State<VersoRC> {
       body: SafeArea(
         child: Center(
           child: _is_loading == true
-              ? CircularProgressIndicator(
-                  color: color3,
-                )
+              ? AdaptiveCircularProgressIndicator(color: color3)
               : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

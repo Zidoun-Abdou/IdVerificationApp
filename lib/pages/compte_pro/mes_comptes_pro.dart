@@ -9,6 +9,8 @@ import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
 import '../../const.dart';
 import 'package:http/http.dart' as http;
 
+import '../../widgets/adaptive_circular_progress_indicator.dart';
+
 class MesComptesPro extends StatefulWidget {
   const MesComptesPro({super.key});
 
@@ -175,9 +177,7 @@ class _MesComptesProState extends State<MesComptesPro> {
 
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
-                        child: CircularProgressIndicator(
-                          color: color3,
-                        ),
+                        child: AdaptiveCircularProgressIndicator(color: color3),
                       );
                     }
                     if (snapshot.hasError) {
