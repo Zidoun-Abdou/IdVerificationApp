@@ -26,6 +26,7 @@ class VeriferNif extends StatefulWidget {
 }
 
 class _VeriferNifState extends State<VeriferNif> {
+  // ******************* Logic *******************
   bool _is_loading = false;
   String _myToken = "";
 
@@ -169,6 +170,7 @@ class _VeriferNifState extends State<VeriferNif> {
     }
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

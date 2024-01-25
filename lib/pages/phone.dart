@@ -20,6 +20,7 @@ class Phone extends StatefulWidget {
 }
 
 class _PhoneState extends State<Phone> {
+  // ******************* Logic *******************
   bool obscureText = true;
 
   GlobalKey<FormState> _formstate = GlobalKey();
@@ -92,6 +93,7 @@ class _PhoneState extends State<Phone> {
     }
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

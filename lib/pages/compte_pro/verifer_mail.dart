@@ -22,6 +22,7 @@ class VeriferMail extends StatefulWidget {
 }
 
 class _VeriferMailState extends State<VeriferMail> {
+  // ******************* Logic *******************
   GlobalKey<FormState> _formMailKey = GlobalKey<FormState>();
   bool isLoading = false;
   String codeId = "";
@@ -190,6 +191,7 @@ class _VeriferMailState extends State<VeriferMail> {
     setState(() {});
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -17,6 +17,7 @@ class Recto extends StatefulWidget {
 }
 
 class _RectoState extends State<Recto> with TickerProviderStateMixin {
+  // ******************* Logic *******************
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -89,6 +90,8 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
   }
 
   bool? _is_loading = false;
+
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

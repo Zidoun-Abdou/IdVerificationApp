@@ -22,6 +22,7 @@ class ConfirmMail extends StatefulWidget {
 }
 
 class _ConfirmMailState extends State<ConfirmMail> {
+  // ******************* Logic *******************
   var _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   TextEditingController _mailContr = TextEditingController();
@@ -182,6 +183,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
     }
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

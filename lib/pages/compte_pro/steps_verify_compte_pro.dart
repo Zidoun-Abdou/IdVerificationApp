@@ -26,7 +26,7 @@ class StepsVerifyComptePro extends StatefulWidget {
 }
 
 class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
-  // AJOUTER VALEUR
+  // ******************* Logic *******************
 
   getCompteDocs() async {
     var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
@@ -45,6 +45,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
     return answerJson;
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

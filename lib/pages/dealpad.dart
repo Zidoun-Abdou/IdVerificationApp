@@ -28,6 +28,7 @@ class DialpadScreen extends StatefulWidget {
 }
 
 class _DialpadScreenState extends State<DialpadScreen> {
+  // ******************* Logic *******************
   List<String> dialpadNumbers = [
     '1',
     '2',
@@ -75,6 +76,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
     return answerJson["success"];
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

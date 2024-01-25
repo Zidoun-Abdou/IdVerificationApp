@@ -26,7 +26,7 @@ class RectoRC extends StatefulWidget {
 }
 
 class _RectoRCState extends State<RectoRC> {
-  // ============== Business Logic ==============
+  // ******************* Logic *******************
   bool _is_loading = false;
   String _myToken = "";
 
@@ -142,7 +142,7 @@ class _RectoRCState extends State<RectoRC> {
     setState(() {});
   }
 
-  // ============== User Interface ==============
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -16,6 +16,7 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
+  // ******************* Logic *******************
   var _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   TextEditingController _phoneContr = TextEditingController();
@@ -84,6 +85,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     super.dispose();
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

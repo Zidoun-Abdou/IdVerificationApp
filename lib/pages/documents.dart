@@ -19,6 +19,7 @@ class Documents extends StatefulWidget {
 }
 
 class _DocumentsState extends State<Documents> {
+  // ******************* Logic *******************
   String _document = "";
   List<String> _mailList = [prefs.getString("mail").toString()];
   final _formKey = GlobalKey<FormState>();
@@ -97,6 +98,7 @@ class _DocumentsState extends State<Documents> {
     }
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return _isloading

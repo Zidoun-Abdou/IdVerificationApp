@@ -33,6 +33,7 @@ class Otp extends StatefulWidget {
 }
 
 class _OtpState extends State<Otp> {
+  // ******************* Logic *******************
   TextEditingController _phoneContr = TextEditingController();
   bool is_filled = false;
   bool isPhoneNumberValid = false;
@@ -234,6 +235,7 @@ class _OtpState extends State<Otp> {
     }
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

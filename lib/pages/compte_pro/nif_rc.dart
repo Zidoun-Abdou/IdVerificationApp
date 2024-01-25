@@ -27,7 +27,8 @@ class NifRC extends StatefulWidget {
 }
 
 class _NifRCState extends State<NifRC> {
-  // ============== Business Logic ==============
+  // ******************* Logic *******************
+
   bool _is_loading = false;
   String _myToken = "";
 
@@ -170,7 +171,7 @@ class _NifRCState extends State<NifRC> {
     }
   }
 
-  // ============== User Interface ==============
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -21,6 +21,7 @@ class ListOfDocuments extends StatefulWidget {
 }
 
 class _ListOfDocumentsState extends State<ListOfDocuments> {
+  // ******************* Logic *******************
   bool _isloading = false;
 
   void seeFile(String id_file, bool is_signed) async {
@@ -292,6 +293,7 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
     super.initState();
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

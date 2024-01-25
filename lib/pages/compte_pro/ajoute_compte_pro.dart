@@ -19,6 +19,7 @@ class AjouteComptePro extends StatefulWidget {
 }
 
 class _AjouteCompteProState extends State<AjouteComptePro> {
+  // ******************* Logic *******************
   TextEditingController _raisonContr = TextEditingController();
   String _formeJurd = "";
   TextEditingController _rcContr = TextEditingController();
@@ -118,6 +119,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
     super.dispose();
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

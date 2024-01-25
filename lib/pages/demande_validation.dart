@@ -78,7 +78,7 @@ class _DemandeValidationState extends State<DemandeValidation> {
     super.initState();
   }
 
-  // ************** UI **************
+  // ************** Interface **************
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

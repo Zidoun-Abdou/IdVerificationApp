@@ -26,6 +26,7 @@ class Verso extends StatefulWidget {
 }
 
 class _VersoState extends State<Verso> with TickerProviderStateMixin {
+  // ******************* Logic *******************
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -351,6 +352,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

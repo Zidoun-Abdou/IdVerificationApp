@@ -24,10 +24,12 @@ class Steps extends StatefulWidget {
 }
 
 class _StepsState extends State<Steps> {
+  // ******************* Logic *******************
   bool isLoading = false;
   bool isPhoneNumberValid = false;
   String countryCode = "";
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

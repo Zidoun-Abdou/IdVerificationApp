@@ -23,6 +23,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  // ******************* Logic *******************
   bool obscureText = true;
 
   @override
@@ -132,6 +133,7 @@ class _LoginState extends State<Login> {
     setState(() {});
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

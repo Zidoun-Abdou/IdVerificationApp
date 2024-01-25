@@ -25,6 +25,8 @@ class VeriferRegitre extends StatefulWidget {
 }
 
 class _VeriferRegitreState extends State<VeriferRegitre> {
+  // ******************* Logic *******************
+
   bool _is_loading = false;
   String _myToken = "";
 
@@ -168,6 +170,7 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
     }
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

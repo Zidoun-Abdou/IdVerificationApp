@@ -19,6 +19,8 @@ class MesComptesPro extends StatefulWidget {
 }
 
 class _MesComptesProState extends State<MesComptesPro> {
+  // ******************* Logic *******************
+
   bool _isVerify = false;
 
   getCompanies() async {
@@ -43,6 +45,7 @@ class _MesComptesProState extends State<MesComptesPro> {
     super.initState();
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

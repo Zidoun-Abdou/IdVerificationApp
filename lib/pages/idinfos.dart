@@ -18,6 +18,7 @@ class IdInfos extends StatefulWidget {
 }
 
 class _IdInfosState extends State<IdInfos> {
+  // ******************* Logic *******************
   bool? _is_loading = false;
   GlobalKey<FlipCardState> _cardKey = GlobalKey<FlipCardState>();
   @override
@@ -35,6 +36,7 @@ class _IdInfosState extends State<IdInfos> {
     });
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

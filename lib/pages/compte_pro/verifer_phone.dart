@@ -24,6 +24,7 @@ class VeriferPhone extends StatefulWidget {
 }
 
 class _VeriferPhoneState extends State<VeriferPhone> {
+  // ******************* Logic *******************
   String countryCode = "";
   String otp = "";
   bool isPhoneNumberValid = false;
@@ -209,6 +210,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
     }
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

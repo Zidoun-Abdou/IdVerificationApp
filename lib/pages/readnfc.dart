@@ -80,6 +80,7 @@ class ReadNfc extends StatefulWidget {
 }
 
 class _ReadNfcState extends State<ReadNfc> {
+  // ******************* Logic *******************
   var _alertMessage = "";
   final _log = Logger("mrtdeg.app");
   var _isNfcAvailable = false;
@@ -439,6 +440,7 @@ class _ReadNfcState extends State<ReadNfc> {
     intent.launch();
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

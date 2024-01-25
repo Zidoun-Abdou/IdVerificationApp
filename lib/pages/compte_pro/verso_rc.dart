@@ -29,7 +29,7 @@ class VersoRC extends StatefulWidget {
 }
 
 class _VersoRCState extends State<VersoRC> {
-  // ============== Business Logic ==============
+  //// ******************* Logic *******************
   bool _is_loading = false;
   String _myToken = "";
 
@@ -175,7 +175,7 @@ class _VersoRCState extends State<VersoRC> {
     }
   }
 
-  // ============== User Interface ==============
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

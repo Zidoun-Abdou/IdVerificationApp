@@ -26,6 +26,7 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+  // ******************* Logic *******************
   bool isProfile = false;
   final GlobalKey<State<BottomSheet>> _bottomSheetKey = GlobalKey();
   double initialSize = 0.7;
@@ -112,6 +113,7 @@ class _WelcomeState extends State<Welcome> {
     super.initState();
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

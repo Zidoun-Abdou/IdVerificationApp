@@ -41,6 +41,7 @@ class VerifyFace extends StatefulWidget {
 }
 
 class _VerifyFaceState extends State<VerifyFace> {
+  // ******************* Logic *******************
   late CameraController controller;
   var isRecording = false;
   bool _isShownFace = false;
@@ -250,6 +251,7 @@ class _VerifyFaceState extends State<VerifyFace> {
     }
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return Scaffold(

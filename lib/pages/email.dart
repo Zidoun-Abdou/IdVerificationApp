@@ -18,6 +18,7 @@ class Email extends StatefulWidget {
 }
 
 class _EmailState extends State<Email> {
+  // ******************* Logic *******************
   var _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   TextEditingController _mailContr = TextEditingController();
@@ -72,6 +73,7 @@ class _EmailState extends State<Email> {
     setState(() {});
   }
 
+  // ******************* Interface *******************
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
