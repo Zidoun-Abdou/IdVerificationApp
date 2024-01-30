@@ -4,12 +4,26 @@ import 'dart:ui';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:whowiyati/pages/compte_pro/mes_comptes_pro.dart';
+import 'package:whowiyati/widgets/compte_pro/ajoute_compte_pro/custom_bottom_background.dart';
+import 'package:whowiyati/widgets/compte_pro/ajoute_compte_pro/custom_top_background.dart';
+import 'package:whowiyati/widgets/compte_pro/custom_alert_dialog.dart';
+import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import '../../const.dart';
 
 import 'package:http/http.dart' as http;
 
 import '../../main.dart';
+import '../../widgets/custom_bottom_text_hint.dart';
+import '../../widgets/custom_byicosnet_hint.dart';
+import '../../widgets/welcome/custom_bonjour_welcome.dart';
+import '../../widgets/welcome/custom_button_ajoute_compte_pro_welcome.dart';
+import '../../widgets/welcome/custom_cancel_button.dart';
+import '../../widgets/welcome/custom_identifient_welcome.dart';
+import '../../widgets/welcome/custom_notif_welcome.dart';
+import '../../widgets/welcome/custom_title_welcome.dart';
+import '../../widgets/welcome/custom_welcome_item.dart';
 
 class AjouteComptePro extends StatefulWidget {
   const AjouteComptePro({super.key});
@@ -132,70 +146,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(
-                    backgroundColor: color4.withOpacity(0.8),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.r))),
-                    content: Text(
-                      'Si vous quittez maintenant, les modifications\neffectuées ne seront pas enregistrées',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 12.sp),
-                    ),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 30.h, horizontal: 20.w),
-                    actionsAlignment: MainAxisAlignment.center,
-                    actionsPadding: EdgeInsets.only(top: 10.h, bottom: 20.h),
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.white,
-                          fixedSize: Size(100.w, 40.h),
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                        ),
-                        child: Text(
-                          'Annuler',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFD32424),
-                          foregroundColor: Colors.white,
-                          fixedSize: Size(100.w, 40.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          elevation: 20,
-                          shadowColor: Color(0xFFD32424),
-                        ),
-                        child: Text(
-                          'Quitter',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+                  return CustomAlertDialog();
                 });
             return false;
           },
@@ -205,371 +156,12 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                 Expanded(
                   child: Stack(
                     children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 20.h),
-                        height: MediaQuery.of(context).size.height / 2.3,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            // color: color1,
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20.r),
-                                bottomRight: Radius.circular(20.r))),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  height: 1,
-                                ),
-                                Text(
-                                  "Mon compte",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xFFA2A2B5),
-                                    fontSize: 16.sp,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.20,
-                                  ),
-                                ),
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.logout,
-                                      color: Colors.grey,
-                                    ))
-                              ],
-                            ),
-                            SizedBox(
-                              height: 15.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: 'Bonjour',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 40,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '.',
-                                        style: TextStyle(
-                                          color: Color(0xFF1FD15C),
-                                          fontSize: 40,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10.h,
-                                      left: 15.w,
-                                      bottom: 10.h,
-                                      right: 10.w),
-                                  alignment: Alignment.center,
-                                  decoration: ShapeDecoration(
-                                    color: Colors.white
-                                        .withOpacity(0.10000000149011612),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50.r),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.notifications_none_outlined,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                        child: CircleAvatar(
-                                          backgroundColor: color5,
-                                          child: Text("0"),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: Text(
-                                '${prefs.getString('name_latin').toString()[0].toUpperCase()}${prefs.getString('name_latin').toString().substring(1).toLowerCase()}',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 35.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 40.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 25.w, vertical: 10.h),
-                                  decoration: ShapeDecoration(
-                                    color: Colors.white
-                                        .withOpacity(0.10000000149011612),
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(width: 0.50),
-                                      borderRadius: BorderRadius.circular(50.r),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'Ajoutez Compte PRO',
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
+                      CustomTopBackground(),
                       Positioned(
                         top: 260.h,
                         right: 0,
                         left: 0,
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 10.h),
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            children: [
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2 -
-                                              10.h -
-                                              10.h,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w, vertical: 10.h),
-                                          decoration: BoxDecoration(
-                                              color: color4.withOpacity(0.8),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.r)),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  padding: EdgeInsets.all(8.sp),
-                                                  decoration: BoxDecoration(
-                                                      color: color5,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.r)),
-                                                  child: Icon(
-                                                    Icons
-                                                        .person_outline_outlined,
-                                                    color: Colors.white,
-                                                  )),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Text(
-                                                "Mon\nprofile",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    color: Colors.white),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2 -
-                                              10.h -
-                                              10.h,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w, vertical: 10.h),
-                                          decoration: BoxDecoration(
-                                              color: color4.withOpacity(0.8),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.r)),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  padding: EdgeInsets.all(8.sp),
-                                                  decoration: BoxDecoration(
-                                                      color: color5,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.r)),
-                                                  child: Icon(
-                                                    Icons.folder_open,
-                                                    color: Colors.white,
-                                                  )),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Text(
-                                                "Mes\ndocuments",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    color: Colors.white),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2 -
-                                              10.h -
-                                              10.h,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w, vertical: 10.h),
-                                          decoration: BoxDecoration(
-                                              color: color4.withOpacity(0.8),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.r)),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  padding: EdgeInsets.all(8.sp),
-                                                  decoration: BoxDecoration(
-                                                      color: color5,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.r)),
-                                                  child: Icon(
-                                                    Icons.phone,
-                                                    color: Colors.white,
-                                                  )),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Text(
-                                                "Mes\ncomptes Pro",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    color: Colors.white),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2 -
-                                              10.h -
-                                              10.h,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w, vertical: 10.h),
-                                          decoration: BoxDecoration(
-                                              color: color4.withOpacity(0.8),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.r)),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  padding: EdgeInsets.all(8.sp),
-                                                  decoration: BoxDecoration(
-                                                      color: color5,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.r)),
-                                                  child: Icon(
-                                                    Icons.edit_outlined,
-                                                    color: Colors.white,
-                                                  )),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Text(
-                                                "Signature\nélectronique",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    color: Colors.white),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 20.h),
-                                child: Text(
-                                  'Votre application d’indentification',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xFF666680),
-                                    fontSize: 12.h,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 0.20,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        child: CustomBottomBackground(),
                       ),
                       ClipRect(
                         child: BackdropFilter(
@@ -583,103 +175,15 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                               children: [
                                 Align(
                                   alignment: Alignment.topRight,
-                                  child: GestureDetector(
+                                  child: CustomCancelButton(
                                     onTap: () {
                                       showDialog(
                                         context: context,
                                         builder: (context) {
-                                          return AlertDialog(
-                                            backgroundColor:
-                                                color4.withOpacity(0.8),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(20.r))),
-                                            content: Text(
-                                              'Si vous quittez maintenant, les modifications\neffectuées ne seront pas enregistrées',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12.sp),
-                                            ),
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    vertical: 30.h,
-                                                    horizontal: 20.w),
-                                            actionsAlignment:
-                                                MainAxisAlignment.center,
-                                            actionsPadding: EdgeInsets.only(
-                                                top: 10.h, bottom: 20.h),
-                                            actions: [
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  foregroundColor: Colors.white,
-                                                  fixedSize: Size(100.w, 40.h),
-                                                  shape: RoundedRectangleBorder(
-                                                    side: BorderSide(
-                                                        color: Colors.white),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  'Annuler',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15.sp,
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Color(0xFFD32424),
-                                                  foregroundColor: Colors.white,
-                                                  fixedSize: Size(100.w, 40.h),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                  ),
-                                                  elevation: 20,
-                                                  shadowColor:
-                                                      Color(0xFFD32424),
-                                                ),
-                                                child: Text(
-                                                  'Quitter',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15.sp,
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
+                                          return CustomAlertDialog();
                                         },
                                       );
                                     },
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.white
-                                          .withOpacity(0.10000000149011612),
-                                      child: Icon(
-                                        Icons.clear,
-                                        color: Colors.white,
-                                        size: 17.sp,
-                                      ),
-                                    ),
                                   ),
                                 ),
                                 Positioned(
@@ -708,47 +212,14 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                             Container(
                                               margin: EdgeInsets.symmetric(
                                                   horizontal: 10.w),
-                                              child: TextFormField(
-                                                autofocus: false,
+                                              child: CustomTextFormField(
                                                 textInputAction:
                                                     TextInputAction.next,
                                                 controller: _raisonContr,
-                                                cursorColor: color3,
+                                                keyboardType:
+                                                    TextInputType.text,
                                                 style: TextStyle(
                                                     color: Colors.black),
-                                                decoration: InputDecoration(
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0xFF6D6D6D)),
-                                                  hintText: "Raison social",
-                                                  prefixIcon: Icon(
-                                                    Icons.description_outlined,
-                                                    color: Colors.black,
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                    borderSide: BorderSide(
-                                                      color: color3,
-                                                    ),
-                                                  ),
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(50
-                                                            .r), // Set border radius
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.red),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                  ),
-                                                ),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -756,6 +227,14 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                                   }
                                                   return null;
                                                 },
+                                                hintText: "Raison social",
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xFF6D6D6D)),
+                                                fillColor: Colors.white,
+                                                prefixIcon: Icon(
+                                                  Icons.description_outlined,
+                                                  color: Colors.black,
+                                                ),
                                               ),
                                             ),
                                             SizedBox(height: 10.h),
@@ -879,50 +358,14 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                             Container(
                                               margin: EdgeInsets.symmetric(
                                                   horizontal: 10.w),
-                                              child: TextFormField(
-                                                autofocus: false,
+                                              child: CustomTextFormField(
                                                 textInputAction:
                                                     TextInputAction.next,
                                                 controller: _rcContr,
-                                                cursorColor: color3,
                                                 keyboardType: TextInputType
                                                     .visiblePassword,
                                                 style: TextStyle(
                                                     color: Colors.black),
-                                                decoration: InputDecoration(
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0xFF6D6D6D)),
-                                                  hintText:
-                                                      "N° Registre de commerce",
-                                                  prefixIcon: Icon(
-                                                    Icons.description_outlined,
-                                                    color: Colors.black,
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                    borderSide: BorderSide(
-                                                      color: color3,
-                                                    ),
-                                                  ),
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(50
-                                                            .r), // Set border radius
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.red),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                  ),
-                                                ),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -930,56 +373,29 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                                   }
                                                   return null;
                                                 },
+                                                hintText:
+                                                    "N° Registre de commerce",
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xFF6D6D6D)),
+                                                fillColor: Colors.white,
+                                                prefixIcon: Icon(
+                                                  Icons.description_outlined,
+                                                  color: Colors.black,
+                                                ),
                                               ),
                                             ),
                                             SizedBox(height: 10.h),
                                             Container(
                                               margin: EdgeInsets.symmetric(
                                                   horizontal: 10.w),
-                                              child: TextFormField(
-                                                autofocus: false,
+                                              child: CustomTextFormField(
                                                 textInputAction:
                                                     TextInputAction.next,
+                                                controller: _nifContr,
                                                 keyboardType: TextInputType
                                                     .visiblePassword,
-                                                controller: _nifContr,
-                                                cursorColor: color3,
                                                 style: TextStyle(
                                                     color: Colors.black),
-                                                decoration: InputDecoration(
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0xFF6D6D6D)),
-                                                  hintText:
-                                                      "N° d'identification fiscale",
-                                                  prefixIcon: Icon(
-                                                    Icons.description_outlined,
-                                                    color: Colors.black,
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                    borderSide: BorderSide(
-                                                      color: color3,
-                                                    ),
-                                                  ),
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(50
-                                                            .r), // Set border radius
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.red),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                  ),
-                                                ),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -987,55 +403,44 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                                   }
                                                   return null;
                                                 },
+                                                hintText:
+                                                    "N° d'identification fiscale",
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xFF6D6D6D)),
+                                                fillColor: Colors.white,
+                                                prefixIcon: Icon(
+                                                  Icons.description_outlined,
+                                                  color: Colors.black,
+                                                ),
                                               ),
                                             ),
                                             SizedBox(height: 10.h),
                                             Container(
                                               margin: EdgeInsets.symmetric(
                                                   horizontal: 10.w),
-                                              child: TextFormField(
-                                                autofocus: false,
-                                                keyboardType: TextInputType
-                                                    .visiblePassword,
+                                              child: CustomTextFormField(
                                                 textInputAction:
                                                     TextInputAction.next,
                                                 controller: _nisContr,
-                                                cursorColor: color3,
+                                                keyboardType: TextInputType
+                                                    .visiblePassword,
                                                 style: TextStyle(
                                                     color: Colors.black),
-                                                decoration: InputDecoration(
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0xFF6D6D6D)),
-                                                  hintText:
-                                                      "N° d'identification statistique",
-                                                  prefixIcon: Icon(
-                                                    Icons.description_outlined,
-                                                    color: Colors.black,
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                    borderSide: BorderSide(
-                                                      color: color3,
-                                                    ),
-                                                  ),
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(50
-                                                            .r), // Set border radius
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.red),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                  ),
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return "N° d'identification statistique non valide";
+                                                  }
+                                                  return null;
+                                                },
+                                                hintText:
+                                                    "N° d'identification statistique",
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xFF6D6D6D)),
+                                                fillColor: Colors.white,
+                                                prefixIcon: Icon(
+                                                  Icons.description_outlined,
+                                                  color: Colors.black,
                                                 ),
                                               ),
                                             ),
@@ -1043,48 +448,14 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                             Container(
                                               margin: EdgeInsets.symmetric(
                                                   horizontal: 10.w),
-                                              child: TextFormField(
-                                                autofocus: false,
+                                              child: CustomTextFormField(
                                                 textInputAction:
                                                     TextInputAction.done,
                                                 controller: _adressContr,
-                                                cursorColor: color3,
+                                                keyboardType:
+                                                    TextInputType.text,
                                                 style: TextStyle(
                                                     color: Colors.black),
-                                                decoration: InputDecoration(
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0xFF6D6D6D)),
-                                                  hintText:
-                                                      "Adresse du siège de la société",
-                                                  prefixIcon: Icon(
-                                                    Icons.description_outlined,
-                                                    color: Colors.black,
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                    borderSide: BorderSide(
-                                                      color: color3,
-                                                    ),
-                                                  ),
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(50
-                                                            .r), // Set border radius
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.red),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                  ),
-                                                ),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -1092,6 +463,15 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                                   }
                                                   return null;
                                                 },
+                                                hintText:
+                                                    "Adresse du siège de la société",
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xFF6D6D6D)),
+                                                fillColor: Colors.white,
+                                                prefixIcon: Icon(
+                                                  Icons.description_outlined,
+                                                  color: Colors.black,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -1137,22 +517,7 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                 ),
                                 Align(
                                   alignment: Alignment.bottomCenter,
-                                  child: Text.rich(
-                                    TextSpan(children: [
-                                      TextSpan(
-                                          text: 'WHOWIATY',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w600)),
-                                      TextSpan(
-                                        text: ' by icosnet',
-                                        style: TextStyle(
-                                            fontFamily: 'Inter',
-                                            color: Colors.white),
-                                      ),
-                                    ]),
-                                  ),
+                                  child: CustomByIcosnetHint(),
                                 ),
                               ],
                             ),

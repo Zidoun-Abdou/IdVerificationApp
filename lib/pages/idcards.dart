@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_image_logo.dart';
 import 'recto.dart';
 
 class IdCards extends StatefulWidget {
@@ -37,15 +38,7 @@ class _IdCardsState extends State<IdCards> {
                         child: ListView(
                           shrinkWrap: true,
                           children: [
-                            Center(
-                              child: Image.asset(
-                                'assets/images/logo.png',
-                                // Replace with the actual path to your image file
-                                fit: BoxFit.contain,
-                                height: 150.h,
-                                width: 150.w,
-                              ),
-                            ),
+                            CustomImageLogo(width: 150),
                             SizedBox(
                               height: 10.h,
                             ),

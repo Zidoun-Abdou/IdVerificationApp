@@ -4,6 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../const.dart';
 
+import '../widgets/conditions/custom_checkbox_conditions.dart';
+import '../widgets/conditions/custom_title_conditions.dart';
+import '../widgets/custom_image_background.dart';
+import '../widgets/custom_image_logo.dart';
 import 'phone.dart';
 
 class Conditions extends StatefulWidget {
@@ -17,25 +21,12 @@ class _ConditionsState extends State<Conditions> {
   bool _isChecked = false;
   var _formKey = GlobalKey<FormState>();
   bool isLoading = false;
-  TextEditingController _mailContr = TextEditingController();
-  TextEditingController _passwordContr = TextEditingController();
-
-  //functions
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        ColorFiltered(
-          colorFilter:
-              ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
-          child: Image.asset(
-            "assets/images/background.png",
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-          ),
-        ),
+        CustomImageBackground(),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -49,94 +40,28 @@ class _ConditionsState extends State<Conditions> {
                 children: [
                   Expanded(
                     flex: 3,
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        // Replace with the actual path to your image file
-                        fit: BoxFit.contain,
-                        height: 100.h,
-                        width:
-                            200.w, // Adjust the image's fit property as needed
-                      ),
-                    ),
+                    child: CustomImageLogo(width: 200),
                   ),
                   Expanded(
                       flex: 3,
                       child: ListView(
                         children: [
-                          Center(
-                            child: Text(
-                              "En continuant, vous confirmez avoir lu et \n approuvé les conditions générales et la \n politique de respect de la vie privée de \n Whowiaty",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.3,
-                                  letterSpacing: 0.20),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                          CustomTitleConditions(),
                           SizedBox(
                             height: 30.h,
                           ),
                           Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 20.w, vertical: 8.h),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Theme(
-                                    data: Theme.of(context).copyWith(
-                                      unselectedWidgetColor: Colors.grey,
-                                    ),
-                                    child: Checkbox(
-                                      checkColor: color3,
-                                      activeColor: Colors.black,
-                                      value: _isChecked,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isChecked = !_isChecked;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      await launchUrl(Uri.parse(
-                                          "https://icosnet.com.dz/conditions-dutilisation-application-whowiyati/"));
-                                    },
-                                    child: Text.rich(
-                                      TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'Condition générales',
-                                            style: TextStyle(
-                                              color: Color(0xFF23D27E),
-                                              fontSize: 13.sp,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: 0.20,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                ' et politique \nde respect de la vie privée.',
-                                            style: TextStyle(
-                                              color: Color(0xFF666680),
-                                              fontSize: 13.sp,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: 0.20,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )
-                                ],
-                              )),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 20.w, vertical: 8.h),
+                            child: CustomCheckboxConditions(
+                              value: _isChecked,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isChecked = !_isChecked;
+                                });
+                              },
+                            ),
+                          ),
                           SizedBox(
                             height: 20.h,
                           ),

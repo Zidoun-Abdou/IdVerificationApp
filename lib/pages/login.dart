@@ -12,8 +12,13 @@ import 'package:whowiyati/pages/forget_password.dart';
 import 'dart:convert';
 
 import 'package:whowiyati/pages/welcome.dart';
+import 'package:whowiyati/widgets/custom_text_form_field.dart';
+import 'package:whowiyati/widgets/login/custom_souvenir_moi_checkbox.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_bottom_text_hint.dart';
+import '../widgets/custom_image_background.dart';
+import '../widgets/custom_image_logo.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -140,16 +145,7 @@ class _LoginState extends State<Login> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Stack(
         children: [
-          ColorFiltered(
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.6), BlendMode.darken),
-            child: Image.asset(
-              "assets/images/background.png",
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
-            ),
-          ),
+          CustomImageBackground(),
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
@@ -165,16 +161,7 @@ class _LoginState extends State<Login> {
                         children: [
                           Expanded(
                             flex: 1,
-                            child: Center(
-                              child: Image.asset(
-                                'assets/images/logo.png',
-                                // Replace with the actual path to your image file
-                                fit: BoxFit.contain,
-                                height: 100.h,
-                                width: 200
-                                    .w, // Adjust the image's fit property as needed
-                              ),
-                            ),
+                            child: CustomImageLogo(width: 200),
                           ),
                           Expanded(
                               flex: 2,
@@ -183,108 +170,76 @@ class _LoginState extends State<Login> {
                                   Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 20.w, vertical: 8.h),
-                                    child: TextFormField(
-                                      validator: (val) {
-                                        return validInput(val!, 6, 25);
-                                      },
-                                      cursorColor: color3,
-                                      keyboardType: TextInputType.number,
+                                    child: CustomTextFormField(
+                                      textInputAction: TextInputAction.next,
                                       controller: _useridContr,
+                                      keyboardType: TextInputType.number,
                                       style: TextStyle(color: Colors.white),
+                                      validator: (val) {
+                                        return validInput(val!, 8, 8);
+                                      },
                                       maxLength: 8,
-                                      // Set text color to white
-                                      decoration: InputDecoration(
-                                        hintText: "Identifiant d'utilisateur",
-                                        hintStyle:
-                                            TextStyle(color: Colors.white),
-                                        counterStyle: TextStyle(
-                                          color: Colors
-                                              .white, // Change this color to your desired color
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                          borderSide: BorderSide(
-                                            color: color3,
-                                          ),
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.black,
-                                        // Set background color to black
-                                        prefixIcon: Icon(
-                                          Icons.person_outline,
-                                          color: Colors.white,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              50.r), // Set border radius
-                                        ),
+                                      hintText: "Identifiant d'utilisateur",
+                                      hintStyle: TextStyle(color: Colors.white),
+                                      fillColor: Colors.black,
+                                      prefixIcon: Icon(
+                                        Icons.person_outline,
+                                        color: Colors.white,
+                                      ),
+                                      counterStyle: TextStyle(
+                                        color: Colors
+                                            .white, // Change this color to your desired color
                                       ),
                                     ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 20.w, vertical: 8.h),
-                                    child: TextFormField(
+                                    child: CustomTextFormField(
+                                      textInputAction: TextInputAction.done,
                                       controller: _passwordContr,
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
+                                      style: TextStyle(color: Colors.white),
+                                      obscureText: obscureText,
                                       validator: (val) {
                                         return validInput(val!, 8, 50);
                                       },
-                                      cursorColor: color3,
-                                      obscureText: obscureText,
-                                      style: TextStyle(color: Colors.white),
-                                      // Set text color to white
-                                      decoration: InputDecoration(
-                                        hintText: "Mot de passe",
-                                        hintStyle:
-                                            TextStyle(color: Colors.white),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                          borderSide: BorderSide(
-                                            color: color3,
-                                          ),
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.black,
-                                        // Set background color to black
-                                        prefixIcon: Icon(
-                                          Icons.lock_outline,
-                                          color: Colors.white,
-                                        ),
-                                        suffixIcon: obscureText
-                                            ? IconButton(
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                splashColor: Colors.transparent,
-                                                onPressed: () {
-                                                  setState(() {
-                                                    obscureText = false;
-                                                  });
-                                                },
-                                                icon: const Icon(
-                                                  Icons.visibility_off,
-                                                  color: Colors.white,
-                                                ))
-                                            : IconButton(
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                splashColor: Colors.transparent,
-                                                onPressed: () {
-                                                  setState(() {
-                                                    obscureText = true;
-                                                  });
-                                                },
-                                                icon: const Icon(
-                                                  Icons.visibility,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              50.r), // Set border radius
-                                        ),
+                                      hintText: "Mot de passe",
+                                      hintStyle: TextStyle(color: Colors.white),
+                                      fillColor: Colors.black,
+                                      prefixIcon: Icon(
+                                        Icons.lock_outline,
+                                        color: Colors.white,
                                       ),
+                                      suffixIcon: obscureText
+                                          ? IconButton(
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              splashColor: Colors.transparent,
+                                              onPressed: () {
+                                                setState(() {
+                                                  obscureText = false;
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                Icons.visibility_off,
+                                                color: Colors.white,
+                                              ))
+                                          : IconButton(
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              splashColor: Colors.transparent,
+                                              onPressed: () {
+                                                setState(() {
+                                                  obscureText = true;
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                Icons.visibility,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                     ),
                                   ),
                                   Container(
@@ -294,65 +249,34 @@ class _LoginState extends State<Login> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
-                                            children: [
-                                              Theme(
-                                                data:
-                                                    Theme.of(context).copyWith(
-                                                  unselectedWidgetColor:
-                                                      Colors.grey,
-                                                ),
-                                                child: Checkbox(
-                                                  checkColor: color3,
-                                                  activeColor: Colors.black,
-                                                  value: prefs.getBool(
-                                                          "isRememberMe") ??
-                                                      false,
-                                                  onChanged: (value) {
-                                                    if (prefs.getBool(
-                                                                "isRememberMe") ==
-                                                            false ||
-                                                        prefs.getBool(
-                                                                "isRememberMe") ==
-                                                            null) {
-                                                      setState(() {
-                                                        prefs.setBool(
-                                                            "isRememberMe",
-                                                            true);
-                                                        if (prefs.getString(
-                                                                    'rememberUserID') !=
-                                                                null &&
-                                                            prefs.getString(
-                                                                    'rememberUserID') !=
-                                                                "") {
-                                                          _useridContr.text = prefs
-                                                              .getString(
-                                                                  'rememberUserID')
-                                                              .toString();
-                                                        }
-                                                      });
-                                                    } else {
-                                                      setState(() {
-                                                        prefs.setBool(
-                                                            "isRememberMe",
-                                                            false);
-                                                      });
-                                                    }
-                                                  },
-                                                ),
-                                              ),
-                                              Text(
-                                                'Se souvenir de moi',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12.sp,
-                                                  fontFamily: 'Poppins',
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                          CustomSouvenirMoiCheckbox(
+                                              onChanged: (value) {
+                                            if (prefs.getBool("isRememberMe") ==
+                                                    false ||
+                                                prefs.getBool("isRememberMe") ==
+                                                    null) {
+                                              setState(() {
+                                                prefs.setBool(
+                                                    "isRememberMe", true);
+                                                if (prefs.getString(
+                                                            'rememberUserID') !=
+                                                        null &&
+                                                    prefs.getString(
+                                                            'rememberUserID') !=
+                                                        "") {
+                                                  _useridContr.text = prefs
+                                                      .getString(
+                                                          'rememberUserID')
+                                                      .toString();
+                                                }
+                                              });
+                                            } else {
+                                              setState(() {
+                                                prefs.setBool(
+                                                    "isRememberMe", false);
+                                              });
+                                            }
+                                          }),
                                           // GestureDetector(
                                           //   onTap: () {
                                           //     Navigator.of(context).push(
@@ -422,18 +346,7 @@ class _LoginState extends State<Login> {
                                   SizedBox(
                                     height: 10.h,
                                   ),
-                                  Text(
-                                    "Votre application d'identification",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.grey[700],
-                                      fontSize: 12.5.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.1.h,
-                                      letterSpacing: 0.20.w,
-                                    ),
-                                  ),
+                                  CustomBottomTextHint(),
                                 ],
                               ))
                         ],

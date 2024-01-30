@@ -12,6 +12,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
+import '../../widgets/compte_pro/custom_text_pro.dart';
+import '../../widgets/custom_image_logo.dart';
 import 'verso_rc.dart';
 import '../verso.dart';
 
@@ -157,14 +159,7 @@ class _RectoRCState extends State<RectoRC> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        fit: BoxFit.contain,
-                        height: 100.h,
-                        width: 200.w,
-                      ),
-                    ),
+                    child: CustomImageLogo(width: 200),
                   ),
                   Expanded(
                     flex: 3,
@@ -174,16 +169,11 @@ class _RectoRCState extends State<RectoRC> {
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 30.w, vertical: 10.h),
-                          child: Text(
-                            "Mettez votre interface registre commerce en position horizontale et votre téléphone en position verticale pour prendre une photo",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                              fontFamily: 'Inter',
-                              height: 1.1.h,
-                              letterSpacing: 0.20.w,
-                            ),
+                          child: CustomTextPro(
+                            data:
+                                "Mettez votre interface registre commerce en position horizontale et votre téléphone en position verticale pour prendre une photo",
+                            color: Colors.white,
+                            size: 14,
                           ),
                         ),
                         Container(

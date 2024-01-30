@@ -11,6 +11,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:whowiyati/pages/welcome.dart';
 import 'package:http/http.dart' as http;
 
+import '../widgets/custom_image_logo.dart';
+
 class DialpadScreen extends StatefulWidget {
   final int status;
   final String password;
@@ -85,13 +87,7 @@ class _DialpadScreenState extends State<DialpadScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/logo.png',
-              // Replace with the actual path to your image file
-              fit: BoxFit.contain,
-              height: 100.h,
-              width: 200.w, // Adjust the image's fit property as needed
-            ),
+            CustomImageLogo(width: 200),
             SizedBox(
               height: 20.h,
             ),

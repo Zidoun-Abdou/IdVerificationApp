@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_bottom_text_hint.dart';
+import '../widgets/custom_image_logo.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -50,16 +52,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   children: [
                     Expanded(
                       flex: 2,
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          // Replace with the actual path to your image file
-                          fit: BoxFit.contain,
-                          height: 100.h,
-                          width: 200
-                              .w, // Adjust the image's fit property as needed
-                        ),
-                      ),
+                      child: CustomImageLogo(width: 200),
                     ),
                     Expanded(
                         flex: 2,
@@ -196,18 +189,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             SizedBox(
                               height: 10.h,
                             ),
-                            Text(
-                              "Votre application d'identification",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 12.5.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                height: 1.1.h,
-                                letterSpacing: 0.20.w,
-                              ),
-                            ),
+                            CustomBottomTextHint(),
                           ],
                         ))
                   ],

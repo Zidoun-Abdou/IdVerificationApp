@@ -8,12 +8,16 @@ import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/compte_pro/mes_comptes_pro.dart';
 import 'package:whowiyati/pages/compte_pro/verifer_mail.dart';
 import 'package:whowiyati/pages/compte_pro/verifer_nif.dart';
-import 'package:whowiyati/pages/compte_pro/verifer_nis.dart';
 import 'package:whowiyati/pages/compte_pro/verifer_phone.dart';
 import 'package:whowiyati/pages/compte_pro/verifer_registre.dart';
 import 'package:http/http.dart' as http;
+import 'package:whowiyati/widgets/compte_pro/custom_text_pro.dart';
+import 'package:whowiyati/widgets/compte_pro/steps_verify_compte_pro/custom_align.dart';
+import 'package:whowiyati/widgets/compte_pro/steps_verify_compte_pro/custom_etape.dart';
 
 import '../../widgets/adaptive_circular_progress_indicator.dart';
+import '../../widgets/custom_byicosnet_hint.dart';
+import '../../widgets/custom_image_logo.dart';
 
 class StepsVerifyComptePro extends StatefulWidget {
   final String companyId;
@@ -82,16 +86,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Center(
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              // Replace with the actual path to your image file
-                              fit: BoxFit.contain,
-                              height: 100.h,
-                              width: 200
-                                  .w, // Adjust the image's fit property as needed
-                            ),
-                          ),
+                          child: CustomImageLogo(width: 200),
                         ),
                         Expanded(
                             flex: 4,
@@ -101,326 +96,46 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    'Etapes vérifiées',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Color(0xFF00FF84),
-                                      fontSize: 14.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                  CustomTextPro(
+                                    data: 'Etapes vérifiées',
+                                    color: Color(0xFF00FF84),
+                                    size: 14,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                   Column(
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: CircleAvatar(
-                                              backgroundColor: int.parse(prefs
-                                                          .getString("step")
-                                                          .toString()) >=
-                                                      1
-                                                  ? color3
-                                                  : Colors.grey,
-                                              child: Icon(
-                                                Icons.check_rounded,
-                                                color: Colors.white,
-                                                size: 30.sp,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 30.w,
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        'Confirmation par téléphone\n',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              1
-                                                          ? Colors.white
-                                                          : Colors.grey,
-                                                      fontSize: 13.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: 'Vérifié',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              1
-                                                          ? color3
-                                                          : Colors.grey,
-                                                      fontSize: 12.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                                      CustomEtape(
+                                        condition: int.parse(prefs
+                                                .getString("step")
+                                                .toString()) >=
+                                            1,
+                                        title: 'Confirmation par téléphone\n',
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Container(
-                                          height: 30.h,
-                                          padding: EdgeInsets.only(left: 30.w),
-                                          child: VerticalDivider(
-                                            color: Colors.grey,
-                                            thickness: 1,
-                                          ),
-                                        ),
+                                      CustomAlign(),
+                                      CustomEtape(
+                                        condition: int.parse(prefs
+                                                .getString("step")
+                                                .toString()) >=
+                                            2,
+                                        title: 'Confirmation par mail\n',
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: CircleAvatar(
-                                              backgroundColor: int.parse(prefs
-                                                          .getString("step")
-                                                          .toString()) >=
-                                                      2
-                                                  ? color3
-                                                  : Colors.grey,
-                                              child: Icon(
-                                                Icons.check_rounded,
-                                                color: Colors.white,
-                                                size: 30.sp,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 30.w,
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        'Confirmation par mail\n',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              2
-                                                          ? Colors.white
-                                                          : Colors.grey,
-                                                      fontSize: 13.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: 'Vérifié',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              2
-                                                          ? color3
-                                                          : Colors.grey,
-                                                      fontSize: 12.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      CustomAlign(),
+                                      CustomEtape(
+                                        condition: int.parse(prefs
+                                                .getString("step")
+                                                .toString()) >=
+                                            3,
+                                        title:
+                                            'Vérification du registre commerce\n',
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Container(
-                                          height: 30.h,
-                                          padding: EdgeInsets.only(left: 30.w),
-                                          child: VerticalDivider(
-                                            color: Colors.grey,
-                                            thickness: 1,
-                                          ),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: CircleAvatar(
-                                              backgroundColor: int.parse(prefs
-                                                          .getString("step")
-                                                          .toString()) >=
-                                                      3
-                                                  ? color3
-                                                  : Colors.grey,
-                                              child: Icon(
-                                                Icons.check_rounded,
-                                                color: Colors.white,
-                                                size: 30.sp,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 30.w,
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        'Vérification du registre commerce\n',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              3
-                                                          ? Colors.white
-                                                          : Colors.grey,
-                                                      fontSize: 13.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: 'Vérifié',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              3
-                                                          ? color3
-                                                          : Colors.grey,
-                                                      fontSize: 12.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Container(
-                                          height: 30.h,
-                                          padding: EdgeInsets.only(left: 30.w),
-                                          child: VerticalDivider(
-                                            color: Colors.grey,
-                                            thickness: 1,
-                                          ),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: CircleAvatar(
-                                              backgroundColor: int.parse(prefs
-                                                          .getString("step")
-                                                          .toString()) >=
-                                                      4
-                                                  ? color3
-                                                  : Colors.grey,
-                                              child: Icon(
-                                                Icons.check_rounded,
-                                                color: Colors.white,
-                                                size: 30.sp,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 30.w,
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        'Vérification de la carte fiscale\n',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              4
-                                                          ? Colors.white
-                                                          : Colors.grey,
-                                                      fontSize: 13.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: 'Vérifié',
-                                                    style: TextStyle(
-                                                      color: int.parse(prefs
-                                                                  .getString(
-                                                                      "step")
-                                                                  .toString()) >=
-                                                              4
-                                                          ? color3
-                                                          : Colors.grey,
-                                                      fontSize: 12.sp,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 0.20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                                      CustomAlign(),
+                                      CustomEtape(
+                                        condition: int.parse(prefs
+                                                .getString("step")
+                                                .toString()) >=
+                                            4,
+                                        title:
+                                            'Vérification de la carte fiscale\n',
                                       ),
                                     ],
                                   ),
@@ -432,19 +147,12 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text(
-                                  prefs.getString("step") == "4"
+                                CustomTextPro(
+                                  data: prefs.getString("step") == "4"
                                       ? 'Félicitations, vous avez terminé toutes les\nétapes. Vos documents sont maintenant\nen cours de vérification'
                                       : "Suivez ces étapes pour compléter la validation\n de votre compte pro",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.2.h,
-                                    letterSpacing: 0.20.w,
-                                  ),
+                                  color: Colors.white,
+                                  size: 14,
                                 ),
                                 Container(
                                   margin: EdgeInsets.symmetric(
@@ -520,22 +228,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                     ),
                                   ),
                                 ),
-                                Text.rich(
-                                  TextSpan(children: [
-                                    TextSpan(
-                                        text: 'WHOWIATY',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w600)),
-                                    TextSpan(
-                                      text: ' by icosnet',
-                                      style: TextStyle(
-                                          fontFamily: 'Inter',
-                                          color: Colors.white),
-                                    ),
-                                  ]),
-                                ),
+                                CustomByIcosnetHint(),
                               ],
                             )),
                       ],
@@ -553,16 +246,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          // Replace with the actual path to your image file
-                          fit: BoxFit.contain,
-                          height: 100.h,
-                          width: 200
-                              .w, // Adjust the image's fit property as needed
-                        ),
-                      ),
+                      child: CustomImageLogo(width: 200),
                     ),
                     Expanded(
                         flex: 4,
@@ -571,305 +255,45 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(
-                                'Etapes vérifiées',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFF00FF84),
-                                  fontSize: 14.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              CustomTextPro(
+                                data: 'Etapes vérifiées',
+                                color: Color(0xFF00FF84),
+                                size: 14,
+                                fontWeight: FontWeight.w600,
                               ),
                               Column(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: CircleAvatar(
-                                          backgroundColor: int.parse(prefs
-                                                      .getString("step")
-                                                      .toString()) >=
-                                                  1
-                                              ? color3
-                                              : Colors.grey,
-                                          child: Icon(
-                                            Icons.check_rounded,
-                                            color: Colors.white,
-                                            size: 30.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text:
-                                                    'Confirmation par téléphone\n',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          1
-                                                      ? Colors.white
-                                                      : Colors.grey,
-                                                  fontSize: 13.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: 'Vérifié',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          1
-                                                      ? color3
-                                                      : Colors.grey,
-                                                  fontSize: 12.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                  CustomEtape(
+                                    condition: int.parse(prefs
+                                            .getString("step")
+                                            .toString()) >=
+                                        1,
+                                    title: 'Confirmation par téléphone\n',
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      height: 30.h,
-                                      padding: EdgeInsets.only(left: 30.w),
-                                      child: VerticalDivider(
-                                        color: Colors.grey,
-                                        thickness: 1,
-                                      ),
-                                    ),
+                                  CustomAlign(),
+                                  CustomEtape(
+                                    condition: int.parse(prefs
+                                            .getString("step")
+                                            .toString()) >=
+                                        2,
+                                    title: 'Confirmation par mail\n',
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: CircleAvatar(
-                                          backgroundColor: int.parse(prefs
-                                                      .getString("step")
-                                                      .toString()) >=
-                                                  2
-                                              ? color3
-                                              : Colors.grey,
-                                          child: Icon(
-                                            Icons.check_rounded,
-                                            color: Colors.white,
-                                            size: 30.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: 'Confirmation par mail\n',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          2
-                                                      ? Colors.white
-                                                      : Colors.grey,
-                                                  fontSize: 13.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: 'Vérifié',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          2
-                                                      ? color3
-                                                      : Colors.grey,
-                                                  fontSize: 12.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  CustomAlign(),
+                                  CustomEtape(
+                                    condition: int.parse(prefs
+                                            .getString("step")
+                                            .toString()) >=
+                                        3,
+                                    title:
+                                        'Vérification du registre commerce\n',
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      height: 30.h,
-                                      padding: EdgeInsets.only(left: 30.w),
-                                      child: VerticalDivider(
-                                        color: Colors.grey,
-                                        thickness: 1,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: CircleAvatar(
-                                          backgroundColor: int.parse(prefs
-                                                      .getString("step")
-                                                      .toString()) >=
-                                                  3
-                                              ? color3
-                                              : Colors.grey,
-                                          child: Icon(
-                                            Icons.check_rounded,
-                                            color: Colors.white,
-                                            size: 30.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text:
-                                                    'Vérification du registre commerce\n',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          3
-                                                      ? Colors.white
-                                                      : Colors.grey,
-                                                  fontSize: 13.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: 'Vérifié',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          3
-                                                      ? color3
-                                                      : Colors.grey,
-                                                  fontSize: 12.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      height: 30.h,
-                                      padding: EdgeInsets.only(left: 30.w),
-                                      child: VerticalDivider(
-                                        color: Colors.grey,
-                                        thickness: 1,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: CircleAvatar(
-                                          backgroundColor: int.parse(prefs
-                                                      .getString("step")
-                                                      .toString()) >=
-                                                  4
-                                              ? color3
-                                              : Colors.grey,
-                                          child: Icon(
-                                            Icons.check_rounded,
-                                            color: Colors.white,
-                                            size: 30.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text:
-                                                    'Vérification de la carte fiscale\n',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          4
-                                                      ? Colors.white
-                                                      : Colors.grey,
-                                                  fontSize: 13.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: 'Vérifié',
-                                                style: TextStyle(
-                                                  color: int.parse(prefs
-                                                              .getString("step")
-                                                              .toString()) >=
-                                                          4
-                                                      ? color3
-                                                      : Colors.grey,
-                                                  fontSize: 12.sp,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 0.20,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                  CustomAlign(),
+                                  CustomEtape(
+                                    condition: int.parse(prefs
+                                            .getString("step")
+                                            .toString()) >=
+                                        4,
+                                    title: 'Vérification de la carte fiscale\n',
                                   ),
                                 ],
                               ),
@@ -881,19 +305,12 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text(
-                              prefs.getString("step") == "4"
-                                  ? 'Félicitations, vous avez terminé toutes les étapes.\nVos documents sont maintenant en cours de vérification'
+                            CustomTextPro(
+                              data: prefs.getString("step") == "4"
+                                  ? 'Félicitations, vous avez terminé toutes les\nétapes. Vos documents sont maintenant\nen cours de vérification'
                                   : "Suivez ces étapes pour compléter la validation\n de votre compte pro",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                height: 1.2.h,
-                                letterSpacing: 0.20.w,
-                              ),
+                              color: Colors.white,
+                              size: 14,
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(
@@ -964,21 +381,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                 ),
                               ),
                             ),
-                            Text.rich(
-                              TextSpan(children: [
-                                TextSpan(
-                                    text: 'WHOWIATY',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w600)),
-                                TextSpan(
-                                  text: ' by icosnet',
-                                  style: TextStyle(
-                                      fontFamily: 'Inter', color: Colors.white),
-                                ),
-                              ]),
-                            ),
+                            CustomByIcosnetHint(),
                           ],
                         )),
                   ],

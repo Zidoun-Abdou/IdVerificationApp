@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:whowiyati/main.dart';
 import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
+import '../../widgets/custom_image_logo.dart';
 import 'steps_verify_compte_pro.dart';
 import 'nif_rc.dart';
 
@@ -189,14 +190,7 @@ class _VersoRCState extends State<VersoRC> {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          fit: BoxFit.contain,
-                          height: 100.h,
-                          width: 200.w,
-                        ),
-                      ),
+                      child: CustomImageLogo(width: 200),
                     ),
                     Expanded(
                       flex: 3,

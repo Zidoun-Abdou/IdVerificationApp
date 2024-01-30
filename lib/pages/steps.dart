@@ -6,6 +6,7 @@ import '../const.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
+import '../widgets/custom_image_logo.dart';
 import 'email.dart';
 import 'idcards.dart';
 import 'idinfos.dart';
@@ -44,15 +45,7 @@ class _StepsState extends State<Steps> {
             children: [
               Expanded(
                 flex: 1,
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    // Replace with the actual path to your image file
-                    fit: BoxFit.contain,
-                    height: 100.h,
-                    width: 200.w, // Adjust the image's fit property as needed
-                  ),
-                ),
+                child: CustomImageLogo(width: 200),
               ),
               Expanded(
                   flex: 4,

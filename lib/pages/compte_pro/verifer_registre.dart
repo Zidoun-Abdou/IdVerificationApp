@@ -12,6 +12,9 @@ import 'package:whowiyati/pages/compte_pro/recto_rc.dart';
 import 'package:http/http.dart' as http;
 import '../../main.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
+import '../../widgets/compte_pro/custom_alert_dialog.dart';
+import '../../widgets/custom_byicosnet_hint.dart';
+import '../../widgets/custom_image_logo.dart';
 import 'steps_verify_compte_pro.dart';
 
 class VeriferRegitre extends StatefulWidget {
@@ -182,70 +185,7 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(
-                    backgroundColor: color4.withOpacity(0.8),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.r))),
-                    content: Text(
-                      'Si vous quittez maintenant, les modifications\neffectuées ne seront pas enregistrées',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 12.sp),
-                    ),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 30.h, horizontal: 20.w),
-                    actionsAlignment: MainAxisAlignment.center,
-                    actionsPadding: EdgeInsets.only(top: 10.h, bottom: 20.h),
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.white,
-                          fixedSize: Size(100.w, 40.h),
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                        ),
-                        child: Text(
-                          'Annuler',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFD32424),
-                          foregroundColor: Colors.white,
-                          fixedSize: Size(100.w, 40.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          elevation: 20,
-                          shadowColor: Color(0xFFD32424),
-                        ),
-                        child: Text(
-                          'Quitter',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+                  return CustomAlertDialog();
                 });
             return false;
           },
@@ -258,16 +198,7 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
                     children: [
                       Expanded(
                         flex: 1,
-                        child: Center(
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                            // Replace with the actual path to your image file
-                            fit: BoxFit.contain,
-                            height: 100.h,
-                            width: 200
-                                .w, // Adjust the image's fit property as needed
-                          ),
-                        ),
+                        child: CustomImageLogo(width: 200),
                       ),
                       Expanded(
                         flex: 4,
@@ -359,22 +290,7 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text.rich(
-                                TextSpan(children: [
-                                  TextSpan(
-                                      text: 'WHOWIATY',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w600)),
-                                  TextSpan(
-                                    text: ' by icosnet',
-                                    style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        color: Colors.white),
-                                  ),
-                                ]),
-                              ),
+                              CustomByIcosnetHint(),
                               SizedBox(height: 20.h),
                             ],
                           )),

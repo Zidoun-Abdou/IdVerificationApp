@@ -9,6 +9,9 @@ import 'package:whowiyati/pages/register.dart';
 import 'package:whowiyati/pages/steps.dart';
 import 'package:whowiyati/pages/welcome.dart';
 
+import '../widgets/custom_bottom_text_welcome_hint.dart';
+import '../widgets/custom_image_logo.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -27,32 +30,13 @@ class _HomePageState extends State<HomePage> {
           children: [
             Expanded(
               flex: 2,
-              child: Center(
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  // Replace with the actual path to your image file
-                  fit: BoxFit.contain,
-                  height: 100.h,
-                  width: 200.w, // Adjust the image's fit property as needed
-                ),
-              ),
+              child: CustomImageLogo(width: 200),
             ),
             Expanded(
                 flex: 1,
                 child: Column(
                   children: [
-                    Text(
-                      "Bienvenue sur Whowiaty\nVotre application d’identification\net de signature électronique en ligne",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.5.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.1.h,
-                        letterSpacing: 0.20.w,
-                      ),
-                    ),
+                    CustomBottomTextWelcomeHint(),
                     SizedBox(
                       height: 20.h,
                     ),

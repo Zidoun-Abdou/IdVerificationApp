@@ -1,10 +1,14 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import '../const.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_bottom_text_hint.dart';
+import '../widgets/custom_image_background.dart';
+import '../widgets/custom_image_logo.dart';
 import 'steps.dart';
 import 'dart:convert';
 
@@ -190,16 +194,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Stack(
         children: [
-          ColorFiltered(
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.6), BlendMode.darken),
-            child: Image.asset(
-              "assets/images/background.png",
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
-            ),
-          ),
+          CustomImageBackground(),
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
@@ -218,15 +213,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
                         children: [
                           Expanded(
                             flex: 2,
-                            child: Center(
-                              child: Image.asset(
-                                'assets/images/logo.png',
-                                // Replace with the actual path to your image file
-                                fit: BoxFit.contain,
-                                height: 100.h,
-                                width: 200.w,
-                              ),
-                            ),
+                            child: CustomImageLogo(width: 200),
                           ),
                           Expanded(
                               flex: 2,
@@ -235,38 +222,20 @@ class _ConfirmMailState extends State<ConfirmMail> {
                                   Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 20.w, vertical: 8.h),
-                                    child: TextFormField(
-                                      // autofocus: true,
+                                    child: CustomTextFormField(
+                                      textInputAction: TextInputAction.done,
+                                      controller: _mailContr,
                                       keyboardType: TextInputType.number,
+                                      style: TextStyle(color: Colors.white),
                                       validator: (val) {
                                         return validInput(val!, 2, 8);
                                       },
-                                      cursorColor: color3,
-                                      controller: _mailContr,
-                                      style: TextStyle(color: Colors.white),
-                                      // Set text color to white
-                                      decoration: InputDecoration(
-                                        hintText: "Code",
-                                        hintStyle:
-                                            TextStyle(color: Colors.white),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                          borderSide: BorderSide(
-                                            color: color3,
-                                          ),
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.black,
-                                        // Set background color to black
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color: Colors.white,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              50.r), // Set border radius
-                                        ),
+                                      hintText: "Code",
+                                      hintStyle: TextStyle(color: Colors.white),
+                                      fillColor: Colors.black,
+                                      prefixIcon: Icon(
+                                        Icons.lock,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -309,18 +278,7 @@ class _ConfirmMailState extends State<ConfirmMail> {
                                   SizedBox(
                                     height: 50.h,
                                   ),
-                                  Text(
-                                    "Votre application d'identification",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.grey[700],
-                                      fontSize: 12.5.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.1.h,
-                                      letterSpacing: 0.20.w,
-                                    ),
-                                  ),
+                                  CustomBottomTextHint(),
                                 ],
                               ))
                         ],

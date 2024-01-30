@@ -7,6 +7,7 @@ import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/welcome.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_bottom_text_welcome_hint.dart';
 
 class IdInfos extends StatefulWidget {
   const IdInfos({
@@ -478,18 +479,7 @@ class _IdInfosState extends State<IdInfos> {
                           Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 20.h),
-                            child: Text(
-                              "Bienvenue sur Whowiaty\nVotre application d’identification\net de signature électronique en ligne",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.5.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                height: 1.1.h,
-                                letterSpacing: 0.20.w,
-                              ),
-                            ),
+                            child: CustomBottomTextWelcomeHint(),
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),

@@ -8,6 +8,7 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/verso.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_image_logo.dart';
 
 class Recto extends StatefulWidget {
   const Recto({super.key});
@@ -113,14 +114,7 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
                         child: ListView(
                           shrinkWrap: true,
                           children: [
-                            Center(
-                              child: Image.asset(
-                                'assets/images/logo.png',
-                                // Replace with the actual path to your image file
-                                fit: BoxFit.contain,
-                                width: 150.w,
-                              ),
-                            ),
+                            CustomImageLogo(width: 150),
                             AnimatedBuilder(
                               animation: _animation,
                               builder: (context, child) {

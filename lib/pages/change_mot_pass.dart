@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../const.dart';
+import '../widgets/custom_bottom_text_hint.dart';
 
 class ChangeMotPass extends StatefulWidget {
   ChangeMotPass({Key? key}) : super(key: key);
@@ -104,8 +105,7 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                             style: TextStyle(color: Colors.white),
                             // Set text color to white
                             decoration: InputDecoration(
-                              hintText: 
-                                    "Password",
+                              hintText: "Password",
                               hintStyle: TextStyle(color: Colors.white),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50.r),
@@ -173,8 +173,7 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                             style: TextStyle(color: Colors.white),
                             // Set text color to white
                             decoration: InputDecoration(
-                               hintText: 
-                                    "Password",
+                              hintText: "Password",
                               hintStyle: TextStyle(color: Colors.white),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50.r),
@@ -242,8 +241,7 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                             style: TextStyle(color: Colors.white),
                             // Set text color to white
                             decoration: InputDecoration(
-                               hintText: 
-                                    "Password",
+                              hintText: "Password",
                               hintStyle: TextStyle(color: Colors.white),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50.r),
@@ -261,7 +259,8 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                               suffixIcon: GestureDetector(
                                 onTap: () {
                                   hidePassword = !hidePassword;
-                                  hidePasswordConfirmer = !hidePasswordConfirmer;
+                                  hidePasswordConfirmer =
+                                      !hidePasswordConfirmer;
                                   setState(() {});
                                 },
                                 child: Icon(Icons.remove_red_eye_outlined,
@@ -287,9 +286,9 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                                _textFontSize = 15.sp;
-                                step = 2;
-                              });
+                            _textFontSize = 15.sp;
+                            step = 2;
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: color3,
@@ -303,7 +302,8 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                           shadowColor: color3,
                           // Set the shadow color
                         ),
-                        child: Text("Enregistrer",
+                        child: Text(
+                          "Enregistrer",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 13.sp,
@@ -314,22 +314,11 @@ class _ChangeMotPassState extends State<ChangeMotPass> {
                       ),
                     ),
                   ),
-                // Spacer(flex: 2,),
-                Container(
-                  margin: EdgeInsets.only(top: step == 1 ? 70.h : 240.h),
-                  
-                  child: Text(
-                    'Votre application d’indentification',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFF666680),
-                      fontSize: 12.h,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.20,
-                    ),
+                  // Spacer(flex: 2,),
+                  Container(
+                    margin: EdgeInsets.only(top: step == 1 ? 70.h : 240.h),
+                    child: CustomBottomTextHint(),
                   ),
-                ),
                 ],
               ),
             ),

@@ -9,8 +9,12 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/main.dart';
 import 'dart:convert';
 import 'package:whowiyati/pages/otp.dart';
+import 'package:whowiyati/widgets/custom_intl_phone_field.dart';
+import 'package:whowiyati/widgets/custom_text_form_field.dart';
+import 'package:whowiyati/widgets/phone/custom_text_phone.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_image_logo.dart';
 
 class Phone extends StatefulWidget {
   const Phone({Key? key}) : super(key: key);
@@ -111,83 +115,33 @@ class _PhoneState extends State<Phone> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Center(
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      // Replace with the actual path to your image file
-                      fit: BoxFit.contain,
-                      height: 100.h,
-                      width: 200.w,
-                    ),
-                  ),
+                  CustomImageLogo(width: 200),
                   SizedBox(
                     height: 20.h,
                   ),
-                  Text(
-                    "Saisissez votre numéro de téléphone",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+                  CustomTextPhone(
+                      data: "Saisissez votre numéro de téléphone",
                       color: Colors.white,
-                      fontSize: 15.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      height: 1.1.h,
-                      letterSpacing: 0.20.w,
-                    ),
-                  ),
+                      size: 15),
                   SizedBox(
                     height: 20.h,
                   ),
-                  Text(
-                    "Nous utilisons votre numéro de téléphone pour vous\n identifier.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+                  CustomTextPhone(
+                      data:
+                          "Nous utilisons votre numéro de téléphone pour vous\n identifier.",
                       color: Colors.grey,
-                      fontSize: 12.5.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      height: 1.1.h,
-                      letterSpacing: 0.20.w,
-                    ),
-                  ),
+                      size: 12.5),
                   SizedBox(
                     height: 20.h,
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: IntlPhoneField(
-                      autofocus: true,
-                      textInputAction: TextInputAction.next,
+                    child: CustomIntlPhoneField(
                       controller: _phoneContr,
-                      cursorColor: color3,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        hintText: "Numero de téléphone",
-                        hintStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.r),
-                          borderSide: BorderSide(
-                            color: color3,
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Colors.black,
-                        // Set background color to black
-                        prefixIcon: Icon(
-                          Icons.lock_outline,
-                          color: Colors.white,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(50.r), // Set border radius
-                        ),
-                      ),
-                      initialCountryCode: 'DZ',
+                      autofocus: true,
+                      styleColor: Colors.white,
+                      fillColor: Colors.black,
                       dropdownTextStyle: TextStyle(color: Colors.white),
-                      dropdownIcon: Icon(
-                        Icons.arrow_drop_down,
-                        color: color3,
-                      ),
                       onChanged: (phone) {
                         if (phone.completeNumber.length == 13) {
                           setState(() {
@@ -206,150 +160,105 @@ class _PhoneState extends State<Phone> {
                   Container(
                     margin:
                         EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                    child: TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
+                    child: CustomTextFormField(
                       textInputAction: TextInputAction.next,
+                      controller: _passwordContr,
+                      keyboardType: TextInputType.visiblePassword,
+                      style: TextStyle(color: Colors.white),
                       validator: (val) {
                         return validInput(val!, 8, 50);
                       },
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      cursorColor: color3,
-                      controller: _passwordContr,
                       obscureText: obscureText,
-                      style: TextStyle(color: Colors.white),
-                      // Set text color to white
-                      decoration: InputDecoration(
-                        hintText: "Mot de passe",
-                        hintStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.r),
-                          borderSide: BorderSide(
-                            color: color3,
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Colors.black,
-                        // Set background color to black
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: color3,
-                        ),
-                        suffixIcon: obscureText
-                            ? IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onPressed: () {
-                                  setState(() {
-                                    obscureText = false;
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.visibility_off,
-                                  color: Colors.white,
-                                ))
-                            : IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onPressed: () {
-                                  setState(() {
-                                    obscureText = true;
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.visibility,
-                                  color: Colors.white,
-                                ),
-                              ),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(50.r), // Set border radius
-                        ),
+                      hintText: "Mot de passe",
+                      hintStyle: TextStyle(color: Colors.white),
+                      fillColor: Colors.black,
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: color3,
                       ),
+                      suffixIcon: obscureText
+                          ? IconButton(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onPressed: () {
+                                setState(() {
+                                  obscureText = false;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.visibility_off,
+                                color: Colors.white,
+                              ))
+                          : IconButton(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onPressed: () {
+                                setState(() {
+                                  obscureText = true;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.visibility,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ),
                   Container(
                     margin:
                         EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                    child: TextFormField(
+                    child: CustomTextFormField(
+                      textInputAction: TextInputAction.done,
+                      controller: _confpasswordContr,
                       keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.next,
+                      style: TextStyle(color: Colors.white),
                       validator: (val) {
                         return validInput(val!, 8, 50);
                       },
-                      cursorColor: color3,
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      controller: _confpasswordContr,
-                      style: TextStyle(color: Colors.white),
                       obscureText: obscureText,
-                      // Set text color to white
-                      decoration: InputDecoration(
-                        hintText: "Confirmer le mot de passe",
-                        hintStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.r),
-                          borderSide: BorderSide(
-                            color: color3,
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Colors.black,
-                        // Set background color to black
-                        prefixIcon: Icon(
-                          Icons.lock_outline,
-                          color: color3,
-                        ),
-                        suffixIcon: obscureText
-                            ? IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onPressed: () {
-                                  setState(() {
-                                    obscureText = false;
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.visibility_off,
-                                  color: Colors.white,
-                                ))
-                            : IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onPressed: () {
-                                  setState(() {
-                                    obscureText = true;
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.visibility,
-                                  color: Colors.white,
-                                ),
-                              ),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(50.r), // Set border radius
-                        ),
+                      hintText: "Confirmer le mot de passe",
+                      hintStyle: TextStyle(color: Colors.white),
+                      fillColor: Colors.black,
+                      prefixIcon: Icon(
+                        Icons.lock_outline,
+                        color: color3,
                       ),
+                      suffixIcon: obscureText
+                          ? IconButton(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onPressed: () {
+                                setState(() {
+                                  obscureText = false;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.visibility_off,
+                                color: Colors.white,
+                              ))
+                          : IconButton(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onPressed: () {
+                                setState(() {
+                                  obscureText = true;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.visibility,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  Text(
-                    "* Première étape de vérification de votre identité",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+                  CustomTextPhone(
+                      data:
+                          "* Première étape de vérification de votre identité",
                       color: Colors.grey,
-                      fontSize: 12.5.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      height: 1.1.h,
-                      letterSpacing: 0.20.w,
-                    ),
-                  ),
+                      size: 12.5),
                   SizedBox(
                     height: 30.h,
                   ),

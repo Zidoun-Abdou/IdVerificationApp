@@ -4,6 +4,9 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/conditions.dart';
 import 'package:whowiyati/pages/login.dart';
 
+import '../widgets/custom_image_background.dart';
+import '../widgets/custom_image_logo.dart';
+
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -16,16 +19,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        ColorFiltered(
-          colorFilter:
-              ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
-          child: Image.asset(
-            "assets/images/background.png",
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-          ),
-        ),
+        CustomImageBackground(),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
@@ -34,15 +28,7 @@ class _RegisterState extends State<Register> {
               children: [
                 Expanded(
                   flex: 2,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      // Replace with the actual path to your image file
-                      fit: BoxFit.contain,
-                      height: 100.h,
-                      width: 200.w, // Adjust the image's fit property as needed
-                    ),
-                  ),
+                  child: CustomImageLogo(width: 200),
                 ),
                 Expanded(
                     flex: 1,

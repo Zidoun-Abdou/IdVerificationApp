@@ -8,8 +8,10 @@ import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/listofdocuments.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_ip_address/get_ip_address.dart';
+import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import '../const.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_image_logo.dart';
 
 class Documents extends StatefulWidget {
   const Documents({super.key});
@@ -126,19 +128,14 @@ class _DocumentsState extends State<Documents> {
               // ],
             ),
             backgroundColor: Colors.transparent,
+            resizeToAvoidBottomInset: false,
             body: SafeArea(
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/images/logo.png',
-                      // Replace with the actual path to your image file
-                      fit: BoxFit.contain,
-                      height: 100.h,
-                      width: 200.w,
-                    ),
+                    CustomImageLogo(width: 200),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -182,55 +179,26 @@ class _DocumentsState extends State<Documents> {
                                                     SizedBox(
                                                       height: 30,
                                                     ),
-                                                    TextFormField(
+                                                    CustomTextFormField(
+                                                      textInputAction:
+                                                          TextInputAction.done,
+                                                      controller: _mailContr,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .emailAddress,
+                                                      style: TextStyle(
+                                                          color: Colors.black),
                                                       validator: (val) {
                                                         return validInput(
                                                             val!, 6, 50);
                                                       },
-                                                      cursorColor: color3,
-                                                      keyboardType:
-                                                          TextInputType
-                                                              .emailAddress,
-                                                      controller: _mailContr,
-                                                      style: TextStyle(
+                                                      hintText: "Email",
+                                                      hintStyle: TextStyle(
                                                           color: Colors.black),
-                                                      // Set text color to white
-                                                      decoration:
-                                                          InputDecoration(
-                                                        label: Text(
-                                                          "Email",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                        counterStyle: TextStyle(
-                                                          color: Colors
-                                                              .black, // Change this color to your desired color
-                                                        ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      50.r),
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: color3,
-                                                          ),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor: Colors.white,
-                                                        // Set background color to black
-                                                        prefixIcon: Icon(
-                                                          Icons.mail_outline,
-                                                          color: Colors.black,
-                                                        ),
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius: BorderRadius
-                                                              .circular(50
-                                                                  .r), // Set border radius
-                                                        ),
+                                                      fillColor: Colors.white,
+                                                      prefixIcon: Icon(
+                                                        Icons.mail_outline,
+                                                        color: Colors.black,
                                                       ),
                                                     ),
                                                     Padding(

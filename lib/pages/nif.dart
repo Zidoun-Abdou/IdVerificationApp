@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 
+import '../widgets/custom_bottom_text_hint.dart';
+
 class Nif extends StatefulWidget {
   const Nif({Key? key}) : super(key: key);
 
@@ -198,17 +200,7 @@ class _NifState extends State<Nif> {
                           SizedBox(
                             height: 50.h,
                           ),
-                          Text(
-                            'Votre application d’indentification',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF666680),
-                              fontSize: 12.h,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 0.20,
-                            ),
-                          ),
+                          CustomBottomTextHint(),
                         ],
                       ),
                     ),

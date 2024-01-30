@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import '../const.dart';
 import '../main.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_image_logo.dart';
 import 'verify_face.dart';
 import 'welcomenfc.dart';
 
@@ -374,14 +375,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                         child: ListView(
                           shrinkWrap: true,
                           children: [
-                            Center(
-                              child: Image.asset(
-                                'assets/images/logo.png',
-                                // Replace with the actual path to your image file
-                                fit: BoxFit.contain,
-                                width: 150.w,
-                              ),
-                            ),
+                            CustomImageLogo(width: 150),
                             AnimatedBuilder(
                               animation: _animation,
                               builder: (context, child) {

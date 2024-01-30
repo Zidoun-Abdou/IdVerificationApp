@@ -12,6 +12,11 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
 
 import '../../widgets/adaptive_circular_progress_indicator.dart';
+import '../../widgets/compte_pro/custom_alert_dialog.dart';
+import '../../widgets/custom_byicosnet_hint.dart';
+import '../../widgets/custom_image_logo.dart';
+import '../../widgets/custom_intl_phone_field.dart';
+import '../../widgets/custom_pin_field_auto_fill.dart';
 
 class VeriferPhone extends StatefulWidget {
   final String companyId;
@@ -223,70 +228,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(
-                    backgroundColor: color4.withOpacity(0.8),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.r))),
-                    content: Text(
-                      'Si vous quittez maintenant, les modifications\neffectuées ne seront pas enregistrées',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 12.sp),
-                    ),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 30.h, horizontal: 20.w),
-                    actionsAlignment: MainAxisAlignment.center,
-                    actionsPadding: EdgeInsets.only(top: 10.h, bottom: 20.h),
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.white,
-                          fixedSize: Size(100.w, 40.h),
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                        ),
-                        child: Text(
-                          'Annuler',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFD32424),
-                          foregroundColor: Colors.white,
-                          fixedSize: Size(100.w, 40.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          elevation: 20,
-                          shadowColor: Color(0xFFD32424),
-                        ),
-                        child: Text(
-                          'Quitter',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+                  return CustomAlertDialog();
                 });
             return false;
           },
@@ -301,16 +243,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Center(
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              // Replace with the actual path to your image file
-                              fit: BoxFit.contain,
-                              height: 100.h,
-                              width: 200
-                                  .w, // Adjust the image's fit property as needed
-                            ),
-                          ),
+                          child: CustomImageLogo(width: 200),
                         ),
                         Expanded(
                           flex: 4,
@@ -375,20 +308,8 @@ class _VeriferPhoneState extends State<VeriferPhone> {
                                       Container(
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 40.w),
-                                        child: PinFieldAutoFill(
-                                          codeLength: 4,
-                                          textInputAction: TextInputAction.done,
-                                          decoration: UnderlineDecoration(
-                                            lineHeight: 2,
-                                            lineStrokeCap: StrokeCap.square,
-                                            textStyle: TextStyle(
-                                                color: color3, fontSize: 20.sp),
-                                            bgColorBuilder:
-                                                PinListenColorBuilder(
-                                                    color4, color4),
-                                            colorBuilder:
-                                                FixedColorBuilder(color3),
-                                          ),
+                                        child: CustomPinFieldAutoFill(
+                                          autoFocus: true,
                                           onCodeChanged: (code) {
                                             otp = code.toString();
                                             print(otp);
@@ -475,41 +396,14 @@ class _VeriferPhoneState extends State<VeriferPhone> {
                                       ),
                                       Visibility(
                                         visible: !_utiliseNum,
-                                        child: IntlPhoneField(
-                                          autofocus: false,
-                                          textInputAction: TextInputAction.done,
+                                        child: CustomIntlPhoneField(
                                           controller: _phoneContr,
-                                          cursorColor: color3,
-                                          style: TextStyle(color: Colors.black),
-                                          decoration: InputDecoration(
-                                            hintStyle:
-                                                TextStyle(color: Colors.black),
-                                            hintText: "Numero de téléphone",
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50.r),
-                                              borderSide: BorderSide(
-                                                color: color3,
-                                              ),
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50
-                                                      .r), // Set border radius
-                                            ),
-                                          ),
-                                          invalidNumberMessage:
-                                              "Numéro de Téléphone non valide",
-                                          initialCountryCode: 'DZ',
-                                          dropdownIcon: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: color3,
-                                          ),
+                                          autofocus: false,
+                                          styleColor: Colors.black,
+                                          fillColor: Colors.white,
                                           validator: (value) {
                                             if (value == null) {
-                                              return "Phone non valide";
+                                              return "Numéro de Téléphone non valide";
                                             }
                                             return null;
                                           },
@@ -616,22 +510,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
                                     ),
                                   ),
                                 ),
-                                Text.rich(
-                                  TextSpan(children: [
-                                    TextSpan(
-                                        text: 'WHOWIATY',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w600)),
-                                    TextSpan(
-                                      text: ' by icosnet',
-                                      style: TextStyle(
-                                          fontFamily: 'Inter',
-                                          color: Colors.white),
-                                    ),
-                                  ]),
-                                ),
+                                CustomByIcosnetHint(),
                               ],
                             )),
                       ],

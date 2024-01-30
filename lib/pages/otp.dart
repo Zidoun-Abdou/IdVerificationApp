@@ -11,8 +11,11 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/dealpad.dart';
 import 'package:whowiyati/pages/steps.dart';
 import 'package:whowiyati/pages/welcome.dart';
+import 'package:whowiyati/widgets/custom_pin_field_auto_fill.dart';
+import 'package:whowiyati/widgets/otp/custom_text_otp.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_image_logo.dart';
 
 class Otp extends StatefulWidget {
   final String phone;
@@ -34,7 +37,6 @@ class Otp extends StatefulWidget {
 
 class _OtpState extends State<Otp> {
   // ******************* Logic *******************
-  TextEditingController _phoneContr = TextEditingController();
   bool is_filled = false;
   bool isPhoneNumberValid = false;
   String otp = "";
@@ -255,65 +257,31 @@ class _OtpState extends State<Otp> {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        // Replace with the actual path to your image file
-                        fit: BoxFit.contain,
-                        height: 100.h,
-                        width: 200.w,
-                        // Adjust the image's fit property as needed
-                      ),
+                      child: CustomImageLogo(width: 200),
                     ),
                     Expanded(
                       flex: 2,
                       child: Column(
                         children: [
-                          Text(
-                            "Verification du numéro de téléphone",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                          CustomTextOtp(
+                              data: "Verification du numéro de téléphone",
                               color: Colors.white,
-                              fontSize: 15.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                              height: 1.1.h,
-                              letterSpacing: 0.20.w,
-                            ),
-                          ),
+                              size: 15),
                           SizedBox(
                             height: 20.h,
                           ),
-                          Text(
-                            "Veuillez saisir le code SMS à 4 chiffres qui a été envoyé à ${widget.phone}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                          CustomTextOtp(
+                              data:
+                                  "Veuillez saisir le code SMS à 4 chiffres qui a été envoyé à ${widget.phone}",
                               color: Colors.grey,
-                              fontSize: 12.5.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                              height: 1.1.h,
-                              letterSpacing: 0.20.w,
-                            ),
-                          ),
+                              size: 12.5),
                           SizedBox(
                             height: 30.h,
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 40.w),
-                            child: PinFieldAutoFill(
-                              controller: _phoneContr,
-                              codeLength: 4, autoFocus: true,
-                              textInputAction: TextInputAction.done,
-                              // cursor: Cursor(color: color3,enabled: true),
-                              decoration: UnderlineDecoration(
-                                lineHeight: 2,
-                                lineStrokeCap: StrokeCap.square,
-                                textStyle:
-                                    TextStyle(color: color3, fontSize: 20.sp),
-                                bgColorBuilder:
-                                    PinListenColorBuilder(color4, color4),
-                                colorBuilder: FixedColorBuilder(color3),
-                              ),
+                            child: CustomPinFieldAutoFill(
+                              autoFocus: true,
                               onCodeChanged: (code) {
                                 otp = code.toString();
                                 print(otp);

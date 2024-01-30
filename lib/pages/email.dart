@@ -1,9 +1,13 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import '../const.dart';
 import 'package:http/http.dart' as http;
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_bottom_text_hint.dart';
+import '../widgets/custom_image_background.dart';
+import '../widgets/custom_image_logo.dart';
 import 'confirm_mail.dart';
 import 'dart:convert';
 
@@ -80,16 +84,7 @@ class _EmailState extends State<Email> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Stack(
         children: [
-          ColorFiltered(
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.6), BlendMode.darken),
-            child: Image.asset(
-              "assets/images/background.png",
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
-            ),
-          ),
+          CustomImageBackground(),
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
@@ -108,16 +103,7 @@ class _EmailState extends State<Email> {
                         children: [
                           Expanded(
                             flex: 2,
-                            child: Center(
-                              child: Image.asset(
-                                'assets/images/logo.png',
-                                // Replace with the actual path to your image file
-                                fit: BoxFit.contain,
-                                height: 100.h,
-                                width: 200
-                                    .w, // Adjust the image's fit property as needed
-                              ),
-                            ),
+                            child: CustomImageLogo(width: 200),
                           ),
                           Expanded(
                               flex: 2,
@@ -126,38 +112,20 @@ class _EmailState extends State<Email> {
                                   Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 20.w, vertical: 8.h),
-                                    child: TextFormField(
+                                    child: CustomTextFormField(
+                                      textInputAction: TextInputAction.done,
+                                      controller: _mailContr,
                                       keyboardType: TextInputType.emailAddress,
-                                      // autofocus: true,
+                                      style: TextStyle(color: Colors.white),
                                       validator: (val) {
                                         return validInput(val!, 5, 50);
                                       },
-                                      cursorColor: color3,
-                                      controller: _mailContr,
-                                      style: TextStyle(color: Colors.white),
-                                      // Set text color to white
-                                      decoration: InputDecoration(
-                                        hintText: "Email",
-                                        hintStyle:
-                                            TextStyle(color: Colors.white),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                          borderSide: BorderSide(
-                                            color: color3,
-                                          ),
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.black,
-                                        // Set background color to black
-                                        prefixIcon: Icon(
-                                          Icons.mail,
-                                          color: Colors.white,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              50.r), // Set border radius
-                                        ),
+                                      hintText: "Email",
+                                      hintStyle: TextStyle(color: Colors.white),
+                                      fillColor: Colors.black,
+                                      prefixIcon: Icon(
+                                        Icons.mail,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -200,18 +168,7 @@ class _EmailState extends State<Email> {
                                   SizedBox(
                                     height: 50.h,
                                   ),
-                                  Text(
-                                    "Votre application d'identification",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.grey[700],
-                                      fontSize: 12.5.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.1.h,
-                                      letterSpacing: 0.20.w,
-                                    ),
-                                  ),
+                                  CustomBottomTextHint(),
                                 ],
                               ))
                         ],

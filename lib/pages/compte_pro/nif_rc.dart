@@ -10,8 +10,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
+import 'package:whowiyati/widgets/compte_pro/custom_text_pro.dart';
 import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
+import '../../widgets/custom_image_logo.dart';
 
 class NifRC extends StatefulWidget {
   final String companyId;
@@ -185,14 +187,7 @@ class _NifRCState extends State<NifRC> {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          fit: BoxFit.contain,
-                          height: 150.h,
-                          width: 200.w,
-                        ),
-                      ),
+                      child: CustomImageLogo(width: 200),
                     ),
                     Expanded(
                       flex: 3,
@@ -202,16 +197,11 @@ class _NifRCState extends State<NifRC> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30.w, vertical: 10.h),
-                            child: Text(
-                              "Mettez votre carte fiscale en position horizontale et votre téléphone en position verticale pour prendre une photo",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14.sp,
-                                fontFamily: 'Inter',
-                                height: 1.1.h,
-                                letterSpacing: 0.20.w,
-                              ),
+                            child: CustomTextPro(
+                              data:
+                                  "Mettez votre carte fiscale en position horizontale et votre téléphone en position verticale pour prendre une photo",
+                              color: Colors.white,
+                              size: 14,
                             ),
                           ),
                           Container(

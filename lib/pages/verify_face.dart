@@ -21,6 +21,7 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/welcome.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
+import '../widgets/custom_byicosnet_hint.dart';
 
 class VerifyFace extends StatefulWidget {
   final String face;
@@ -411,21 +412,7 @@ class _VerifyFaceState extends State<VerifyFace> {
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: Text.rich(
-                      TextSpan(children: [
-                        TextSpan(
-                            text: 'WHOWIATY',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600)),
-                        TextSpan(
-                          text: ' by icosnet',
-                          style: TextStyle(
-                              fontFamily: 'Inter', color: Colors.white),
-                        ),
-                      ]),
-                    ),
+                    child: CustomByIcosnetHint(),
                   )
                 ],
               ),
