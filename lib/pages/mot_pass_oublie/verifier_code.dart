@@ -78,7 +78,10 @@ class _VerifierCodeState extends State<VerifierCode> {
         var answerJson = jsonDecode(answer);
         if (answerJson["success"] == true) {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ResetPassword(resetTo: widget.sendTo)));
+              builder: (context) => ResetPassword(
+                    resetTo: widget.sendTo,
+                    isEmail: widget.isEmail,
+                  )));
         } else {
           print(answerJson.toString());
           ScaffoldMessenger.of(context).showSnackBar(
@@ -157,7 +160,10 @@ class _VerifierCodeState extends State<VerifierCode> {
         var answerJson = jsonDecode(answer);
         if (answerJson["success"] == true) {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ResetPassword(resetTo: widget.sendTo)));
+              builder: (context) => ResetPassword(
+                    resetTo: widget.sendTo,
+                    isEmail: widget.isEmail,
+                  )));
         } else {
           print(answerJson.toString());
           ScaffoldMessenger.of(context).showSnackBar(

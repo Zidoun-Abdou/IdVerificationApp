@@ -16,8 +16,10 @@ import '../../widgets/custom_image_logo.dart';
 import '../../widgets/custom_title_text.dart';
 
 class ResetPassword extends StatefulWidget {
+  final bool isEmail;
   final String resetTo;
-  const ResetPassword({super.key, required this.resetTo});
+  const ResetPassword(
+      {super.key, required this.resetTo, required this.isEmail});
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -43,11 +45,19 @@ class _ResetPasswordState extends State<ResetPassword> {
         var request = http.MultipartRequest('PUT',
             Uri.parse('https://api.icosnet.com/sign/wh/update/password/'));
 
-        request.fields.addAll({
-          'email': widget.resetTo,
-          'new_password': _passwordContr.text,
-          'confirm_password': _confirmContr.text
-        });
+        if (widget.isEmail) {
+          request.fields.addAll({
+            'email': widget.resetTo,
+            'new_password': _passwordContr.text,
+            'confirm_password': _confirmContr.text
+          });
+        } else {
+          request.fields.addAll({
+            'phone': widget.resetTo,
+            'new_password': _passwordContr.text,
+            'confirm_password': _confirmContr.text
+          });
+        }
 
         request.headers.addAll(headers);
 
