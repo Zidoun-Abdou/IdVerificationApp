@@ -4,6 +4,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whowiyati/widgets/custom_byicosnet_hint.dart';
 import 'package:whowiyati/widgets/custom_question_show_bottom_sheet.dart';
 import 'package:whowiyati/widgets/welcome/custom_bonjour_welcome.dart';
 import 'package:whowiyati/widgets/welcome/custom_button_ajoute_compte_pro_welcome.dart';
@@ -18,6 +19,7 @@ import '../widgets/custom_bottom_text_hint.dart';
 import '../widgets/welcome/custom_non_identifie.dart';
 import '../widgets/welcome/custom_page_ajoute_compte_pro_welcome.dart';
 import '../widgets/welcome/custom_profil_welcome.dart';
+import 'cardnfcinfo.dart';
 import 'compte_pro/mes_comptes_pro.dart';
 import 'demande_validation.dart';
 import 'homepage.dart';
@@ -305,115 +307,91 @@ class _WelcomeState extends State<Welcome> {
                         width: MediaQuery.of(context).size.width,
                         child: Column(
                           children: [
-                            AnimatedSwitcher(
-                              duration: Duration(milliseconds: 300),
-                              child: isProfile
-                                  ?
-                                  // Profile-details
-                                  CustomProfilWelcome(
-                                      onTap: () {
-                                        isProfile = !isProfile;
-                                        setState(() {});
-                                      },
-                                    )
-                                  : Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: CustomWelcomeItem(
-                                                onTap: () {
-                                                  if (prefs.getString(
-                                                          'status') ==
-                                                      "5") {
-                                                    setState(() {
-                                                      isProfile = !isProfile;
-                                                    });
-                                                  }
-                                                },
-                                                icon: "profil",
-                                                title: "Mon\nprofile",
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.w),
-                                            Expanded(
-                                              child: CustomWelcomeItem(
-                                                onTap: () {
-                                                  if (prefs.getString(
-                                                          'status') ==
-                                                      "5") {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ListOfDocuments(),
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                                icon: "document",
-                                                title: "Mes\ndocuments",
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 15.h),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: CustomWelcomeItem(
-                                                onTap: () {
-                                                  if (prefs.getString(
-                                                          'status') ==
-                                                      "5") {
-                                                    Navigator.of(context)
-                                                        .push(MaterialPageRoute(
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomWelcomeItem(
+                                        onTap: () {
+                                          if (prefs.getString('status') ==
+                                              "5") {
+                                            prefs.getString("name_arabic") ==
+                                                    null
+                                                ? Navigator.of(context).push(
+                                                    MaterialPageRoute(
                                                       builder: (context) =>
-                                                          MesComptesPro(),
-                                                    ));
-                                                  }
-                                                },
-                                                icon: "star",
-                                                title: "Mes\ncomptes Pro",
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.w),
-                                            Expanded(
-                                              child: CustomWelcomeItem(
-                                                onTap: () {
-                                                  if (prefs.getString(
-                                                          'status') ==
-                                                      "5") {
-                                                    // prefs.getString("name_arabic") ==
-                                                    //         null
-                                                    //     ? Navigator.of(context)
-                                                    //         .push(
-                                                    //         MaterialPageRoute(
-                                                    //           builder:
-                                                    //               (context) =>
-                                                    //                   IdInfos(),
-                                                    //         ),
-                                                    //       )
-                                                    //     : Navigator.of(context)
-                                                    //         .push(MaterialPageRoute(
-                                                    //             builder: (context) =>
-                                                    //                 CardNfcInfo()));
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
+                                                          IdInfos(),
+                                                    ),
+                                                  )
+                                                : Navigator.of(context).push(
+                                                    MaterialPageRoute(
                                                         builder: (context) =>
-                                                            IdInfos(),
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                                icon: "edit",
-                                                title:
-                                                    "Signature\nélectronique",
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                                            CardNfcInfo()));
+                                            // Navigator.of(context).push(
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) => IdInfos(),
+                                            //   ),
+                                            // );
+                                          }
+                                        },
+                                        icon: "profil",
+                                        title: "Mon\nprofile",
+                                      ),
                                     ),
+                                    SizedBox(width: 10.w),
+                                    Expanded(
+                                      child: CustomWelcomeItem(
+                                        onTap: () {
+                                          if (prefs.getString('status') ==
+                                              "5") {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ListOfDocuments(),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        icon: "edit",
+                                        title: "Signature\nélectronique",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 15.h),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomWelcomeItem(
+                                        onTap: () {
+                                          if (prefs.getString('status') ==
+                                              "5") {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MesComptesPro(),
+                                            ));
+                                          }
+                                        },
+                                        icon: "star",
+                                        title: "Mes\ncomptes Pro",
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Expanded(
+                                      child: CustomWelcomeItem(
+                                        onTap: () {
+                                          if (prefs.getString('status') ==
+                                              "5") {}
+                                        },
+                                        icon: "document",
+                                        title: "Mes\ndocuments",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             Visibility(
                               visible: prefs.getString('status') != "5",
@@ -467,13 +445,15 @@ class _WelcomeState extends State<Welcome> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.05,
                                 )),
-                            Container(
-                              margin: EdgeInsets.only(top: 20.h),
-                              child: CustomBottomTextHint(),
-                            ),
                           ],
                         ),
                       ),
+                    ),
+                    Positioned(
+                      bottom: 10.h,
+                      right: 0,
+                      left: 0,
+                      child: Center(child: CustomByIcosnetHint()),
                     ),
                   ],
                 ),

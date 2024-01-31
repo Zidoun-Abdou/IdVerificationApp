@@ -92,26 +92,31 @@ class _MesComptesProState extends State<MesComptesPro> {
                           itemCount: companies.length,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () async {
-                              if (companies[index]["company_user"]["phone"] ==
-                                  "") {
-                                await prefs.setString("step", "0");
-                              } else if (companies[index]["company_user"]
-                                      ["email"] ==
-                                  "") {
-                                await prefs.setString("step", "1");
+                              if (companies[index]["company_user"]["status"]
+                                      .toString() ==
+                                  "1") {
                               } else {
-                                await prefs.setString("step", "2");
+                                if (companies[index]["company_user"]["phone"] ==
+                                    "") {
+                                  await prefs.setString("step", "0");
+                                } else if (companies[index]["company_user"]
+                                        ["email"] ==
+                                    "") {
+                                  await prefs.setString("step", "1");
+                                } else {
+                                  await prefs.setString("step", "2");
+                                }
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => StepsVerifyComptePro(
+                                          companyUserId: companies[index]
+                                                      ["company_user"]
+                                                  ["company_user_id"]
+                                              .toString(),
+                                          companyId: companies[index]
+                                                  ["company_user"]["company"]
+                                              .toString(),
+                                        )));
                               }
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => StepsVerifyComptePro(
-                                        companyUserId: companies[index]
-                                                    ["company_user"]
-                                                ["company_user_id"]
-                                            .toString(),
-                                        companyId: companies[index]
-                                                ["company_user"]["company"]
-                                            .toString(),
-                                      )));
                             },
                             child: Container(
                               margin: EdgeInsets.symmetric(
