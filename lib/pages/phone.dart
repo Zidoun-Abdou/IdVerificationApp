@@ -142,6 +142,13 @@ class _PhoneState extends State<Phone> {
                       styleColor: Colors.white,
                       fillColor: Colors.black,
                       dropdownTextStyle: TextStyle(color: Colors.white),
+                      invalidNumberMessage: "Numéro de Téléphone non valide",
+                      validator: (value) {
+                        if (value == null) {
+                          return "Phone non valide";
+                        }
+                        return null;
+                      },
                       onChanged: (phone) {
                         if (phone.completeNumber.length == 13) {
                           setState(() {

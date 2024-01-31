@@ -15,6 +15,7 @@ class CustomIntlPhoneField extends StatelessWidget {
   final TextStyle? dropdownTextStyle;
   final void Function(PhoneNumber)? onChanged;
   final FutureOr<String?> Function(PhoneNumber?)? validator;
+  final String? invalidNumberMessage;
   const CustomIntlPhoneField(
       {super.key,
       required this.controller,
@@ -23,7 +24,8 @@ class CustomIntlPhoneField extends StatelessWidget {
       required this.fillColor,
       required this.onChanged,
       this.validator,
-      this.dropdownTextStyle});
+      this.dropdownTextStyle,
+      this.invalidNumberMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class CustomIntlPhoneField extends StatelessWidget {
           borderRadius: BorderRadius.circular(50.r), // Set border radius
         ),
       ),
-      invalidNumberMessage: "Numéro de Téléphone non valide",
+      invalidNumberMessage: invalidNumberMessage,
       initialCountryCode: 'DZ',
       dropdownTextStyle: dropdownTextStyle,
       dropdownIcon: Icon(

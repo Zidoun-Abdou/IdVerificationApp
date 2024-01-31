@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/main.dart';
-import 'package:whowiyati/pages/forget_password.dart';
+import 'package:whowiyati/pages/mot_pass_oublie/forget_password.dart';
 import 'dart:convert';
 
 import 'package:whowiyati/pages/welcome.dart';
@@ -277,25 +276,25 @@ class _LoginState extends State<Login> {
                                               });
                                             }
                                           }),
-                                          // GestureDetector(
-                                          //   onTap: () {
-                                          //     Navigator.of(context).push(
-                                          //         MaterialPageRoute(
-                                          //             builder: (context) =>
-                                          //                 ForgetPassword()));
-                                          //   },
-                                          //   child: Text(
-                                          //     'Mot de passe oublié ?',
-                                          //     textAlign: TextAlign.center,
-                                          //     style: TextStyle(
-                                          //       color: Colors.white,
-                                          //       fontSize: 12.sp,
-                                          //       fontStyle: FontStyle.italic,
-                                          //       fontFamily: 'Poppins',
-                                          //       fontWeight: FontWeight.w300,
-                                          //     ),
-                                          //   ),
-                                          // )
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ForgetPassword()));
+                                            },
+                                            child: Text(
+                                              'Mot de passe oublié ?',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12.sp,
+                                                fontStyle: FontStyle.italic,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                            ),
+                                          )
                                         ],
                                       )),
                                   SizedBox(
