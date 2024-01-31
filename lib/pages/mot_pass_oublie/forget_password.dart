@@ -3,13 +3,15 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import '../const.dart';
-import '../widgets/adaptive_circular_progress_indicator.dart';
+import 'package:whowiyati/pages/mot_pass_oublie/verifier_code.dart';
+import 'package:whowiyati/widgets/custom_intl_phone_field.dart';
+import 'package:whowiyati/widgets/custom_title_text.dart';
+import '../../const.dart';
+import '../../widgets/adaptive_circular_progress_indicator.dart';
 import 'package:http/http.dart' as http;
 
-import '../widgets/custom_bottom_text_hint.dart';
-import '../widgets/custom_image_logo.dart';
+import '../../widgets/custom_bottom_text_hint.dart';
+import '../../widgets/custom_image_logo.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({Key? key}) : super(key: key);
@@ -23,12 +25,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   var _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   TextEditingController _phoneContr = TextEditingController();
-
   bool isPhoneNumberValid = false;
   String countryCode = "";
 
-  //functions
-  sendRefreshPassword() async {
+  checkPhoneNumber() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
@@ -37,8 +37,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         setState(() {});
         var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
 
-        var request = http.MultipartRequest('POST',
-            Uri.parse('https://api.icosnet.com/sign/wh/forget/password/'));
+        var request = http.MultipartRequest(
+            'POST', Uri.parse('https://api.icosnet.com/sign/wh/user/check/'));
 
         request.fields.addAll({'phone': '+213${_phoneContr.text}'});
 
@@ -46,18 +46,22 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
         http.StreamedResponse response = await request.send();
         String answer = await response.stream.bytesToString();
-        var answerJson = jsonDecode(answer);
+        Map answerJson = jsonDecode(answer);
 
         if (answerJson["success"] == true) {
-          Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                  "Vérifiez votre mail pour réinitialisation votre mot de passe"),
-              duration: Duration(seconds: 3),
-              backgroundColor: color3,
-            ),
-          );
+          if (answerJson.containsKey("email")) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => VerifierCode(
+                      isEmail: true,
+                      sendTo: answerJson["email"],
+                    )));
+          } else if (answerJson.containsKey("phone")) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => VerifierCode(
+                      isEmail: false,
+                      sendTo: answerJson["phone"],
+                    )));
+          }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -94,8 +98,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(backgroundColor: Colors.black),
+        backgroundColor: color1,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
+        resizeToAvoidBottomInset: false,
         body: isLoading
             ? Center(
                 child: AdaptiveCircularProgressIndicator(color: color3),
@@ -113,88 +121,43 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             SizedBox(
                               height: 20.h,
                             ),
-                            Text(
-                              "Saisissez votre numéro de téléphone",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
+                            CustomTitleText(
+                                data:
+                                    "Saisissez votre numéro\nde téléphone associé à votre compte Whowiaty",
                                 color: Colors.white,
-                                fontSize: 15.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                height: 1.1.h,
-                                letterSpacing: 0.20.w,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Text(
-                              "Nous utilisons votre numéro de téléphone afin\nenvoyer un mail pour réinitialisation votre mot de passe",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12.5.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                height: 1.1.h,
-                                letterSpacing: 0.20.w,
-                              ),
-                            ),
+                                size: 14),
                             SizedBox(
                               height: 40.h,
                             ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 20.w),
-                              alignment: Alignment.center,
-                              child: IntlPhoneField(
-                                autofocus: true,
-                                textInputAction: TextInputAction.next,
-                                controller: _phoneContr,
-                                cursorColor: color3,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                  hintText: "Numero de téléphone",
-                                  hintStyle: TextStyle(color: Colors.white),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50.r),
-                                    borderSide: BorderSide(
-                                      color: color3,
-                                    ),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.black,
-                                  // Set background color to black
-                                  prefixIcon: Icon(
-                                    Icons.lock_outline,
-                                    color: Colors.white,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        50.r), // Set border radius
-                                  ),
-                                ),
-                                initialCountryCode: 'DZ',
-                                dropdownTextStyle:
-                                    TextStyle(color: Colors.white),
-                                dropdownIcon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: color3,
-                                ),
-                                onChanged: (phone) {
-                                  if (phone.completeNumber.length == 13) {
-                                    setState(() {
-                                      isPhoneNumberValid = true;
-                                      countryCode =
-                                          phone.countryCode.substring(1);
-                                      print(countryCode);
-                                    });
-                                  } else {
-                                    setState(() {
-                                      isPhoneNumberValid = false;
-                                    });
-                                  }
-                                },
-                              ),
+                            Padding(
+                              padding: EdgeInsets.all(20.w),
+                              child: CustomIntlPhoneField(
+                                  controller: _phoneContr,
+                                  autofocus: false,
+                                  styleColor: Colors.black,
+                                  fillColor: Colors.white,
+                                  invalidNumberMessage:
+                                      "Numéro de Téléphone non valide",
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Phone non valide";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (phone) {
+                                    if (phone.completeNumber.length == 13) {
+                                      setState(() {
+                                        isPhoneNumberValid = true;
+                                        countryCode =
+                                            phone.countryCode.substring(1);
+                                        print(countryCode);
+                                      });
+                                    } else {
+                                      setState(() {
+                                        isPhoneNumberValid = false;
+                                      });
+                                    }
+                                  }),
                             ),
                           ],
                         ),
@@ -211,7 +174,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                     horizontal: 20.w, vertical: 8.h),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    sendRefreshPassword();
+                                    checkPhoneNumber();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: color3,
@@ -228,7 +191,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                     // Set the shadow color
                                   ),
                                   child: Text(
-                                    "Confirmer",
+                                    "Envoyer",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13.sp,
