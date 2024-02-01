@@ -8,8 +8,6 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/homepage.dart';
 import 'package:whowiyati/pages/dealpad.dart';
 import 'package:flutter/services.dart';
-import 'package:whowiyati/pages/verify_face.dart';
-import 'package:whowiyati/pages/welcomenfc.dart';
 
 late SharedPreferences prefs;
 late List<CameraDescription> cameras;
