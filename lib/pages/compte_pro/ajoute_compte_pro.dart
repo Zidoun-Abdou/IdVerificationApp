@@ -35,7 +35,7 @@ class AjouteComptePro extends StatefulWidget {
 class _AjouteCompteProState extends State<AjouteComptePro> {
   // ******************* Logic *******************
   TextEditingController _raisonContr = TextEditingController();
-  String _formeJurd = "";
+  String _formeJurd = "EURL";
   TextEditingController _rcContr = TextEditingController();
   TextEditingController _nifContr = TextEditingController();
   TextEditingController _nisContr = TextEditingController();
@@ -426,13 +426,6 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                                     .visiblePassword,
                                                 style: TextStyle(
                                                     color: Colors.black),
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return "N° d'identification statistique non valide";
-                                                  }
-                                                  return null;
-                                                },
                                                 hintText:
                                                     "N° d'identification statistique",
                                                 hintStyle: TextStyle(
