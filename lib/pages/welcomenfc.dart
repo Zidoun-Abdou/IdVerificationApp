@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:dmrtd/dmrtd.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';

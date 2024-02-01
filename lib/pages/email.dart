@@ -11,8 +11,6 @@ import '../widgets/custom_image_logo.dart';
 import 'confirm_mail.dart';
 import 'dart:convert';
 
-import 'package:whowiyati/pages/login.dart';
-
 class Email extends StatefulWidget {
   final String token;
   const Email({Key? key, required this.token}) : super(key: key);

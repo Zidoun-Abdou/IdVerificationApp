@@ -129,8 +129,6 @@ class _ConfirmMailState extends State<ConfirmMail> {
       setState(() {});
       return 0;
     }
-    isLoading = false;
-    setState(() {});
   }
 
   Future<int> _updateEmail() async {

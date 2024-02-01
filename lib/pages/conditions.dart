@@ -1,7 +1,5 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../const.dart';
 
 import '../widgets/conditions/custom_checkbox_conditions.dart';

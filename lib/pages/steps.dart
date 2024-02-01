@@ -1,19 +1,10 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../const.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:http/http.dart' as http;
 import '../main.dart';
 import '../widgets/custom_image_logo.dart';
 import 'email.dart';
 import 'idcards.dart';
-import 'idinfos.dart';
-import 'dart:convert';
-
-import 'otp.dart';
-import 'welcome.dart';
 
 class Steps extends StatefulWidget {
   final String token;

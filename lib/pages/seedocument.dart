@@ -1,13 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:whowiyati/const.dart';
-import 'package:whowiyati/pages/dealpad.dart';
-import 'package:http/http.dart' as http;
-
-import '../main.dart';
 
 class SeeDocument extends StatefulWidget {
   final String myurl;

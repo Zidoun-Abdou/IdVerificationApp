@@ -1,13 +1,8 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
-import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/conditions.dart';
 import 'package:whowiyati/pages/login.dart';
-import 'package:whowiyati/pages/register.dart';
-import 'package:whowiyati/pages/steps.dart';
-import 'package:whowiyati/pages/welcome.dart';
 
 import '../widgets/custom_bottom_text_welcome_hint.dart';
 import '../widgets/custom_image_logo.dart';

@@ -1,16 +1,11 @@
 import 'dart:convert';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sms_autofill/sms_autofill.dart';
 import 'package:whowiyati/const.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:whowiyati/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/dealpad.dart';
-import 'package:whowiyati/pages/steps.dart';
-import 'package:whowiyati/pages/welcome.dart';
 import 'package:whowiyati/widgets/custom_pin_field_auto_fill.dart';
 import 'package:whowiyati/widgets/otp/custom_text_otp.dart';
 

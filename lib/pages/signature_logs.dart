@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../widgets/base64img.dart';
-
 class SignaturesLogs extends StatefulWidget {
   final String base64code;
   const SignaturesLogs({super.key, required this.base64code});

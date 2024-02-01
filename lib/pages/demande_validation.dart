@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
+import 'package:whowiyati/widgets/demande_validation/custom_card.dart';
+import 'package:whowiyati/widgets/demande_validation/custom_subtitle.dart';
+import 'package:whowiyati/widgets/demande_validation/custom_title.dart';
 import '../main.dart';
 import '../models/demande_validation_model.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
@@ -133,191 +136,122 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                   height: 20.h,
                                 ),
                                 itemCount: enAttenteList.length,
-                                itemBuilder: (context, index) => Container(
+                                itemBuilder: (context, index) => CustomCard(
                                   height:
                                       MediaQuery.of(context).size.height * 0.26,
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 15.w,
-                                    horizontal: 20.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'ID : ',
-                                              style: TextStyle(
-                                                  color: color2,
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.w600)),
-                                          TextSpan(
-                                              text: enAttenteList[index]
-                                                  .requestIdentify,
-                                              style: TextStyle(
-                                                  color: color2,
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.w600))
-                                        ]),
-                                      ),
-                                      Divider(color: color6),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'Source demande: ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text: enAttenteList[index]
-                                                  .sourceDemande,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'Créer à : ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text: enAttenteList[index]
-                                                  .createdAt,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'type demande : ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text: enAttenteList[index]
-                                                  .typeDemande,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                      SizedBox(),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          ElevatedButton(
-                                            onPressed: () async {
-                                              // await updateDemandeStatus(
-                                              //     enAttenteList[index]
-                                              //         .requestIdentify!,
-                                              //     "-1");
-                                              // setState(() {});
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DialpadScreen(
-                                                    status: 4,
-                                                    onPressedAction: () async {
-                                                      await updateDemandeStatus(
-                                                          enAttenteList[index]
-                                                              .requestIdentify!,
-                                                          "-1");
-                                                      setState(() {});
-                                                    },
-                                                  ),
+                                  children: [
+                                    CustomTitle(
+                                        color: color2,
+                                        data: enAttenteList[index]
+                                            .requestIdentify!),
+                                    Divider(color: color6),
+                                    CustomSubtitle(
+                                        text: 'Source demande : ',
+                                        data: enAttenteList[index]
+                                            .sourceDemande!),
+                                    CustomSubtitle(
+                                        text: 'Créer à : ',
+                                        data: enAttenteList[index].createdAt!),
+                                    CustomSubtitle(
+                                        text: 'Type demande : ',
+                                        data:
+                                            enAttenteList[index].typeDemande!),
+                                    SizedBox(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            // await updateDemandeStatus(
+                                            //     enAttenteList[index]
+                                            //         .requestIdentify!,
+                                            //     "-1");
+                                            // setState(() {});
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DialpadScreen(
+                                                  status: 4,
+                                                  onPressedAction: () async {
+                                                    await updateDemandeStatus(
+                                                        enAttenteList[index]
+                                                            .requestIdentify!,
+                                                        "-1");
+                                                    setState(() {});
+                                                  },
                                                 ),
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xFFD32424),
-                                              foregroundColor: Colors.white,
-                                              fixedSize: Size(100.w, 30.h),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(60.r),
                                               ),
-                                              elevation: 10,
-                                              shadowColor: Color(0xFFD32424),
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xFFD32424),
+                                            foregroundColor: Colors.white,
+                                            fixedSize: Size(100.w, 30.h),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(60.r),
                                             ),
-                                            child: Text(
-                                              'Refuser',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                            elevation: 10,
+                                            shadowColor: Color(0xFFD32424),
+                                          ),
+                                          child: Text(
+                                            'Refuser',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15.sp,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w600,
                                             ),
                                           ),
-                                          ElevatedButton(
-                                            onPressed: () async {
-                                              // await updateDemandeStatus(
-                                              //     enAttenteList[index]
-                                              //         .requestIdentify!,
-                                              //     "1");
-                                              // setState(() {});
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DialpadScreen(
-                                                    status: 4,
-                                                    onPressedAction: () async {
-                                                      await updateDemandeStatus(
-                                                          enAttenteList[index]
-                                                              .requestIdentify!,
-                                                          "1");
-                                                      setState(() {});
-                                                    },
-                                                  ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            // await updateDemandeStatus(
+                                            //     enAttenteList[index]
+                                            //         .requestIdentify!,
+                                            //     "1");
+                                            // setState(() {});
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DialpadScreen(
+                                                  status: 4,
+                                                  onPressedAction: () async {
+                                                    await updateDemandeStatus(
+                                                        enAttenteList[index]
+                                                            .requestIdentify!,
+                                                        "1");
+                                                    setState(() {});
+                                                  },
                                                 ),
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: color3,
-                                              foregroundColor: Colors.white,
-                                              fixedSize: Size(100.w, 30.h),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50.r),
                                               ),
-                                              elevation: 10,
-                                              shadowColor: color3,
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: color3,
+                                            foregroundColor: Colors.white,
+                                            fixedSize: Size(100.w, 30.h),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50.r),
                                             ),
-                                            child: Text(
-                                              'Accepter',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15.sp,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                            elevation: 10,
+                                            shadowColor: color3,
+                                          ),
+                                          child: Text(
+                                            'Accepter',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15.sp,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w600,
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               );
                             }
@@ -395,103 +329,28 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                   height: 20.h,
                                 ),
                                 itemCount: accepteList.length,
-                                itemBuilder: (context, index) => Container(
+                                itemBuilder: (context, index) => CustomCard(
                                   height:
                                       MediaQuery.of(context).size.height * 0.2,
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 15.w,
-                                    horizontal: 20.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'ID : ',
-                                              style: TextStyle(
-                                                  color: accepteList[index]
-                                                              .status ==
-                                                          "1"
-                                                      ? color3
-                                                      : Colors.grey,
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.w600)),
-                                          TextSpan(
-                                              text: accepteList[index]
-                                                  .requestIdentify,
-                                              style: TextStyle(
-                                                  color: accepteList[index]
-                                                              .status ==
-                                                          "1"
-                                                      ? color3
-                                                      : Colors.grey,
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.w600))
-                                        ]),
-                                      ),
-                                      Divider(color: color6),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'Source demande: ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text: accepteList[index]
-                                                  .sourceDemande,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'Créer à : ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text:
-                                                  accepteList[index].createdAt,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'type demande : ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text: accepteList[index]
-                                                  .typeDemande,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                    ],
-                                  ),
+                                  children: [
+                                    CustomTitle(
+                                        color: accepteList[index].status == "1"
+                                            ? color3
+                                            : Colors.grey,
+                                        data: accepteList[index]
+                                            .requestIdentify!),
+                                    Divider(color: color6),
+                                    CustomSubtitle(
+                                        text: 'Source demande : ',
+                                        data:
+                                            accepteList[index].sourceDemande!),
+                                    CustomSubtitle(
+                                        text: 'Créer à : ',
+                                        data: accepteList[index].createdAt!),
+                                    CustomSubtitle(
+                                        text: 'Type demande : ',
+                                        data: accepteList[index].typeDemande!),
+                                  ],
                                 ),
                               );
                             }
@@ -568,94 +427,25 @@ class _DemandeValidationState extends State<DemandeValidation> {
                                   height: 20.h,
                                 ),
                                 itemCount: refuseList.length,
-                                itemBuilder: (context, index) => Container(
+                                itemBuilder: (context, index) => CustomCard(
                                   height:
                                       MediaQuery.of(context).size.height * 0.2,
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 15.w,
-                                    horizontal: 20.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'ID : ',
-                                              style: TextStyle(
-                                                  color: Color(0xFFD32424),
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.w600)),
-                                          TextSpan(
-                                              text: refuseList[index]
-                                                  .requestIdentify,
-                                              style: TextStyle(
-                                                  color: Color(0xFFD32424),
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.w600))
-                                        ]),
-                                      ),
-                                      Divider(color: color6),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'Source demande: ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text: refuseList[index]
-                                                  .sourceDemande,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'Créer à : ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text: refuseList[index].createdAt,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: 'type demande : ',
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              )),
-                                          TextSpan(
-                                              text:
-                                                  refuseList[index].typeDemande,
-                                              style: TextStyle(
-                                                color: color9,
-                                                fontSize: 15.sp,
-                                              ))
-                                        ]),
-                                      ),
-                                    ],
-                                  ),
+                                  children: [
+                                    CustomTitle(
+                                        color: Color(0xFFD32424),
+                                        data:
+                                            refuseList[index].requestIdentify!),
+                                    Divider(color: color6),
+                                    CustomSubtitle(
+                                        text: 'Source demande : ',
+                                        data: refuseList[index].sourceDemande!),
+                                    CustomSubtitle(
+                                        text: 'Créer à : ',
+                                        data: refuseList[index].createdAt!),
+                                    CustomSubtitle(
+                                        text: 'Type demande : ',
+                                        data: refuseList[index].typeDemande!),
+                                  ],
                                 ),
                               );
                             }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
-import 'package:whowiyati/main.dart';
 
 import '../widgets/custom_bottom_text_hint.dart';
 

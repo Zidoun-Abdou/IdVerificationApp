@@ -4,11 +4,9 @@ import 'dart:io';
 
 import 'package:dmrtd/dmrtd.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -17,7 +15,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
 import 'package:dmrtd/dmrtd.dart';
 import 'package:dmrtd/extensions.dart';
-import 'package:whowiyati/pages/cardnfcinfo.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:whowiyati/pages/verify_face.dart';
 
