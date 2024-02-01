@@ -143,7 +143,8 @@ class _MesComptesProState extends State<MesComptesPro> {
                                         width: 20.w,
                                       ),
                                       Text(
-                                        companies[index]["company_name"]
+                                        companies[index]["company_user"]
+                                                ["company_user_id"]
                                             .toString()
                                             .toUpperCase(),
                                         textAlign: TextAlign.center,
