@@ -5,8 +5,13 @@ class CustomTitleText extends StatelessWidget {
   final String data;
   final Color color;
   final double size;
+  final FontWeight? fontWeight;
   const CustomTitleText(
-      {super.key, required this.data, required this.color, required this.size});
+      {super.key,
+      required this.data,
+      required this.color,
+      required this.size,
+      this.fontWeight = FontWeight.w400});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class CustomTitleText extends StatelessWidget {
         color: color,
         fontSize: size.sp,
         fontFamily: 'Inter',
-        fontWeight: FontWeight.w400,
+        fontWeight: fontWeight,
         height: 1.1.h,
         letterSpacing: 0.20.w,
       ),

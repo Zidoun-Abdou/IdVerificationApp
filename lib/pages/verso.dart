@@ -13,6 +13,8 @@ import '../const.dart';
 import '../main.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
 import '../widgets/custom_image_logo.dart';
+import '../widgets/custom_main_button.dart';
+import '../widgets/custom_title_text.dart';
 import 'verify_face.dart';
 import 'welcomenfc.dart';
 
@@ -112,7 +114,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         source: ImageSource.camera,
         maxHeight: 1080,
         maxWidth: 1920,
-        imageQuality: 50);
+        imageQuality: 80);
 
     if (widget.rectoPhoto != null && versoPhoto != null) {
       String _token = prefs.getString('mail').toString();
@@ -426,47 +428,22 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 30.w, vertical: 10.h),
-                              child: Text(
-                                "Mettez votre carte en position horizontale et votre téléphone en position verticale pour prendre une photo",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.sp,
-                                  fontFamily: 'Inter',
-                                  height: 1.1.h,
-                                  letterSpacing: 0.20.w,
-                                ),
+                              child: CustomTitleText(
+                                data:
+                                    "Mettez votre carte en position horizontale et votre téléphone en position verticale pour prendre une photo",
+                                color: Colors.white,
+                                size: 14,
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 20.w, vertical: 5.h),
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  takePhotos();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: color3,
-                                  padding: EdgeInsets.symmetric(vertical: 15.h),
-                                  foregroundColor: Colors.white,
-                                  minimumSize: Size.fromHeight(30.w),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.r),
-                                  ),
-                                  elevation: 20,
-                                  shadowColor: color3, // Set the shadow color
-                                ),
-                                child: Text(
-                                  'Continuer',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.sp,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            )
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 20.w, vertical: 5.h),
+                                child: CustomMainButton(
+                                  onPressed: () async {
+                                    takePhotos();
+                                  },
+                                  text: 'Continuer',
+                                ))
                           ],
                         ),
                       ),

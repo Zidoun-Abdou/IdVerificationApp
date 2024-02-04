@@ -3,6 +3,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/idinfos.dart/custom_back.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
@@ -100,32 +101,13 @@ class _IdInfosState extends State<IdInfos> {
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            child: ElevatedButton(
+                            child: CustomMainButton(
                               onPressed: () async {
                                 Navigator.of(context).pop();
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: color3,
-                                padding: EdgeInsets.symmetric(vertical: 15.h),
-                                foregroundColor: Colors.white,
-                                minimumSize: Size.fromHeight(30.w),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.r),
-                                ),
-                                elevation: 20,
-                                shadowColor: color3, // Set the shadow color
-                              ),
-                              child: Text(
-                                'Retourner',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                              text: 'Retourner',
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

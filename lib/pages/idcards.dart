@@ -1,6 +1,8 @@
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
+import 'package:whowiyati/widgets/custom_title_text.dart';
 import '../const.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
 import '../widgets/custom_image_logo.dart';
@@ -42,18 +44,11 @@ class _IdCardsState extends State<IdCards> {
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 30.w),
-                              child: Text(
-                                "Pour vérifier votre carte d’identité la caméra du téléphone va se lancer vous permettant de scanner le recto et le verso  de votre carte d’identité",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
+                              child: CustomTitleText(
+                                  data:
+                                      "Pour vérifier votre carte d’identité la caméra du téléphone va se lancer vous permettant de scanner le recto et le verso  de votre carte d’identité",
                                   color: Colors.white,
-                                  fontSize: 15.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.1.h,
-                                  letterSpacing: 0.20.w,
-                                ),
-                              ),
+                                  size: 15),
                             ),
                           ],
                         ),
@@ -72,33 +67,13 @@ class _IdCardsState extends State<IdCards> {
                               child: Container(
                                 margin: EdgeInsets.symmetric(
                                     horizontal: 20.w, vertical: 8.h),
-                                child: ElevatedButton(
+                                child: CustomMainButton(
                                   onPressed: () async {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => Recto()));
                                   },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: color3,
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 15.h),
-                                    foregroundColor: Colors.white,
-                                    minimumSize: Size.fromHeight(30.w),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50.r),
-                                    ),
-                                    elevation: 20,
-                                    shadowColor: color3, // Set the shadow color
-                                  ),
-                                  child: Text(
-                                    'Continuer',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                                  text: 'Continuer',
                                 ),
                               ),
                             )

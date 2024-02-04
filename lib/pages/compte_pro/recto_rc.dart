@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
 import '../../widgets/compte_pro/custom_text_pro.dart';
@@ -48,7 +49,7 @@ class _RectoRCState extends State<RectoRC> {
         source: ImageSource.camera,
         maxHeight: 1080,
         maxWidth: 1920,
-        imageQuality: 50);
+        imageQuality: 80);
     _is_loading = true;
     setState(() {});
     if (rectoPhoto != null) {
@@ -146,6 +147,10 @@ class _RectoRCState extends State<RectoRC> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color1,
+      appBar: AppBar(
+        backgroundColor: color1,
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: _is_loading == true
             ? Center(
@@ -176,30 +181,11 @@ class _RectoRCState extends State<RectoRC> {
                         Container(
                           margin: EdgeInsets.symmetric(
                               horizontal: 20.w, vertical: 5.h),
-                          child: ElevatedButton(
+                          child: CustomMainButton(
                             onPressed: () async {
                               takeRecto();
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: color3,
-                              padding: EdgeInsets.symmetric(vertical: 15.h),
-                              foregroundColor: Colors.white,
-                              minimumSize: Size.fromHeight(30.w),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.r),
-                              ),
-                              elevation: 20,
-                              shadowColor: color3, // Set the shadow color
-                            ),
-                            child: Text(
-                              'Continuer',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.sp,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                            text: 'Continuer',
                           ),
                         )
                       ],

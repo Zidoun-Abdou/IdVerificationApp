@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whowiyati/widgets/compte_pro/steps_verify_compte_pro/custom_align.dart';
+import 'package:whowiyati/widgets/compte_pro/steps_verify_compte_pro/custom_etape.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
+import 'package:whowiyati/widgets/custom_title_text.dart';
 import '../const.dart';
 import '../main.dart';
 import '../widgets/custom_image_logo.dart';
@@ -57,208 +61,22 @@ class _StepsState extends State<Steps> {
                         ),
                         Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: CircleAvatar(
-                                    backgroundColor:
-                                        int.parse(prefs.getString("status")!) >=
-                                                2
-                                            ? color3
-                                            : Colors.grey,
-                                    child: Icon(
-                                      Icons.check_rounded,
-                                      color: Colors.white,
-                                      size: 30.sp,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 30.w,
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'Confirmation par téléphone\n',
-                                          style: TextStyle(
-                                            color: int.parse(prefs.getString(
-                                                        "status")!) >=
-                                                    2
-                                                ? Colors.white
-                                                : Colors.grey,
-                                            fontSize: 13.sp,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.20,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: 'Vérifié',
-                                          style: TextStyle(
-                                            color: int.parse(prefs.getString(
-                                                        "status")!) >=
-                                                    2
-                                                ? color3
-                                                : Colors.grey,
-                                            fontSize: 12.sp,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
+                            CustomEtape(
+                              condition:
+                                  int.parse(prefs.getString("status")!) >= 2,
+                              title: 'Confirmation par téléphone\n',
                             ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                height: 30.h,
-                                padding: EdgeInsets.only(left: 30.w),
-                                child: VerticalDivider(
-                                  color: Colors.grey,
-                                  thickness: 1,
-                                ),
-                              ),
+                            CustomAlign(),
+                            CustomEtape(
+                              condition:
+                                  int.parse(prefs.getString("status")!) >= 3,
+                              title: 'Confirmation par mail\n',
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: CircleAvatar(
-                                    backgroundColor:
-                                        int.parse(prefs.getString("status")!) >=
-                                                3
-                                            ? color3
-                                            : Colors.grey,
-                                    child: Icon(
-                                      Icons.check_rounded,
-                                      color: Colors.white,
-                                      size: 30.sp,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 30.w,
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'Confirmation par mail\n',
-                                          style: TextStyle(
-                                            color: int.parse(prefs.getString(
-                                                        "status")!) >=
-                                                    3
-                                                ? Colors.white
-                                                : Colors.grey,
-                                            fontSize: 13.sp,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.20,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: 'Vérifié',
-                                          style: TextStyle(
-                                            color: int.parse(prefs.getString(
-                                                        "status")!) >=
-                                                    3
-                                                ? color3
-                                                : Colors.grey,
-                                            fontSize: 12.sp,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                height: 30.h,
-                                padding: EdgeInsets.only(left: 30.w),
-                                child: VerticalDivider(
-                                  color: Colors.grey,
-                                  thickness: 1,
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: CircleAvatar(
-                                    backgroundColor:
-                                        int.parse(prefs.getString("status")!) ==
-                                                5
-                                            ? color3
-                                            : Colors.grey,
-                                    child: Icon(
-                                      Icons.check_rounded,
-                                      color: Colors.white,
-                                      size: 30.sp,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 30.w,
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text:
-                                              'Confirmation par carte d’identité\n',
-                                          style: TextStyle(
-                                            color: int.parse(prefs.getString(
-                                                        "status")!) ==
-                                                    5
-                                                ? Colors.white
-                                                : Colors.grey,
-                                            fontSize: 13.sp,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.20,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: 'Vérifié',
-                                          style: TextStyle(
-                                            color: int.parse(prefs.getString(
-                                                        "status")!) ==
-                                                    5
-                                                ? color3
-                                                : Colors.grey,
-                                            fontSize: 12.sp,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
+                            CustomAlign(),
+                            CustomEtape(
+                              condition:
+                                  int.parse(prefs.getString("status")!) == 5,
+                              title: 'Confirmation par carte d’identité\n',
                             ),
                           ],
                         ),
@@ -270,22 +88,17 @@ class _StepsState extends State<Steps> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
-                        "Suivez ces étapes pour compléter la validation\n de votre identité",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14.sp,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                          height: 1.2.h,
-                          letterSpacing: 0.20.w,
-                        ),
+                      CustomTitleText(
+                        data:
+                            "Suivez ces étapes pour compléter la validation\n de votre identité",
+                        color: Colors.white,
+                        size: 14,
+                        fontWeight: FontWeight.w500,
                       ),
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: 20.w, vertical: 8.h),
-                        child: ElevatedButton(
+                        child: CustomMainButton(
                           onPressed: () {
                             if (int.parse(prefs.getString("status")!) == 2) {
                               Navigator.of(context).push(MaterialPageRoute(
@@ -308,25 +121,7 @@ class _StepsState extends State<Steps> {
                             //   );
                             // }
                           },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: color3,
-                              padding: EdgeInsets.symmetric(vertical: 15.h),
-                              foregroundColor: Colors.white,
-                              minimumSize: Size.fromHeight(30.w),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.r),
-                              ),
-                              elevation: 20,
-                              shadowColor: color3),
-                          child: Text(
-                            'Continuer',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          text: 'Continuer',
                         ),
                       ),
                     ],

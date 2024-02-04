@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/pages/mot_pass_oublie/verifier_code.dart';
 import 'package:whowiyati/widgets/custom_intl_phone_field.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/custom_title_text.dart';
 import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
@@ -172,33 +173,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               Container(
                                 margin: EdgeInsets.symmetric(
                                     horizontal: 20.w, vertical: 8.h),
-                                child: ElevatedButton(
+                                child: CustomMainButton(
                                   onPressed: () {
                                     checkPhoneNumber();
                                   },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: color3,
-
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 15.h),
-                                    foregroundColor: Colors.white,
-                                    minimumSize: Size.fromHeight(30.w),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50.r),
-                                    ),
-                                    elevation: 20,
-                                    shadowColor: color3,
-                                    // Set the shadow color
-                                  ),
-                                  child: Text(
-                                    "Envoyer",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                                  text: "Envoyer",
                                 ),
                               ),
                               SizedBox(

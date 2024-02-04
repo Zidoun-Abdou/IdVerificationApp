@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 
 import '../../const.dart';
 import '../../widgets/custom_bottom_text_hint.dart';
@@ -64,35 +65,14 @@ class Reinitialisation extends StatelessWidget {
                     Container(
                       margin:
                           EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                      child: ElevatedButton(
+                      child: CustomMainButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: color3,
-
-                          padding: EdgeInsets.symmetric(vertical: 15.h),
-                          foregroundColor: Colors.white,
-                          minimumSize: Size.fromHeight(30.w),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          elevation: 20,
-                          shadowColor: color3,
-                          // Set the shadow color
-                        ),
-                        child: Text(
-                          "Connexion",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        text: "Connexion",
                       ),
                     ),
                     SizedBox(

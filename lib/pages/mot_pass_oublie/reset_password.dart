@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/pages/mot_pass_oublie/reinitialisation.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import 'package:http/http.dart' as http;
 
@@ -248,33 +249,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                               Container(
                                 margin: EdgeInsets.symmetric(
                                     horizontal: 20.w, vertical: 8.h),
-                                child: ElevatedButton(
+                                child: CustomMainButton(
                                   onPressed: () {
                                     resetPass();
                                   },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: color3,
-
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 15.h),
-                                    foregroundColor: Colors.white,
-                                    minimumSize: Size.fromHeight(30.w),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50.r),
-                                    ),
-                                    elevation: 20,
-                                    shadowColor: color3,
-                                    // Set the shadow color
-                                  ),
-                                  child: Text(
-                                    "Confirmer",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                                  text: "Confirmer",
                                 ),
                               ),
                               SizedBox(

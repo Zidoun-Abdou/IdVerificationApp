@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/conditions.dart';
 import 'package:whowiyati/pages/login.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 
 import '../widgets/custom_bottom_text_welcome_hint.dart';
 import '../widgets/custom_image_logo.dart';
@@ -38,60 +39,25 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       margin:
                           EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                      child: ElevatedButton(
+                      child: CustomMainButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => Conditions()));
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: color3,
-                          padding: EdgeInsets.symmetric(vertical: 15.h),
-                          foregroundColor: Colors.white,
-                          minimumSize: Size.fromHeight(30.w),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          elevation: 20,
-                          shadowColor: color3, // Set the shadow color
-                        ),
-                        child: Text(
-                          'S\'inscrire',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        text: "S\'inscrire",
                       ),
                     ),
                     Container(
                       margin:
                           EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                      child: ElevatedButton(
+                      child: CustomMainButton(
                         onPressed: () {
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (context) => Login()));
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey[850],
-                          padding: EdgeInsets.symmetric(vertical: 15.h),
-                          foregroundColor: Colors.white,
-                          minimumSize: Size.fromHeight(30.w),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          // Set the shadow color
-                        ),
-                        child: Text(
-                          'Déjà identifié',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        text: 'Déjà identifié',
+                        backgroundColor: Colors.grey[850],
+                        elevation: 0,
                       ),
                     ),
                   ],

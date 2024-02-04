@@ -14,6 +14,7 @@ import 'package:whowiyati/main.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/welcome.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
 import '../widgets/custom_byicosnet_hint.dart';
@@ -356,7 +357,7 @@ class _VerifyFaceState extends State<VerifyFace> {
                       left: 0,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: ElevatedButton(
+                        child: CustomMainButton(
                           onPressed: () async {
                             setState(() {
                               _isShownFace = !_isShownFace;
@@ -381,26 +382,7 @@ class _VerifyFaceState extends State<VerifyFace> {
                             setState(() {});
                             print("finish");
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: color3,
-                            padding: EdgeInsets.symmetric(vertical: 15.h),
-                            foregroundColor: Colors.white,
-                            minimumSize: Size.fromHeight(50.w),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.r),
-                            ),
-                            elevation: 20,
-                            shadowColor: color3, // Set the shadow color
-                          ),
-                          child: Text(
-                            "Open camera",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          text: "Open camera",
                         ),
                       ),
                     ),

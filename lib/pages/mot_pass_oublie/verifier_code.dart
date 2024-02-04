@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:whowiyati/pages/mot_pass_oublie/reset_password.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/custom_pin_field_auto_fill.dart';
 import 'package:http/http.dart' as http;
 import '../../const.dart';
@@ -315,34 +316,13 @@ class _VerifierCodeState extends State<VerifierCode> {
                             Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 8.h),
-                              child: ElevatedButton(
+                              child: CustomMainButton(
                                 onPressed: () {
                                   widget.isEmail
                                       ? validateCodeEmail()
                                       : validateCodePhone();
                                 },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: color3,
-
-                                  padding: EdgeInsets.symmetric(vertical: 15.h),
-                                  foregroundColor: Colors.white,
-                                  minimumSize: Size.fromHeight(30.w),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.r),
-                                  ),
-                                  elevation: 20,
-                                  shadowColor: color3,
-                                  // Set the shadow color
-                                ),
-                                child: Text(
-                                  "Continue",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13.sp,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                                text: "Continue",
                               ),
                             ),
                             SizedBox(

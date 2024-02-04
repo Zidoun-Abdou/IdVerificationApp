@@ -301,7 +301,9 @@ class _ListOfDocumentsState extends State<ListOfDocuments> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Signature électronique"),
+          title: Text(
+            "Signature électronique",
+          ),
           actions: [
             IconButton(
                 onPressed: () async {

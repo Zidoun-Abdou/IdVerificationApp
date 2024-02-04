@@ -17,6 +17,8 @@ import 'package:dmrtd/dmrtd.dart';
 import 'package:dmrtd/extensions.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:whowiyati/pages/verify_face.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
+import 'package:whowiyati/widgets/custom_title_text.dart';
 
 import '../main.dart';
 import '../widgets/adaptive_circular_progress_indicator.dart';
@@ -458,31 +460,18 @@ class _ReadNfcState extends State<ReadNfc> {
                       children: [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.w),
-                          child: Text(
-                            "Validation Via NFC",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                          child: CustomTitleText(
+                              data: "Validation Via NFC",
                               color: Colors.white,
-                              fontSize: 16.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0.20.w,
-                            ),
-                          ),
+                              size: 16),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30.w),
-                          child: Text(
-                            "Cette action nécessite l’activation de l’NFC",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                          child: CustomTitleText(
+                              data:
+                                  "Cette action nécessite l’activation de l’NFC",
                               color: Colors.white,
-                              fontSize: 14.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 0.20.w,
-                            ),
-                          ),
+                              size: 14),
                         ),
                         Visibility(
                           visible: !_isNfcAvailable,
@@ -521,21 +510,9 @@ class _ReadNfcState extends State<ReadNfc> {
                           child: Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 8.h),
-                            child: ElevatedButton(
+                            child: CustomMainButton(
                               onPressed: _readMRTD,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: color3,
-                                padding: EdgeInsets.symmetric(vertical: 15.h),
-                                foregroundColor: Colors.white,
-                                minimumSize: Size.fromHeight(30.w),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.r),
-                                ),
-                                elevation: 20,
-                                shadowColor: color3, // Set the shadow color
-                              ),
-                              child: Text(
-                                  _isReading ? 'Reading ...' : 'Read IdCard'),
+                              text: _isReading ? 'Reading ...' : 'Read IdCard',
                             ),
                           ),
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import '../const.dart';
 
 import '../widgets/conditions/custom_checkbox_conditions.dart';
@@ -75,36 +76,17 @@ class _ConditionsState extends State<Conditions> {
                           Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 8.h),
-                            child: ElevatedButton(
+                            child: CustomMainButton(
                               onPressed: () {
                                 if (_isChecked == true) {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => Phone()));
                                 }
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    _isChecked ? color3 : Colors.grey[850],
-                                padding: EdgeInsets.symmetric(vertical: 15.h),
-                                foregroundColor: Colors.white,
-                                minimumSize: Size.fromHeight(30.w),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.r),
-                                ),
-                                elevation: 20,
-                                shadowColor: _isChecked
-                                    ? color3
-                                    : Colors.grey[850], // Set the shadow color
-                              ),
-                              child: Text(
-                                "Continuer",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                              text: "Continuer",
+                              backgroundColor:
+                                  _isChecked ? color3 : Colors.grey[850],
+                              elevation: _isChecked ? 20 : 0,
                             ),
                           ),
                           SizedBox(

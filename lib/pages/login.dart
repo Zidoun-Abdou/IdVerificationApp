@@ -9,6 +9,7 @@ import 'package:whowiyati/pages/mot_pass_oublie/forget_password.dart';
 import 'dart:convert';
 
 import 'package:whowiyati/pages/welcome.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import 'package:whowiyati/widgets/login/custom_souvenir_moi_checkbox.dart';
 
@@ -310,34 +311,11 @@ class _LoginState extends State<Login> {
                                   Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 20.w, vertical: 8.h),
-                                    child: ElevatedButton(
+                                    child: CustomMainButton(
                                       onPressed: () {
                                         login();
                                       },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: color3,
-
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 15.h),
-                                        foregroundColor: Colors.white,
-                                        minimumSize: Size.fromHeight(30.w),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                        ),
-                                        elevation: 20,
-                                        shadowColor: color3,
-                                        // Set the shadow color
-                                      ),
-                                      child: Text(
-                                        "Se Connecter",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13.sp,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
+                                      text: "Se Connecter",
                                     ),
                                   ),
                                   SizedBox(

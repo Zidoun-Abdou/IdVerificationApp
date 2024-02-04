@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
+import 'package:whowiyati/widgets/custom_title_text.dart';
 import 'package:whowiyati/widgets/welcome/custom_cancel_button.dart';
 
 import '../../const.dart';
@@ -33,19 +35,14 @@ class CustomPageAjouteCompteProWelcome extends StatelessWidget {
                 left: 0,
                 child: Column(
                   children: [
-                    Text(
-                      "Souhaitez-vous ajouter un  compte\nprofessionnel ?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.20,
-                      ),
+                    CustomTitleText(
+                      data:
+                          "Souhaitez-vous ajouter un  compte\nprofessionnel ?",
+                      color: Colors.white,
+                      size: 14,
                     ),
                     SizedBox(height: 30.h),
-                    ElevatedButton(
+                    CustomMainButton(
                       onPressed: () {
                         // Navigator to ajouter compte pro
                         Navigator.of(context).push(
@@ -70,26 +67,7 @@ class CustomPageAjouteCompteProWelcome extends StatelessWidget {
                           ),
                         );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: color3,
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
-                        foregroundColor: Colors.white,
-                        minimumSize: Size.fromHeight(30.w),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.r),
-                        ),
-                        elevation: 20,
-                        shadowColor: color3,
-                      ),
-                      child: Text(
-                        'Ajouter un compte PRO',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.sp,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      text: 'Ajouter un compte PRO',
                     ),
                   ],
                 ),

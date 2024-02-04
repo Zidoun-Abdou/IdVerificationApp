@@ -6,6 +6,7 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/dealpad.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/custom_pin_field_auto_fill.dart';
 import 'package:whowiyati/widgets/otp/custom_text_otp.dart';
 
@@ -289,30 +290,11 @@ class _OtpState extends State<Otp> {
                     Container(
                       margin: EdgeInsets.symmetric(
                           horizontal: 20.w, vertical: 30.h),
-                      child: ElevatedButton(
+                      child: CustomMainButton(
                         onPressed: () async {
                           verifySms();
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: color3,
-                          padding: EdgeInsets.symmetric(vertical: 15.h),
-                          foregroundColor: Colors.white,
-                          minimumSize: Size.fromHeight(30.w),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.r),
-                          ),
-                          elevation: 20,
-                          shadowColor: color3, // Set the shadow color
-                        ),
-                        child: Text(
-                          'Continuer',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        text: 'Continuer',
                       ),
                     ),
                   ],

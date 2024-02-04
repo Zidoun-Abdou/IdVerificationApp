@@ -447,11 +447,14 @@ class _WelcomeState extends State<Welcome> {
                         ),
                       ),
                     ),
-                    Positioned(
-                      bottom: 10.h,
-                      right: 0,
-                      left: 0,
-                      child: Center(child: CustomByIcosnetHint()),
+                    Visibility(
+                      visible: prefs.getString('status') == "5",
+                      child: Positioned(
+                        bottom: 10.h,
+                        right: 0,
+                        left: 0,
+                        child: Center(child: CustomByIcosnetHint()),
+                      ),
                     ),
                   ],
                 ),

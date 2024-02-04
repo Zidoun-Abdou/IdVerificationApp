@@ -8,6 +8,7 @@ import 'package:whowiyati/pages/compte_pro/mes_comptes_pro.dart';
 import 'package:whowiyati/widgets/compte_pro/ajoute_compte_pro/custom_bottom_background.dart';
 import 'package:whowiyati/widgets/compte_pro/ajoute_compte_pro/custom_top_background.dart';
 import 'package:whowiyati/widgets/compte_pro/custom_alert_dialog.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import '../../const.dart';
 
@@ -420,35 +421,14 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                   bottom: 40.h,
                                   left: 0,
                                   right: 0,
-                                  child: ElevatedButton(
+                                  child: CustomMainButton(
                                     onPressed: () async {
                                       if (formKey.currentState!.validate() &&
                                           _formeJurd.isNotEmpty) {
                                         createComptePro();
                                       }
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: color3,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15.h),
-                                      foregroundColor: Colors.white,
-                                      minimumSize: Size.fromHeight(30.w),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(50.r),
-                                      ),
-                                      elevation: 20,
-                                      shadowColor: color3,
-                                    ),
-                                    child: Text(
-                                      'Continuer',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                    text: 'Continuer',
                                   ),
                                 ),
                                 Align(

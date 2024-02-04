@@ -9,6 +9,7 @@ import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 
 import '../../widgets/adaptive_circular_progress_indicator.dart';
 import '../../widgets/compte_pro/custom_alert_dialog.dart';
@@ -222,6 +223,10 @@ class _VeriferPhoneState extends State<VeriferPhone> {
       child: Scaffold(
         backgroundColor: color1,
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
         body: WillPopScope(
           onWillPop: () async {
             showDialog(
@@ -440,43 +445,24 @@ class _VeriferPhoneState extends State<VeriferPhone> {
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 20.w, vertical: 8.h),
-                                    child: ElevatedButton(
+                                    child: CustomMainButton(
                                       onPressed: () {
                                         setState(() {
                                           _utiliseNum = !_utiliseNum;
                                         });
                                       },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xFF120918),
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 15.h),
-                                        foregroundColor: Colors.white,
-                                        minimumSize: Size.fromHeight(30.w),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                        ),
-                                        elevation: 20,
-                                        shadowColor: Color(0xFF120918),
-                                      ),
-                                      child: Text(
-                                        _utiliseNum
-                                            ? 'Utiliser un autre numéro'
-                                            : 'Utiliser votre numéro personnel',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.sp,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
+                                      text: _utiliseNum
+                                          ? 'Utiliser un autre numéro'
+                                          : 'Utiliser votre numéro personnel',
+                                      backgroundColor: Color(0xFF120918),
+                                      elevation: 0,
                                     ),
                                   ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: 20.w, vertical: 8.h),
-                                  child: ElevatedButton(
+                                  child: CustomMainButton(
                                     onPressed: () {
                                       if (isVerificationNum == false) {
                                         if (formKey.currentState!.validate()) {
@@ -486,27 +472,7 @@ class _VeriferPhoneState extends State<VeriferPhone> {
                                         verifySms();
                                       }
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: color3,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 15.h),
-                                        foregroundColor: Colors.white,
-                                        minimumSize: Size.fromHeight(30.w),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                        ),
-                                        elevation: 20,
-                                        shadowColor: color3),
-                                    child: Text(
-                                      'Continuer',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                    text: 'Continuer',
                                   ),
                                 ),
                                 CustomByIcosnetHint(),

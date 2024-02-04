@@ -8,6 +8,7 @@ import 'package:whowiyati/const.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/pages/compte_pro/steps_verify_compte_pro.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/custom_text_form_field.dart';
 
 import '../../widgets/adaptive_circular_progress_indicator.dart';
@@ -204,6 +205,10 @@ class _VeriferMailState extends State<VeriferMail> {
       child: Scaffold(
         backgroundColor: color1,
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
         body: WillPopScope(
           onWillPop: () async {
             showDialog(
@@ -419,45 +424,25 @@ class _VeriferMailState extends State<VeriferMail> {
                                 Visibility(
                                   visible: !isVerificationMail,
                                   child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 20.w, vertical: 8.h),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _utiliseMail = !_utiliseMail;
-                                        });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xFF120918),
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 15.h),
-                                        foregroundColor: Colors.white,
-                                        minimumSize: Size.fromHeight(30.w),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                        ),
-                                        elevation: 20,
-                                        shadowColor: Color(0xFF120918),
-                                      ),
-                                      child: Text(
-                                        _utiliseMail
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 20.w, vertical: 8.h),
+                                      child: CustomMainButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _utiliseMail = !_utiliseMail;
+                                          });
+                                        },
+                                        text: _utiliseMail
                                             ? 'Utiliser un autre mail'
                                             : 'Utiliser votre mail personnel',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.sp,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                        backgroundColor: Color(0xFF120918),
+                                        elevation: 0,
+                                      )),
                                 ),
                                 Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: 20.w, vertical: 8.h),
-                                  child: ElevatedButton(
+                                  child: CustomMainButton(
                                     onPressed: () {
                                       if (isVerificationMail == false) {
                                         if (_formMailKey.currentState!
@@ -468,27 +453,7 @@ class _VeriferMailState extends State<VeriferMail> {
                                         validateCode();
                                       }
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: color3,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 15.h),
-                                        foregroundColor: Colors.white,
-                                        minimumSize: Size.fromHeight(30.w),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                        ),
-                                        elevation: 20,
-                                        shadowColor: color3),
-                                    child: Text(
-                                      'Continuer',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                    text: 'Continuer',
                                   ),
                                 ),
                                 CustomByIcosnetHint(),

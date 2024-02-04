@@ -10,6 +10,8 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/compte_pro/recto_rc.dart';
 import 'package:http/http.dart' as http;
+import 'package:whowiyati/widgets/custom_main_button.dart';
+import 'package:whowiyati/widgets/custom_title_text.dart';
 import '../../main.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
 import '../../widgets/compte_pro/custom_alert_dialog.dart';
@@ -180,6 +182,10 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         backgroundColor: color1,
+        appBar: AppBar(
+          backgroundColor: color1,
+          elevation: 0.0,
+        ),
         body: WillPopScope(
           onWillPop: () async {
             showDialog(
@@ -207,17 +213,11 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(
-                                "Téleverser votre registre commerce\nau format PDF",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.1.h,
-                                  letterSpacing: 0.20.w,
-                                ),
+                              CustomTitleText(
+                                data:
+                                    "Téleverser votre registre commerce\nau format PDF",
+                                color: Colors.white,
+                                size: 13,
                               ),
                               SizedBox(height: 20.h),
                               GestureDetector(
@@ -233,22 +233,15 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
                                 ),
                               ),
                               SizedBox(height: 10.h),
-                              Text(
-                                "OU",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.sp,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.1.h,
-                                  letterSpacing: 0.20.w,
-                                ),
+                              CustomTitleText(
+                                data: "OU",
+                                color: Colors.white,
+                                size: 15,
                               ),
                               SizedBox(height: 10.h),
                               Padding(
                                 padding: EdgeInsets.all(10.w),
-                                child: ElevatedButton(
+                                child: CustomMainButton(
                                   onPressed: () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
@@ -258,27 +251,7 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
                                       ),
                                     ));
                                   },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: color3,
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 15.h),
-                                    foregroundColor: Colors.white,
-                                    minimumSize: Size.fromHeight(30.w),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50.r),
-                                    ),
-                                    elevation: 20,
-                                    shadowColor: color3,
-                                  ),
-                                  child: Text(
-                                    'Prendre une photo registre commerce',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.sp,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                                  text: 'Prendre une photo registre commerce',
                                 ),
                               ),
                             ],

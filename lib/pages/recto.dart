@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/pages/verso.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
+import 'package:whowiyati/widgets/custom_title_text.dart';
 
 import '../widgets/adaptive_circular_progress_indicator.dart';
 import '../widgets/custom_image_logo.dart';
@@ -31,7 +33,7 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
         source: ImageSource.camera,
         maxHeight: 1080,
         maxWidth: 1920,
-        imageQuality: 50);
+        imageQuality: 80);
 
     if (recto != null) {
       Navigator.of(context).push(
@@ -165,45 +167,21 @@ class _RectoState extends State<Recto> with TickerProviderStateMixin {
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 30.w, vertical: 10.h),
-                              child: Text(
-                                "Mettez votre carte en position horizontale et votre téléphone en position verticale pour prendre une photo",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.sp,
-                                  fontFamily: 'Inter',
-                                  height: 1.1.h,
-                                  letterSpacing: 0.20.w,
-                                ),
+                              child: CustomTitleText(
+                                data:
+                                    "Mettez votre carte en position horizontale et votre téléphone en position verticale pour prendre une photo",
+                                color: Colors.white,
+                                size: 14,
                               ),
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 10.h),
-                              child: ElevatedButton(
+                              child: CustomMainButton(
                                 onPressed: () async {
                                   takeRecto();
                                 },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: color3,
-                                  padding: EdgeInsets.symmetric(vertical: 15.h),
-                                  foregroundColor: Colors.white,
-                                  minimumSize: Size.fromHeight(30.w),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.r),
-                                  ),
-                                  elevation: 20,
-                                  shadowColor: color3, // Set the shadow color
-                                ),
-                                child: Text(
-                                  'Continuer',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.sp,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                                text: 'Continuer',
                               ),
                             )
                           ],

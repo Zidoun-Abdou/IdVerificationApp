@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:whowiyati/widgets/compte_pro/custom_text_pro.dart';
 import 'package:whowiyati/widgets/compte_pro/steps_verify_compte_pro/custom_align.dart';
 import 'package:whowiyati/widgets/compte_pro/steps_verify_compte_pro/custom_etape.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 
 import '../../widgets/adaptive_circular_progress_indicator.dart';
 import '../../widgets/custom_byicosnet_hint.dart';
@@ -157,7 +158,7 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                 Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: 20.w, vertical: 8.h),
-                                  child: ElevatedButton(
+                                  child: CustomMainButton(
                                     onPressed: () {
                                       if (prefs.getString("step") == "0") {
                                         Navigator.of(context)
@@ -203,29 +204,9 @@ class _StepsVerifyCompteProState extends State<StepsVerifyComptePro> {
                                         ));
                                       }
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: color3,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 15.h),
-                                        foregroundColor: Colors.white,
-                                        minimumSize: Size.fromHeight(30.w),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                        ),
-                                        elevation: 20,
-                                        shadowColor: color3),
-                                    child: Text(
-                                      prefs.getString("step") == "4"
-                                          ? 'Retourner'
-                                          : 'Continuer',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.sp,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                    text: prefs.getString("step") == "4"
+                                        ? 'Retourner'
+                                        : 'Continuer',
                                   ),
                                 ),
                                 CustomByIcosnetHint(),

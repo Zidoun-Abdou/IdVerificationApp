@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:whowiyati/pages/otp.dart';
 import 'package:whowiyati/widgets/custom_intl_phone_field.dart';
+import 'package:whowiyati/widgets/custom_main_button.dart';
 import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import 'package:whowiyati/widgets/phone/custom_text_phone.dart';
 
@@ -278,7 +279,7 @@ class _PhoneState extends State<Phone> {
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: 20.w, vertical: 8.h),
-                        child: ElevatedButton(
+                        child: CustomMainButton(
                           onPressed: () async {
                             var connectivityResult =
                                 await (Connectivity().checkConnectivity());
@@ -301,36 +302,19 @@ class _PhoneState extends State<Phone> {
                               setState(() {});
                             }
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isPhoneNumberValid &&
-                                    _confpasswordContr.text ==
-                                        _passwordContr.text &&
-                                    _confpasswordContr.text.isNotEmpty
-                                ? color3
-                                : color4,
-                            padding: EdgeInsets.symmetric(vertical: 15.h),
-                            foregroundColor: Colors.white,
-                            minimumSize: Size.fromHeight(30.w),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.r),
-                            ),
-                            elevation: 20,
-                            shadowColor: isPhoneNumberValid &&
-                                    _confpasswordContr.text ==
-                                        _passwordContr.text &&
-                                    _confpasswordContr.text.isNotEmpty
-                                ? color3
-                                : color4, // Set the shadow color
-                          ),
-                          child: Text(
-                            'Continuer',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          text: 'Continuer',
+                          backgroundColor: isPhoneNumberValid &&
+                                  _confpasswordContr.text ==
+                                      _passwordContr.text &&
+                                  _confpasswordContr.text.isNotEmpty
+                              ? color3
+                              : color4,
+                          elevation: isPhoneNumberValid &&
+                                  _confpasswordContr.text ==
+                                      _passwordContr.text &&
+                                  _confpasswordContr.text.isNotEmpty
+                              ? 20
+                              : 0,
                         ),
                       ),
                     ],
