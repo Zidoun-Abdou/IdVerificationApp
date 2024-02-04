@@ -20,9 +20,6 @@ class MesComptesPro extends StatefulWidget {
 
 class _MesComptesProState extends State<MesComptesPro> {
   // ******************* Logic *******************
-
-  bool _isVerify = false;
-
   getCompanies() async {
     var headers = {'Authorization': 'Basic c2lnbmF0dXJlOnNpZ25hdHVyZQ=='};
     var request = http.MultipartRequest(

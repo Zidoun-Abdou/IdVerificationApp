@@ -38,7 +38,6 @@ class Welcome extends StatefulWidget {
 class _WelcomeState extends State<Welcome> {
   // ******************* Logic *******************
   bool isProfile = false;
-  final GlobalKey<State<BottomSheet>> _bottomSheetKey = GlobalKey();
   double initialSize = 0.7;
   ValueNotifier<bool> isDemandeValidationOpen = ValueNotifier(false);
 

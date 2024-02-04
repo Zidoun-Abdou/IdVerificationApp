@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sms_autofill/sms_autofill.dart';
 import 'package:whowiyati/const.dart';
 import 'package:http/http.dart' as http;
 import 'package:whowiyati/main.dart';

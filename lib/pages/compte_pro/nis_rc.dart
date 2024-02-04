@@ -36,7 +36,6 @@ class _NisRCState extends State<NisRC> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
     });
   }

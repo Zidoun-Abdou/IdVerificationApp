@@ -32,7 +32,6 @@ class _RectoRCState extends State<RectoRC> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
     });
   }

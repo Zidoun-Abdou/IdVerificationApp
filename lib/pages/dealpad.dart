@@ -48,7 +48,6 @@ class _DialpadScreenState extends State<DialpadScreen> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
       print(_myToken);
     });

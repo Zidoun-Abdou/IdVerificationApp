@@ -40,7 +40,6 @@ class _MyAppState extends State<MyApp> {
   String _myToken = "";
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
       print("token : " + _myToken);
     });

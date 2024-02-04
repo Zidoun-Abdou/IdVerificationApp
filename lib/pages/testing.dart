@@ -7,7 +7,6 @@ class Testing extends StatefulWidget {
 
 class _TestingState extends State<Testing> {
   double _sheetHeight = 500.0;
-  bool _full_height = false;
 
   @override
   Widget build(BuildContext context) {

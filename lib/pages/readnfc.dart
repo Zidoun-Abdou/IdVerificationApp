@@ -89,7 +89,6 @@ class _ReadNfcState extends State<ReadNfc> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
       print(_myToken);
     });
@@ -101,8 +100,7 @@ class _ReadNfcState extends State<ReadNfc> {
 
   // ignore: unused_field
   late Timer _timerStateUpdater;
-  final _scrollController = ScrollController();
-  bool? _is_loading = false;
+  // final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -138,14 +136,14 @@ class _ReadNfcState extends State<ReadNfc> {
   }
 
   DateTime? _getDOBDate() {
-    if (widget.dob == null) {
+    if (widget.dob.isEmpty) {
       return null;
     }
     return DateFormat.yMd().parse(widget.dob);
   }
 
   DateTime? _getDOEDate() {
-    if (widget.doe == null) {
+    if (widget.doe.isEmpty) {
       return null;
     }
     return DateFormat.yMd().parse(widget.doe);
@@ -450,7 +448,7 @@ class _ReadNfcState extends State<ReadNfc> {
       ),
       body: SafeArea(
         child: Center(
-          child: _is_loading == true
+          child: _isLoading == true
               ? AdaptiveCircularProgressIndicator(color: color3)
               : Stack(
                   alignment: Alignment.center,

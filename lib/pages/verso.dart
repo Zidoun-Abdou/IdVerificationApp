@@ -116,9 +116,7 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
         maxWidth: 1920,
         imageQuality: 80);
 
-    if (widget.rectoPhoto != null && versoPhoto != null) {
-      String _token = prefs.getString('mail').toString();
-
+    if (versoPhoto != null) {
       var headers = {
         'Authorization': 'Basic ZHNpX3NlbGZjYXJlOmRzaV9zZWxmY2FyZQ==',
         'Content-Type':
@@ -136,16 +134,8 @@ class _VersoState extends State<Verso> with TickerProviderStateMixin {
 
       http.StreamedResponse response = await request.send();
       String answer = await response.stream.bytesToString();
-      // Parse the JSON string.
-      Map<String, dynamic> jsonData = json.decode(answer);
-      // Extract the "result" part as a JSON string.
-      String resultData = jsonEncode(['result']);
-      // Create a new map with "result" as the key.
-      Map<String, dynamic> outputMap = {"result": resultData};
-      // Convert the map to a JSON string.
-      String resultJson = jsonEncode(outputMap);
-
       var answerJson = jsonDecode(answer);
+
       if (answerJson["decision"] == true) {
         //"abdelkrim_nachef_121328643_face.png"
         String _face = "Face";

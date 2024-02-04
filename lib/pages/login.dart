@@ -44,7 +44,6 @@ class _LoginState extends State<Login> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
     });
   }

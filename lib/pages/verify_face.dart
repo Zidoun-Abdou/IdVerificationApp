@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dmrtd/dmrtd.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get_ip_address/get_ip_address.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:whowiyati/const.dart';
 import 'package:whowiyati/main.dart';
 import 'package:camera/camera.dart';
@@ -48,7 +46,6 @@ class _VerifyFaceState extends State<VerifyFace> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
       print(_myToken);
     });

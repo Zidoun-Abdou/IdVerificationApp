@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,20 +22,6 @@ class _IdInfosState extends State<IdInfos> {
   // ******************* Logic *******************
   bool? _is_loading = false;
   GlobalKey<FlipCardState> _cardKey = GlobalKey<FlipCardState>();
-  @override
-  void initState() {
-    super.initState();
-    getToken();
-  }
-
-  String _myToken = "";
-
-  void getToken() {
-    FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
-      _myToken = value.toString();
-    });
-  }
 
   // ******************* Interface *******************
   @override

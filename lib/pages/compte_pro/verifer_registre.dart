@@ -37,7 +37,6 @@ class _VeriferRegitreState extends State<VeriferRegitre> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
     });
   }

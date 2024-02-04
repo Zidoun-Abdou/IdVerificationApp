@@ -37,7 +37,6 @@ class _VeriferNifState extends State<VeriferNif> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
     });
   }

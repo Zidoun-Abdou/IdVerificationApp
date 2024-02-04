@@ -11,7 +11,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:whowiyati/main.dart';
 import 'package:whowiyati/widgets/compte_pro/custom_text_pro.dart';
 import 'package:whowiyati/widgets/custom_main_button.dart';
-import 'package:whowiyati/widgets/custom_title_text.dart';
 import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
 import '../../widgets/custom_image_logo.dart';
@@ -38,7 +37,6 @@ class _VersoRCState extends State<VersoRC> {
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
       _myToken = value.toString();
     });
   }
