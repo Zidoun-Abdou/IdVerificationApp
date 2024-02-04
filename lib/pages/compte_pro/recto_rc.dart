@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,13 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
 import '../../widgets/compte_pro/custom_text_pro.dart';
 import '../../widgets/custom_image_logo.dart';
 import 'verso_rc.dart';
-import '../verso.dart';
 
 class RectoRC extends StatefulWidget {
   final String companyId;

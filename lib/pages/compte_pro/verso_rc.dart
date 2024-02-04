@@ -13,7 +13,6 @@ import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
 import '../../widgets/custom_image_logo.dart';
 import 'steps_verify_compte_pro.dart';
-import 'nif_rc.dart';
 
 class VersoRC extends StatefulWidget {
   final String companyId;

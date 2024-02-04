@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:whowiyati/pages/compte_pro/mes_comptes_pro.dart';
 import 'package:whowiyati/widgets/compte_pro/ajoute_compte_pro/custom_bottom_background.dart';
 import 'package:whowiyati/widgets/compte_pro/ajoute_compte_pro/custom_top_background.dart';
@@ -15,15 +14,8 @@ import '../../const.dart';
 import 'package:http/http.dart' as http;
 
 import '../../main.dart';
-import '../../widgets/custom_bottom_text_hint.dart';
 import '../../widgets/custom_byicosnet_hint.dart';
-import '../../widgets/welcome/custom_bonjour_welcome.dart';
-import '../../widgets/welcome/custom_button_ajoute_compte_pro_welcome.dart';
 import '../../widgets/welcome/custom_cancel_button.dart';
-import '../../widgets/welcome/custom_identifient_welcome.dart';
-import '../../widgets/welcome/custom_notif_welcome.dart';
-import '../../widgets/welcome/custom_title_welcome.dart';
-import '../../widgets/welcome/custom_welcome_item.dart';
 
 class AjouteComptePro extends StatefulWidget {
   const AjouteComptePro({super.key});
@@ -304,55 +296,6 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                                                   print(_formeJurd);
                                                 },
                                               ),
-                                              // TextFormField(
-                                              //   autofocus: false,
-                                              //   textInputAction:
-                                              //       TextInputAction.next,
-                                              //   controller: _formeJurdContr,
-                                              //   cursorColor: color3,
-                                              //   style: TextStyle(
-                                              //       color: Colors.black),
-                                              //   decoration: InputDecoration(
-                                              //     hintStyle: TextStyle(
-                                              //         color: Color(0xFF6D6D6D)),
-                                              //     hintText: "Forme juridique",
-                                              //     prefixIcon: Icon(
-                                              //       Icons.description_outlined,
-                                              //       color: Colors.black,
-                                              //     ),
-                                              //     focusedBorder:
-                                              //         OutlineInputBorder(
-                                              //       borderRadius:
-                                              //           BorderRadius.circular(
-                                              //               50.r),
-                                              //       borderSide: BorderSide(
-                                              //         color: color3,
-                                              //       ),
-                                              //     ),
-                                              //     filled: true,
-                                              //     fillColor: Colors.white,
-                                              //     border: OutlineInputBorder(
-                                              //       borderRadius:
-                                              //           BorderRadius.circular(50
-                                              //               .r), // Set border radius
-                                              //     ),
-                                              //     errorBorder:
-                                              //         OutlineInputBorder(
-                                              //       borderSide: BorderSide(
-                                              //           color: Colors.red),
-                                              //       borderRadius:
-                                              //           BorderRadius.circular(
-                                              //               50.r),
-                                              //     ),
-                                              //   ),
-                                              //   validator: (value) {
-                                              //     if (value == null ||
-                                              //         value.isEmpty) {
-                                              //       return "Forme juridique non valide";
-                                              //     }
-                                              //     return null;
-                                              //   },
-                                              // ),
                                             ),
                                             SizedBox(height: 10.h),
                                             Container(

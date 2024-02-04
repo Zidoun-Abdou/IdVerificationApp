@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:whowiyati/pages/login.dart';
 import 'package:whowiyati/pages/mot_pass_oublie/reinitialisation.dart';
 import 'package:whowiyati/widgets/custom_text_form_field.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +10,6 @@ import 'package:http/http.dart' as http;
 import '../../const.dart';
 import '../../widgets/adaptive_circular_progress_indicator.dart';
 import '../../widgets/custom_bottom_text_hint.dart';
-import '../../widgets/custom_image_logo.dart';
 import '../../widgets/custom_title_text.dart';
 
 class ResetPassword extends StatefulWidget {
