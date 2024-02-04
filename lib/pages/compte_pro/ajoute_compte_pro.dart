@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whowiyati/pages/compte_pro/mes_comptes_pro.dart';
+import 'package:whowiyati/widgets/adaptive_circular_progress_indicator.dart';
 import 'package:whowiyati/widgets/compte_pro/ajoute_compte_pro/custom_bottom_background.dart';
 import 'package:whowiyati/widgets/compte_pro/ajoute_compte_pro/custom_top_background.dart';
 import 'package:whowiyati/widgets/compte_pro/custom_alert_dialog.dart';
@@ -164,279 +165,316 @@ class _AjouteCompteProState extends State<AjouteComptePro> {
                             color: Colors.transparent,
                             height: MediaQuery.of(context).size.height,
                             padding: EdgeInsets.all(15.h),
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: CustomCancelButton(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return CustomAlertDialog();
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 50.h,
-                                  right: 0,
-                                  left: 0,
-                                  child: Column(
+                            child: isLoading
+                                ? AdaptiveCircularProgressIndicator(
+                                    color: color3)
+                                : Stack(
                                     children: [
-                                      Text(
-                                        "Renseignez les informations mentionnées pour\ncréer votre compte pro",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13.sp,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.1.h,
-                                          letterSpacing: 0.20.w,
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: CustomCancelButton(
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return CustomAlertDialog();
+                                              },
+                                            );
+                                          },
                                         ),
                                       ),
-                                      SizedBox(height: 20.h),
-                                      Form(
-                                        key: formKey,
+                                      Positioned(
+                                        top: 50.h,
+                                        right: 0,
+                                        left: 0,
                                         child: Column(
                                           children: [
-                                            Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10.w),
-                                              child: CustomTextFormField(
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: _raisonContr,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                style: TextStyle(
-                                                    color: Colors.black),
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return "Raison social non valide";
-                                                  }
-                                                  return null;
-                                                },
-                                                hintText: "Raison social",
-                                                hintStyle: TextStyle(
-                                                    color: Color(0xFF6D6D6D)),
-                                                fillColor: Colors.white,
-                                                prefixIcon: Icon(
-                                                  Icons.description_outlined,
-                                                  color: Colors.black,
-                                                ),
+                                            Text(
+                                              "Renseignez les informations mentionnées pour\ncréer votre compte pro",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13.sp,
+                                                fontFamily: 'Inter',
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.1.h,
+                                                letterSpacing: 0.20.w,
                                               ),
                                             ),
-                                            SizedBox(height: 10.h),
-                                            Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10.w),
-                                              child: DropdownButtonFormField(
-                                                decoration: InputDecoration(
-                                                  hintStyle: TextStyle(
-                                                      color: Color(0xFF6D6D6D)),
-                                                  hintText: "Forme juridique",
-                                                  prefixIcon: Icon(
-                                                    Icons.description_outlined,
-                                                    color: Colors.black,
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                    borderSide: BorderSide(
-                                                      color: color3,
+                                            SizedBox(height: 20.h),
+                                            Form(
+                                              key: formKey,
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10.w),
+                                                    child: CustomTextFormField(
+                                                      textInputAction:
+                                                          TextInputAction.next,
+                                                      controller: _raisonContr,
+                                                      keyboardType:
+                                                          TextInputType.text,
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                      validator: (value) {
+                                                        if (value == null ||
+                                                            value.isEmpty) {
+                                                          return "Raison social non valide";
+                                                        }
+                                                        return null;
+                                                      },
+                                                      hintText: "Raison social",
+                                                      hintStyle: TextStyle(
+                                                          color: Color(
+                                                              0xFF6D6D6D)),
+                                                      fillColor: Colors.white,
+                                                      prefixIcon: Icon(
+                                                        Icons
+                                                            .description_outlined,
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
                                                   ),
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(50
-                                                            .r), // Set border radius
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.red),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.r),
-                                                  ),
-                                                ),
-                                                value: "EURL",
-                                                items: [
-                                                  DropdownMenuItem(
+                                                  SizedBox(height: 10.h),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10.w),
+                                                    child:
+                                                        DropdownButtonFormField(
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintStyle: TextStyle(
+                                                            color: Color(
+                                                                0xFF6D6D6D)),
+                                                        hintText:
+                                                            "Forme juridique",
+                                                        prefixIcon: Icon(
+                                                          Icons
+                                                              .description_outlined,
+                                                          color: Colors.black,
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      50.r),
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: color3,
+                                                          ),
+                                                        ),
+                                                        filled: true,
+                                                        fillColor: Colors.white,
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderRadius: BorderRadius
+                                                              .circular(50
+                                                                  .r), // Set border radius
+                                                        ),
+                                                        errorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .red),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      50.r),
+                                                        ),
+                                                      ),
                                                       value: "EURL",
-                                                      child: Text("EURL")),
-                                                  DropdownMenuItem(
-                                                      value: "SARL",
-                                                      child: Text("SARL")),
-                                                  DropdownMenuItem(
-                                                      value: "SPA",
-                                                      child: Text("SPA")),
-                                                  DropdownMenuItem(
-                                                      value: "SNC",
-                                                      child: Text("SNC")),
-                                                  DropdownMenuItem(
-                                                      value: "SCS",
-                                                      child: Text("SCS")),
-                                                  DropdownMenuItem(
-                                                      value: "SCA",
-                                                      child: Text("SCA")),
-                                                  DropdownMenuItem(
-                                                      value: "GR",
-                                                      child: Text("GR")),
+                                                      items: [
+                                                        DropdownMenuItem(
+                                                            value: "EURL",
+                                                            child:
+                                                                Text("EURL")),
+                                                        DropdownMenuItem(
+                                                            value: "SARL",
+                                                            child:
+                                                                Text("SARL")),
+                                                        DropdownMenuItem(
+                                                            value: "SPA",
+                                                            child: Text("SPA")),
+                                                        DropdownMenuItem(
+                                                            value: "SNC",
+                                                            child: Text("SNC")),
+                                                        DropdownMenuItem(
+                                                            value: "SCS",
+                                                            child: Text("SCS")),
+                                                        DropdownMenuItem(
+                                                            value: "SCA",
+                                                            child: Text("SCA")),
+                                                        DropdownMenuItem(
+                                                            value: "GR",
+                                                            child: Text("GR")),
+                                                      ],
+                                                      onChanged:
+                                                          (String? value) {
+                                                        _formeJurd = value!;
+                                                        print(_formeJurd);
+                                                      },
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10.h),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10.w),
+                                                    child: CustomTextFormField(
+                                                      textInputAction:
+                                                          TextInputAction.next,
+                                                      controller: _rcContr,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .visiblePassword,
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                      validator: (value) {
+                                                        if (value == null ||
+                                                            value.isEmpty) {
+                                                          return "N° Registre de commerce non valide";
+                                                        }
+                                                        return null;
+                                                      },
+                                                      hintText:
+                                                          "N° Registre de commerce",
+                                                      hintStyle: TextStyle(
+                                                          color: Color(
+                                                              0xFF6D6D6D)),
+                                                      fillColor: Colors.white,
+                                                      prefixIcon: Icon(
+                                                        Icons
+                                                            .description_outlined,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10.h),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10.w),
+                                                    child: CustomTextFormField(
+                                                      textInputAction:
+                                                          TextInputAction.next,
+                                                      controller: _nifContr,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .visiblePassword,
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                      validator: (value) {
+                                                        if (value == null ||
+                                                            value.isEmpty) {
+                                                          return "N° d'identification fiscale non valide";
+                                                        }
+                                                        return null;
+                                                      },
+                                                      hintText:
+                                                          "N° d'identification fiscale",
+                                                      hintStyle: TextStyle(
+                                                          color: Color(
+                                                              0xFF6D6D6D)),
+                                                      fillColor: Colors.white,
+                                                      prefixIcon: Icon(
+                                                        Icons
+                                                            .description_outlined,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10.h),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10.w),
+                                                    child: CustomTextFormField(
+                                                      textInputAction:
+                                                          TextInputAction.next,
+                                                      controller: _nisContr,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .visiblePassword,
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                      hintText:
+                                                          "N° d'identification statistique",
+                                                      hintStyle: TextStyle(
+                                                          color: Color(
+                                                              0xFF6D6D6D)),
+                                                      fillColor: Colors.white,
+                                                      prefixIcon: Icon(
+                                                        Icons
+                                                            .description_outlined,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10.h),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10.w),
+                                                    child: CustomTextFormField(
+                                                      textInputAction:
+                                                          TextInputAction.done,
+                                                      controller: _adressContr,
+                                                      keyboardType:
+                                                          TextInputType.text,
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                      validator: (value) {
+                                                        if (value == null ||
+                                                            value.isEmpty) {
+                                                          return "Adresse du siège non valide";
+                                                        }
+                                                        return null;
+                                                      },
+                                                      hintText:
+                                                          "Adresse du siège de la société",
+                                                      hintStyle: TextStyle(
+                                                          color: Color(
+                                                              0xFF6D6D6D)),
+                                                      fillColor: Colors.white,
+                                                      prefixIcon: Icon(
+                                                        Icons
+                                                            .description_outlined,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ],
-                                                onChanged: (String? value) {
-                                                  _formeJurd = value!;
-                                                  print(_formeJurd);
-                                                },
-                                              ),
-                                            ),
-                                            SizedBox(height: 10.h),
-                                            Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10.w),
-                                              child: CustomTextFormField(
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: _rcContr,
-                                                keyboardType: TextInputType
-                                                    .visiblePassword,
-                                                style: TextStyle(
-                                                    color: Colors.black),
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return "N° Registre de commerce non valide";
-                                                  }
-                                                  return null;
-                                                },
-                                                hintText:
-                                                    "N° Registre de commerce",
-                                                hintStyle: TextStyle(
-                                                    color: Color(0xFF6D6D6D)),
-                                                fillColor: Colors.white,
-                                                prefixIcon: Icon(
-                                                  Icons.description_outlined,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 10.h),
-                                            Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10.w),
-                                              child: CustomTextFormField(
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: _nifContr,
-                                                keyboardType: TextInputType
-                                                    .visiblePassword,
-                                                style: TextStyle(
-                                                    color: Colors.black),
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return "N° d'identification fiscale non valide";
-                                                  }
-                                                  return null;
-                                                },
-                                                hintText:
-                                                    "N° d'identification fiscale",
-                                                hintStyle: TextStyle(
-                                                    color: Color(0xFF6D6D6D)),
-                                                fillColor: Colors.white,
-                                                prefixIcon: Icon(
-                                                  Icons.description_outlined,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 10.h),
-                                            Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10.w),
-                                              child: CustomTextFormField(
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: _nisContr,
-                                                keyboardType: TextInputType
-                                                    .visiblePassword,
-                                                style: TextStyle(
-                                                    color: Colors.black),
-                                                hintText:
-                                                    "N° d'identification statistique",
-                                                hintStyle: TextStyle(
-                                                    color: Color(0xFF6D6D6D)),
-                                                fillColor: Colors.white,
-                                                prefixIcon: Icon(
-                                                  Icons.description_outlined,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 10.h),
-                                            Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10.w),
-                                              child: CustomTextFormField(
-                                                textInputAction:
-                                                    TextInputAction.done,
-                                                controller: _adressContr,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                style: TextStyle(
-                                                    color: Colors.black),
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return "Adresse du siège non valide";
-                                                  }
-                                                  return null;
-                                                },
-                                                hintText:
-                                                    "Adresse du siège de la société",
-                                                hintStyle: TextStyle(
-                                                    color: Color(0xFF6D6D6D)),
-                                                fillColor: Colors.white,
-                                                prefixIcon: Icon(
-                                                  Icons.description_outlined,
-                                                  color: Colors.black,
-                                                ),
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
+                                      Positioned(
+                                        bottom: 40.h,
+                                        left: 0,
+                                        right: 0,
+                                        child: CustomMainButton(
+                                          onPressed: () async {
+                                            if (formKey.currentState!
+                                                    .validate() &&
+                                                _formeJurd.isNotEmpty) {
+                                              createComptePro();
+                                            }
+                                          },
+                                          text: 'Continuer',
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: CustomByIcosnetHint(),
+                                      ),
                                     ],
                                   ),
-                                ),
-                                Positioned(
-                                  bottom: 40.h,
-                                  left: 0,
-                                  right: 0,
-                                  child: CustomMainButton(
-                                    onPressed: () async {
-                                      if (formKey.currentState!.validate() &&
-                                          _formeJurd.isNotEmpty) {
-                                        createComptePro();
-                                      }
-                                    },
-                                    text: 'Continuer',
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: CustomByIcosnetHint(),
-                                ),
-                              ],
-                            ),
                           ),
                         ),
                       ),
