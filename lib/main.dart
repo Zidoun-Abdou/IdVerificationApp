@@ -4,9 +4,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whowiyati/pages/homepage.dart';
-import 'package:whowiyati/pages/dealpad.dart';
 import 'package:flutter/services.dart';
+
+import 'features/auth/pages/homepage.dart';
+import 'features/home/pages/dealpad.dart';
 
 late SharedPreferences prefs;
 late List<CameraDescription> cameras;
