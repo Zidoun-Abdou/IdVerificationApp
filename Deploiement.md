@@ -128,7 +128,8 @@ Doctor summary (to see all details, run flutter doctor -v):
 (Pour la version Android)
 ```
 1.  Accéder à la [Google Play Console](https://play.google.com/console/u/0/developers/4835810507970136412/app/4975136487171041964/app-dashboard?timespan=thirtyDays) pour déployer la nouvelle version d'Android sur le `Play Store` 
-2. Passer au `Production` : (add screenshot)
+2. Passer au `Production` : 
+![alt text for screen readers](assets/screenshots/deploie_android_1.png)
 3. 
 
 ```plaintext
