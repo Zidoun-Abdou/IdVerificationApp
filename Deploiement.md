@@ -30,7 +30,15 @@ Ce document fournit des instructions pour le déploiement de la solution logicie
      - Si il n'ouvre pas automatiquement, recherche le et ouvrir
      - La boîte de dialogue "Bienvenue dans Android Studio" s'affiche
      - Vérifier les étapes suivants : 
- (insérer capture d'écran)     
+
+![android studio](assets/screenshots/android_studio_1.png)
+
+![android studio](assets/screenshots/android_studio_2.png)
+
+![android studio](assets/screenshots/android_studio_3.png)
+
+![android studio](assets/screenshots/android_studio_4.png)
+    
  - Ouvrir "Terminal" :
 	 - taper `flutter doctor --android-licenses` pour accepter les licences Android
 	 - taper `flutter doctor` si le résultat comme suivants donc le téléchargement et l'installation du Flutter fait correctement : 
@@ -92,7 +100,14 @@ Doctor summary (to see all details, run flutter doctor -v):
      - Si il n'ouvre pas automatiquement, recherche le et ouvrir
      - La boîte de dialogue "Bienvenue dans Android Studio" s'affiche
      - Vérifier les étapes suivants : 
- (insérer capture d'écran)     
+
+![android studio](assets/screenshots/android_studio_1.png)
+
+![android studio](assets/screenshots/android_studio_2.png)
+
+![android studio](assets/screenshots/android_studio_3.png)
+
+![android studio](assets/screenshots/android_studio_4.png)   
  
  - Ouvrir "Terminal" :
 	 - taper `flutter doctor --android-licenses` pour accepter les licences Android
@@ -127,10 +142,19 @@ Doctor summary (to see all details, run flutter doctor -v):
 ```plaintext
 (Pour la version Android)
 ```
+
 1.  Accéder à la [Google Play Console](https://play.google.com/console/u/0/developers/4835810507970136412/app/4975136487171041964/app-dashboard?timespan=thirtyDays) pour déployer la nouvelle version d'Android sur le `Play Store` 
+
 2. Passer au `Production` : 
-![alt text for screen readers](assets/screenshots/deploie_android_1.png)
-3. 
+
+![google play console](assets/screenshots/deploie_android_1.png)
+
+3. Ouvrir "Terminal":
+	 - taper `flutter build appbundle` pour crée "App Bundle"
+     - A la fin vous trouvez le fichier comme ça :
+![app bundle](assets/screenshots/deploie_android_2.png)
+
+4. 
 
 ```plaintext
 (Pour la version IOS)
