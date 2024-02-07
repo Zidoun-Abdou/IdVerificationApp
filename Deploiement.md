@@ -73,7 +73,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 - Télécharger Xcode :
 	 - Ouvrir "App Store" 
 	 - Recherche sur "Xcode" et installer le 
-	 - Si la boîte de dialogue "Xcode" affiche pour sélectionné la platform de développement coché sur IOS et taper sur "télécharger et installer"
+	 - Si la boîte de dialogue "Xcode" affiche pour sélectionné la platform de développement coché sur IOS et cliquez sur "télécharger et installer"
 	 - Ouvrir "Terminal" et taper :
 	 `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
 	 `sudo xcodebuild -runFirstLaunch`
@@ -145,16 +145,104 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 1.  Accéder à la [Google Play Console](https://play.google.com/console/u/0/developers/4835810507970136412/app/4975136487171041964/app-dashboard?timespan=thirtyDays) pour déployer la nouvelle version d'Android sur le `Play Store` 
 
-2. Passer au `Production` : 
+2. Accédez à l'onglet `Production` puis cliquez sur `Créer une version` : 
 
 ![google play console](assets/screenshots/deploie_android_1.png)
 
-3. Ouvrir "Terminal":
-	 - taper `flutter build appbundle` pour crée "App Bundle"
-     - A la fin vous trouvez le fichier comme ça :
+3. Ouvrez simultanément "Terminal" dans votre projet Flutter:
+	 - Taper `flutter build appbundle` pour créer votre fichier "App Bundle"
+     - À la fin, vous trouverez le fichier avec l'extension ".aab" :
+
 ![app bundle](assets/screenshots/deploie_android_2.png)
 
-4. 
+4. Retournez à la `Google Play Console` et faites glisser votre fichier avec l'extension ".aab" dans la zone `App bundles` :
+
+![google play console](assets/screenshots/deploie_android_3.png)
+
+5. Après avoir déployé le fichier, cliquez sur `Suivant` :
+
+![google play console](assets/screenshots/deploie_android_4.png)
+
+6. Après cliquez sur `Enregistrer` :
+
+![google play console](assets/screenshots/deploie_android_5.png)
+
+7. Enfin, cliquez sur `Envoyer modification pour examen?` pour soumettre votre nouvelle version à l'examen de Google en vue de son déploiement sur le `Play Store` dans quelques heures :
+
+![google play console](assets/screenshots/deploie_android_6.png)
+
+- Voici le résultat souhaité :
+
+![google play console](assets/screenshots/deploie_android_7.png)
 
 ```plaintext
 (Pour la version IOS)
+```
+
+1. Vérifiez la dernière version du projet avant de commencer le déploiement comme suivant `version: 2.0.4+14` : 
+
+![version](assets/screenshots/deploy_ios_1.png)
+
+2. Ouvrez [App Store Connect](https://appstoreconnect.apple.com/account), puis accédez à l'onglet `Apps` dans `Apps Store Connect` :
+
+![app store connect](assets/screenshots/deploy_ios_16.png)
+
+3. Puis cliquez sur `Whowiaty` : 
+
+![app store connect](assets/screenshots/deploy_ios_17.png)
+
+4. Cliquez sur `IOS App (+)` et taper le numéro de nouvelle version et cliquez sur `Create` :
+
+![app store connect](assets/screenshots/deploy_ios_18.png)
+
+4. Ouvrez "Xcode" et accédez le fichier `Runner.xcworkspace` dans votre projet Flutter, ou ouvrez directement comme suit :
+
+![app store connect](assets/screenshots/deploy_ios_3.png)
+
+5. Accédez à l'onglet `Runner`, puis cliquez sur `Product` puis `Archive` comme suit :
+
+![app store connect](assets/screenshots/deploy_ios_4.png)
+
+6. Sélectionnez votre nouvelle version, puis cliquez sur `Distribute App` :
+
+![app store connect](assets/screenshots/deploy_ios_5.png)
+
+7. Sélectionnez la case `TestFlight & App Store`, puis cliquez sur `Distribute`:
+
+![app store connect](assets/screenshots/deploy_ios_6.png)
+
+- Voici le résultat souhaité, cliquez sur `Done` :
+
+![app store connect](assets/screenshots/deploy_ios_7.png)
+
+8. Retournez au `App Store Connect` et accédez à l'onglet `TestFlight`, puis cliquez sur `Manage` :
+
+![app store connect](assets/screenshots/deploy_ios_8.png)
+
+- Sélectionnez comme suit puis cliquez sur `Save` :
+
+![app store connect](assets/screenshots/deploy_ios_9.png)
+
+9. Retournez à l'onglet `App Store`, puis faites défiler jusqu'à `Build` et cliquez sur `Add build` :
+
+![app store connect](assets/screenshots/deploy_ios_10.png)
+
+- Sélectionnez votre `BUILD`, puis cliquez sur `Done` :
+
+![app store connect](assets/screenshots/deploy_ios_11.png)
+
+10. Ajoutez des informations sur votre version, puis cliquez su `Save` en haut de votre page :
+
+![app store connect](assets/screenshots/deploy_ios_12.png)
+
+- Puis cliquez sur `Add for Review` :
+
+![app store connect](assets/screenshots/deploy_ios_13.png)
+
+- Vous serez redirigé vers la page `Confirm Submission`, cliquez sur `Submit to Add Review` :
+
+![app store connect](assets/screenshots/deploy_ios_14.png)
+
+- Voici le résultat souhaité :
+
+![app store connect](assets/screenshots/deploy_ios_15.png)
