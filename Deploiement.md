@@ -7,12 +7,11 @@ Ce document fournit des instructions pour le déploiement de la solution logicie
 ## 2. Prérequis <a name="prérequis"></a>
      (Installer et configurer Framework Flutter)
 
-```plaintext
-(Pour Windows)
-```
+###  2.1. Pour Windows
+
 - Télécharger Git (2.4 ou version ultérieure)
 
-- Télécharger Framework Flutter :  
+- Télécharger Framework Flutter `version: 3.7.12` :  
 `https://docs.flutter.dev/get-started/install/windows/mobile?tab=download`
 	 - Après le téléchargement et le décompresser du fichier "flutter", copie le et coller dans le dossier local (C:)
 	 - Entre au dossier "flutter" après "bin" et copie leur chemin, comme suivant :
@@ -64,9 +63,8 @@ Doctor summary (to see all details, run flutter doctor -v):
    `flutter clean`
    `flutter pub get`
 
- ```plaintext
- (Pour MacOS)
- ```
+###  2.2. Pour MacOS
+
  - Some Flutter components require the [Rosetta 2 translation process](https://github.com/flutter/website/pull/7119#issuecomment-1124537969) on Macs running [Apple silicon](https://support.apple.com/en-us/HT211814). To run all Flutter components on Apple silicon, install [Rosetta 2](https://support.apple.com/en-us/HT211861).
 	 -  Ouvrir "Terminal" et taper : 
 	 `sudo softwareupdate --install-rosetta --agree-to-license`
@@ -136,12 +134,10 @@ Doctor summary (to see all details, run flutter doctor -v):
    `flutter pub get`
 
 
-## 3. Déploiement  <a name="déploiement"></a>
+## 3. Déploiement d'une nouvelle version  <a name="déploiement"></a>
      (Les étapes à suivre pour le déploiement d'une nouvelle version)
 
-```plaintext
-(Pour la version Android)
-```
+### 3.1 Pour la version Android
 
 1.  Accéder à la [Google Play Console](https://play.google.com/console/u/0/developers/4835810507970136412/app/4975136487171041964/app-dashboard?timespan=thirtyDays) pour déployer la nouvelle version d'Android sur le `Play Store` 
 
@@ -175,9 +171,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![google play console](assets/screenshots/deploie_android_7.png)
 
-```plaintext
-(Pour la version IOS)
-```
+### 3.2 Pour la version IOS
 
 1. Vérifiez la dernière version du projet avant de commencer le déploiement comme suivant `version: 2.0.4+14` : 
 
