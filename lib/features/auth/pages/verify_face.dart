@@ -9,10 +9,11 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:intl/intl.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:whowiyati/core/utils/snackbar_message.dart';
 
 import '../../../const.dart';
-import '../../../core/widgets/adaptive_circular_progress_indicator.dart';
 import '../../../core/widgets/custom_byicosnet_hint.dart';
 import '../../../core/widgets/custom_main_button.dart';
 import '../../../main.dart';
@@ -44,6 +45,7 @@ class _VerifyFaceState extends State<VerifyFace> {
   late File savedImage;
   bool _is_loading = false;
   String _myToken = "";
+  double progress = 0.8;
 
   void getToken() {
     FirebaseMessaging.instance.getToken().then((value) {
@@ -281,7 +283,9 @@ class _VerifyFaceState extends State<VerifyFace> {
                           height: 15.h,
                         ),
                         Text(
-                          'Placez votre visage dans \nle cadre de la caméra ',
+                          _is_loading
+                              ? "Veuillez patienter, nous sommes en train de vérifier votre visage"
+                              : 'Placez votre visage dans \nle cadre de la caméra ',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[300],
@@ -329,8 +333,16 @@ class _VerifyFaceState extends State<VerifyFace> {
                                   borderRadius: BorderRadius.circular(15.r)),
                               child: _is_loading == true
                                   ? Center(
-                                      child: AdaptiveCircularProgressIndicator(
-                                          color: color3),
+                                      child: CircularPercentIndicator(
+                                        animation: true,
+                                        animationDuration: 30000,
+                                        radius: 40.r,
+                                        lineWidth: 6.0.w,
+                                        percent: progress,
+                                        progressColor: color3,
+                                        circularStrokeCap:
+                                            CircularStrokeCap.round,
+                                      ),
                                     )
                                   : Image.asset(
                                       'assets/images/face.png',
@@ -338,6 +350,20 @@ class _VerifyFaceState extends State<VerifyFace> {
                                     ),
                             ),
                           ),
+                  ),
+                  Visibility(
+                    visible: _is_loading,
+                    child: Positioned(
+                      bottom: 80.h,
+                      right: 0,
+                      left: 0,
+                      child: Center(
+                        child: LoadingAnimationWidget.staggeredDotsWave(
+                          color: color3,
+                          size: 40.sp,
+                        ),
+                      ),
+                    ),
                   ),
                   Visibility(
                     visible: _is_loading == false && _isShownFace == false,
@@ -359,7 +385,9 @@ class _VerifyFaceState extends State<VerifyFace> {
                               _isShownFace = !_isShownFace;
                             });
                             _is_loading = true;
-                            setState(() {});
+                            setState(() {
+                              progress = 0.8;
+                            });
                             String _mypath = video.path;
                             print(_mypath);
                             await GallerySaver.saveVideo(_mypath);
