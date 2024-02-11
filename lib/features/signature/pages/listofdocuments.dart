@@ -13,7 +13,7 @@ import '../../../main.dart';
 import '../../home/pages/dealpad.dart';
 import 'documents.dart';
 import 'seedocument.dart';
-import 'signature_logs.dart';
+import '../widgets/signature_logs.dart';
 
 class ListOfDocuments extends StatefulWidget {
   const ListOfDocuments({super.key});
