@@ -29,7 +29,10 @@ class CustomNotifWelcome extends StatelessWidget {
             height: 20.h,
             child: CircleAvatar(
               backgroundColor: color5,
-              child: Text("0"),
+              child: Text(
+                "0",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           )
         ],
