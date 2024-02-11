@@ -173,23 +173,23 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ### 3.2 Pour la version IOS
 
-1. Vérifiez la dernière version du projet avant de commencer le déploiement comme suivant `version: 2.0.4+14` : 
-
-![version](assets/screenshots/deploy_ios_1.png)
-
-2. Ouvrez [App Store Connect](https://appstoreconnect.apple.com/account), puis accédez à l'onglet `Apps` dans `Apps Store Connect` :
+1. Ouvrez [App Store Connect](https://appstoreconnect.apple.com/account), puis accédez à l'onglet `Apps` dans `Apps Store Connect` :
 
 ![app store connect](assets/screenshots/deploy_ios_16.png)
 
-3. Puis cliquez sur `Whowiaty` : 
+2. Puis cliquez sur `Whowiaty` : 
 
 ![app store connect](assets/screenshots/deploy_ios_17.png)
 
-4. Cliquez sur `IOS App (+)` et taper le numéro de nouvelle version et cliquez sur `Create` :
+3. Cliquez sur `IOS App (+)` et saisissez le numéro de la nouvelle version au format `x.x.x`, puis cliquez sur `Create`. Vous trouverez la nouvelle version à l'étape suivante :
 
 ![app store connect](assets/screenshots/deploy_ios_18.png)
 
-4. Ouvrez "Xcode" et accédez le fichier `Runner.xcworkspace` dans votre projet Flutter, ou ouvrez directement comme suit :
+- La dernière version du projet se trouve comme suit : `version: 2.0.4+14` dans le fichier `pubspec.yaml`. Vous ne copiez que `2.0.4`, le `+14` représente le nombre de déploiements : 
+
+![version](assets/screenshots/deploy_ios_1.png)
+
+4. Ouvrez "Xcode" et accédez au fichier `Runner.xcworkspace` dans votre projet Flutter, ou bien ouvrez directement le fichier sélectionné comme suit :
 
 ![app store connect](assets/screenshots/deploy_ios_3.png)
 
@@ -209,7 +209,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![app store connect](assets/screenshots/deploy_ios_7.png)
 
-8. Retournez au `App Store Connect` et accédez à l'onglet `TestFlight`, puis cliquez sur `Manage` :
+8. Retournez à `App Store Connect` et accédez à l'onglet `TestFlight`. Cela prendra un certain temps pour que le fichier `BUILD` de votre version soit prêt.  Une fois qu'il s'affiche, cliquez sur `Manage` :
 
 ![app store connect](assets/screenshots/deploy_ios_8.png)
 
@@ -225,15 +225,16 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![app store connect](assets/screenshots/deploy_ios_11.png)
 
-10. Ajoutez des informations sur votre version, puis cliquez su `Save` en haut de votre page :
+10. Ajoutez des informations sur votre version :
 
 ![app store connect](assets/screenshots/deploy_ios_12.png)
 
-- Puis cliquez sur `Add for Review` :
+- Faites glisser vers le haut et copier le texte suivant : "Whowiaty la solution N°1 d'identification et de signature électronique." et coller dans `Promotional Text`.
+- Ensuite, cliquez sur `Save` en haut de votre page, puis sur `Add for Review` :
 
 ![app store connect](assets/screenshots/deploy_ios_13.png)
 
-- Vous serez redirigé vers la page `Confirm Submission`, cliquez sur `Submit to Add Review` :
+11. Vous serez redirigé vers la page `Confirm Submission`, cliquez sur `Submit to Add Review` :
 
 ![app store connect](assets/screenshots/deploy_ios_14.png)
 
