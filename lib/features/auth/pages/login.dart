@@ -14,6 +14,7 @@ import '../../../core/widgets/custom_image_logo.dart';
 import '../../../core/widgets/custom_main_button.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
 import '../../../main.dart';
+import '../../home/pages/dealpad.dart';
 import '../../home/pages/welcome.dart';
 import '../widgets/login/custom_souvenir_moi_checkbox.dart';
 import 'mot_pass_oublie/forget_password.dart';
@@ -32,11 +33,16 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    prefs.getBool("isRememberMe") == true
-        ? prefs.getString('rememberUserID') == null
-            ? prefs.setBool("isRememberMe", false)
-            : _useridContr.text = prefs.getString('rememberUserID').toString()
-        : _useridContr.text = "";
+    if (prefs.getBool("isRememberMe") == true) {
+      if (prefs.getString('rememberUserID') == null) {
+        prefs.setBool("isRememberMe", false);
+      } else if (prefs.getString('rememberPassword') == null) {
+        _useridContr.text = prefs.getString('rememberUserID').toString();
+      } else {
+        _useridContr.text = prefs.getString('rememberUserID').toString();
+        _passwordContr.text = prefs.getString('rememberPassword').toString();
+      }
+    }
     getToken();
   }
 
@@ -101,18 +107,22 @@ class _LoginState extends State<Login> {
             await prefs.setString(
                 "pasword", answerJson["user"]['pass_code'] ?? "");
 
+            await prefs.setString('login', 'true');
+
             if (prefs.getBool("isRememberMe") == true) {
               await prefs.setString("rememberUserID", _useridContr.text);
+              await prefs.setString("rememberPassword", _passwordContr.text);
             } else if (prefs.getBool("isRememberMe") == false) {
               await prefs.remove("rememberUserID");
+              await prefs.remove("rememberPassword");
             }
-            await prefs.setString('login', 'true');
 
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Welcome(token: _myToken)),
+                    builder: (BuildContext context) => DialpadScreen(
+                          status: 3,
+                        )),
                 (Route<dynamic> route) => false);
           } else {
             SnackBarMessage().showErrorSnackBar(
@@ -188,54 +198,62 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 20.w, vertical: 8.h),
-                                    child: CustomTextFormField(
-                                      textInputAction: TextInputAction.done,
-                                      controller: _passwordContr,
-                                      keyboardType:
-                                          TextInputType.visiblePassword,
-                                      style: TextStyle(color: Colors.white),
-                                      obscureText: obscureText,
-                                      validator: (val) {
-                                        return validInput(val!, 8, 50);
-                                      },
-                                      hintText: "Mot de passe",
-                                      hintStyle: TextStyle(color: Colors.white),
-                                      fillColor: Colors.black,
-                                      prefixIcon: Icon(
-                                        Icons.lock_outline,
-                                        color: Colors.white,
-                                      ),
-                                      suffixIcon: obscureText
-                                          ? IconButton(
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              splashColor: Colors.transparent,
-                                              onPressed: () {
-                                                setState(() {
-                                                  obscureText = false;
-                                                });
-                                              },
-                                              icon: const Icon(
-                                                Icons.visibility_off,
-                                                color: Colors.white,
-                                              ))
-                                          : IconButton(
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              splashColor: Colors.transparent,
-                                              onPressed: () {
-                                                setState(() {
-                                                  obscureText = true;
-                                                });
-                                              },
-                                              icon: const Icon(
-                                                Icons.visibility,
-                                                color: Colors.white,
+                                  Visibility(
+                                    visible: (prefs.getBool("isRememberMe") ??
+                                                false) ==
+                                            false ||
+                                        prefs.getString("rememberPassword") ==
+                                            null,
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 20.w, vertical: 8.h),
+                                      child: CustomTextFormField(
+                                        textInputAction: TextInputAction.done,
+                                        controller: _passwordContr,
+                                        keyboardType:
+                                            TextInputType.visiblePassword,
+                                        style: TextStyle(color: Colors.white),
+                                        obscureText: obscureText,
+                                        validator: (val) {
+                                          return validInput(val!, 8, 50);
+                                        },
+                                        hintText: "Mot de passe",
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
+                                        fillColor: Colors.black,
+                                        prefixIcon: Icon(
+                                          Icons.lock_outline,
+                                          color: Colors.white,
+                                        ),
+                                        suffixIcon: obscureText
+                                            ? IconButton(
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                splashColor: Colors.transparent,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    obscureText = false;
+                                                  });
+                                                },
+                                                icon: const Icon(
+                                                  Icons.visibility_off,
+                                                  color: Colors.white,
+                                                ))
+                                            : IconButton(
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                splashColor: Colors.transparent,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    obscureText = true;
+                                                  });
+                                                },
+                                                icon: const Icon(
+                                                  Icons.visibility,
+                                                  color: Colors.white,
+                                                ),
                                               ),
-                                            ),
+                                      ),
                                     ),
                                   ),
                                   Container(
@@ -255,14 +273,19 @@ class _LoginState extends State<Login> {
                                                 prefs.setBool(
                                                     "isRememberMe", true);
                                                 if (prefs.getString(
-                                                            'rememberUserID') !=
-                                                        null &&
-                                                    prefs.getString(
-                                                            'rememberUserID') !=
-                                                        "") {
+                                                        'rememberUserID') !=
+                                                    null) {
                                                   _useridContr.text = prefs
                                                       .getString(
                                                           'rememberUserID')
+                                                      .toString();
+                                                }
+                                                if (prefs.getString(
+                                                        'rememberPassword') !=
+                                                    null) {
+                                                  _passwordContr.text = prefs
+                                                      .getString(
+                                                          'rememberPassword')
                                                       .toString();
                                                 }
                                               });
@@ -270,6 +293,9 @@ class _LoginState extends State<Login> {
                                               setState(() {
                                                 prefs.setBool(
                                                     "isRememberMe", false);
+
+                                                _useridContr.text = "";
+                                                _passwordContr.text = "";
                                               });
                                             }
                                           }),
