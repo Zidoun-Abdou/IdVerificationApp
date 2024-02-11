@@ -173,15 +173,11 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ### 3.2 Pour la version IOS
 
-1. Ouvrez [App Store Connect](https://appstoreconnect.apple.com/account), puis accédez à l'onglet `Apps` dans `Apps Store Connect` :
-
-![app store connect](assets/screenshots/deploy_ios_16.png)
-
-2. Puis cliquez sur `Whowiaty` : 
+1. Ouvrez [App Store Connect](https://appstoreconnect.apple.com/apps), puis cliquez sur `Whowiaty` : 
 
 ![app store connect](assets/screenshots/deploy_ios_17.png)
 
-3. Cliquez sur `IOS App (+)` et saisissez le numéro de la nouvelle version au format `x.x.x`, puis cliquez sur `Create`. Vous trouverez la nouvelle version à l'étape suivante :
+2. Cliquez sur `IOS App (+)` et saisissez le numéro de la nouvelle version au format `x.x.x`, puis cliquez sur `Create`. Vous trouverez la nouvelle version à l'étape suivante :
 
 ![app store connect](assets/screenshots/deploy_ios_18.png)
 
@@ -189,19 +185,19 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![version](assets/screenshots/deploy_ios_1.png)
 
-4. Ouvrez "Xcode" et accédez au fichier `Runner.xcworkspace` dans votre projet Flutter, ou bien ouvrez directement le fichier sélectionné comme suit :
+3. Ouvrez "Xcode" et accédez au fichier `Runner.xcworkspace` dans votre projet Flutter, ou bien ouvrez directement le fichier sélectionné comme suit :
 
 ![app store connect](assets/screenshots/deploy_ios_3.png)
 
-5. Accédez à l'onglet `Runner`, puis cliquez sur `Product` puis `Archive` comme suit :
+4. Accédez à l'onglet `Runner`, puis cliquez sur `Product` puis `Archive` comme suit :
 
 ![app store connect](assets/screenshots/deploy_ios_4.png)
 
-6. Sélectionnez votre nouvelle version, puis cliquez sur `Distribute App` :
+5. Sélectionnez votre nouvelle version, puis cliquez sur `Distribute App` :
 
 ![app store connect](assets/screenshots/deploy_ios_5.png)
 
-7. Sélectionnez la case `TestFlight & App Store`, puis cliquez sur `Distribute`:
+6. Sélectionnez la case `TestFlight & App Store`, puis cliquez sur `Distribute`:
 
 ![app store connect](assets/screenshots/deploy_ios_6.png)
 
@@ -209,7 +205,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![app store connect](assets/screenshots/deploy_ios_7.png)
 
-8. Retournez à `App Store Connect` et accédez à l'onglet `TestFlight`. Cela prendra un certain temps pour que le fichier `BUILD` de votre version soit prêt.  Une fois qu'il s'affiche, cliquez sur `Manage` :
+7. Retournez à `App Store Connect` et accédez à l'onglet `TestFlight`. Cela prendra un certain temps pour que le fichier `BUILD` de votre version soit prêt.  Une fois qu'il s'affiche, cliquez sur `Manage` :
 
 ![app store connect](assets/screenshots/deploy_ios_8.png)
 
@@ -217,7 +213,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![app store connect](assets/screenshots/deploy_ios_9.png)
 
-9. Retournez à l'onglet `App Store`, puis faites défiler jusqu'à `Build` et cliquez sur `Add build` :
+8. Retournez à l'onglet `App Store`, puis faites défiler jusqu'à `Build` et cliquez sur `Add build` :
 
 ![app store connect](assets/screenshots/deploy_ios_10.png)
 
@@ -225,7 +221,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![app store connect](assets/screenshots/deploy_ios_11.png)
 
-10. Ajoutez des informations sur votre version :
+9. Ajoutez des informations sur votre version :
 
 ![app store connect](assets/screenshots/deploy_ios_12.png)
 
@@ -234,7 +230,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![app store connect](assets/screenshots/deploy_ios_13.png)
 
-11. Vous serez redirigé vers la page `Confirm Submission`, cliquez sur `Submit to Add Review` :
+10. Vous serez redirigé vers la page `Confirm Submission`, cliquez sur `Submit to Add Review` :
 
 ![app store connect](assets/screenshots/deploy_ios_14.png)
 
