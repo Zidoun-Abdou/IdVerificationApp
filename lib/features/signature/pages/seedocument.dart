@@ -18,8 +18,9 @@ class _SeeDocumentState extends State<SeeDocument> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: color2,
+        backgroundColor: color1,
         title: const Text('Voir le contrat à signé'),
+        centerTitle: true,
         // actions: <Widget>[
         //   IconButton(
         //     icon: const Icon(

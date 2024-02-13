@@ -85,7 +85,6 @@ class _MyAppState extends State<MyApp> {
                   backgroundColor: Colors.black.withOpacity(0.5)),
               fontFamily: "Rubik",
               canvasColor: Colors.white,
-              // accentColor: color3,
             ),
           );
         });

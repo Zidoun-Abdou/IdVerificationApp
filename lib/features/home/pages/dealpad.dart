@@ -87,6 +87,9 @@ class _DialpadScreenState extends State<DialpadScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color2,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
