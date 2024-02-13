@@ -19,29 +19,15 @@ class _CardNfcInfoState extends State<CardNfcInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color1,
+      appBar: AppBar(
+        backgroundColor: color1,
+        title: Text("Validation Via NFC"),
+        centerTitle: true,
+        elevation: 0.0,
+      ),
       body: SafeArea(
           child: Center(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          SizedBox(
-            height: 30.h,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.w),
-            child: Text(
-              "Validation Via NFC",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.sp,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.20.w,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
